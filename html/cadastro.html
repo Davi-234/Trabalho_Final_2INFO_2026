@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../estilo/cadastro.css" />
+  </head>
+  <body>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main id="cadastro-container">
+      <section id="cadastro-box">
+        <h1 class="section-title">Cadastro de Usuário</h1>
+
+        <p class="info-text">
+          Crie sua conta para compartilhar, comentar e avaliar projetos.
+        </p>
+
+        <!-- FORMULÁRIO -->
+        <form id="cadastro-form">
+          <div class="externa">
+            <div id="div_usu" class="form-group">
+              <!-- USUÁRIO -->
+              <label for="usuario">Nome de usuário:</label><br />
+              <input
+                class="input-text"
+                type="text"
+                id="usuario"
+                name="usuario"
+                placeholder="Digite seu nome de usuário"
+                required
+              />
+            </div>
+
+            <div id="div_email" class="form-group">
+              <!-- EMAIL -->
+              <label for="email">E-mail:</label><br />
+              <input
+                class="input-text"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Digite seu e-mail"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="externa" >
+            <div id="div_senha" class="form-group">
+              <!-- SENHA -->
+              <label for="senha">Senha:</label><br />
+              <input
+                class="input-text"
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Digite sua senha"
+                required
+              />
+            </div>
+
+            <div id="div_confirmar_senha" class="form-group">
+              <!-- CONFIRMAR SENHA -->
+              <label for="confirmar-senha">Confirmar senha:</label><br />
+              <input
+                class="input-text"
+                type="password"
+                id="confirmar-senha"
+                name="confirmarSenha"
+                placeholder="Confirme sua senha"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="externa">
+            <div id="div_github" class="form-group">
+              <!-- GITHUB (opcional) -->
+              <label for="github">GitHub (opcional):</label><br />
+              <input
+                class="input-text"
+                type="url"
+                id="github"
+                name="github"
+                placeholder="https://github.com/seuusuario"
+              />
+            </div>
+
+            <div id="div_linkedin" class="form-group">
+              <!-- LINKEDIN (opcional) -->
+              <label for="linkedin">LinkedIn (opcional):</label><br />
+              <input
+                class="input-text"
+                type="url"
+                id="linkedin"
+                name="linkedin"
+                placeholder="https://linkedin.com/in/seuusuario"
+              />
+            </div>
+          </div>
+
+          <br /><br />
+
+          <!-- BOTÃO -->
+          <button class="btn" type="submit">Cadastrar</button>
+        </form>
+
+        <br />
+
+        <!-- MENSAGENS -->
+        <div id="mensagens">
+          <p class="erro">
+            <!-- Exemplo: E-mail já cadastrado -->
+          </p>
+
+          <p class="erro">
+            <!-- Exemplo: Senhas não coincidem -->
+          </p>
+
+          <p class="sucesso">
+            <!-- Exemplo: Cadastro realizado. Verifique seu e-mail para ativar a conta -->
+          </p>
+        </div>
+
+        <br />
+
+        <!-- LINK LOGIN -->
+        <p>
+          Já possui conta?
+          <a href="login.html">Faça login</a>
+        </p>
+      </section>
+    </main>
+
+    <hr />
+
+    <!-- FOOTER -->
+    <footer id="footer">
+      <p>Trabalho final do 2º ano de Informática do IFMG - Campus Formiga</p>
+
+      <p>
+        Disciplinas: Desenvolvimento Web I, Banco de Dados I e Análise e Projeto
+        de Sistemas
+      </p>
+
+      <p>Autores: Davi Leandro e João Marcos Vital</p>
+    </footer>
+  </body>
+</html>

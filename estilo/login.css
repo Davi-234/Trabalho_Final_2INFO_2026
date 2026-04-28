@@ -77,6 +77,51 @@ input {
     background-color: #272727;
 }
 
+@media (max-width: 768px) {
+
+    #login-container {
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    #login-container h1 {
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+
+    #login-container p {
+        margin-bottom: 30px;
+        font-size: 14px;
+    }
+
+    input {
+        padding: 6px;
+    }
+
+    #login-container button {
+        padding: 8px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    #login-container {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    #login-container h1 {
+        font-size: 22px;
+    }
+
+    #login-container p {
+        font-size: 13px;
+    }
+
+}
+
 /* LINKS */
 a {
     text-decoration: none;
@@ -99,4 +144,11 @@ footer {
 footer p {
     margin: 0;
     font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    
+    footer p {
+        font-size: 12px;
+    }
 }
