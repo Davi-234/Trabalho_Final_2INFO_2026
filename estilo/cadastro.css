@@ -1,21 +1,21 @@
-/* RESET */
+/* ===================== RESET ===================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* BASE */
+/* ===================== BASE ===================== */
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #999999;
-    color: #333;
+    background-color: #c5c5c5;
+    color: #cacaca;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* CONTAINER PRINCIPAL */
+/* ===================== CONTAINER ===================== */
 #cadastro-container {
     flex: 1;
     display: flex;
@@ -23,30 +23,19 @@ body {
     align-items: center;
 }
 
-/* CAIXA DO FORMULÁRIO */
+/* ===================== BOX ===================== */
 #cadastro-box {
     width: 800px;
     max-width: 90%;
     background-color: #5a5656;
     padding: 25px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px rgba(0,0,0,0.3);
 }
 
-#cadastro-form {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-div.externa {
-    display: flex;
-    justify-content: space-around;
-    flex: 1;
-    padding: 0 10px;
-    margin-bottom: 20px;
-}
-
-#cadastro-box h1 {
+/* ===================== TÍTULO ===================== */
+#cadastro-box h1,
+#cadastro-box .section-title {
     text-align: center;
     width: 100%;
     font-size: 32px;
@@ -55,7 +44,9 @@ div.externa {
     box-shadow: 3px 4px 2px rgba(0, 0, 0, 0.3);
 }
 
-#cadastro-box p {
+/* ===================== TEXTO ===================== */
+#cadastro-box p,
+#cadastro-box .info-text {
     text-align: center;
     width: 100%;
     margin-bottom: 25px;
@@ -63,18 +54,15 @@ div.externa {
     font-size: 14px;
 }
 
+/* ===================== LABEL ===================== */
 #cadastro-box label {
     font-weight: bold;
     color: rgb(40, 37, 37);
 }
 
-#div_usu, #div_email, #div_senha, #div_confirmar_senha, #div_github, #div_linkedin {
-    flex: 1;
-    margin: 0 10px;
-}
-
+/* ===================== INPUT ===================== */
 #cadastro-box input {
-    flex: 1;
+    width: 100%;
     padding: 8px;
     margin-top: 4px;
     margin-bottom: 12px;
@@ -82,6 +70,20 @@ div.externa {
     border-radius: 4px;
 }
 
+/* ===================== FLEX BLOCO ===================== */
+#cadastro-form .externa_senha,
+#cadastro-form .externa_links {
+    display: flex;
+    gap: 20px;
+}
+
+/* ===================== DIVS INTERNAS ===================== */
+.form-group {
+    flex: 1;
+    margin: 10px;
+}
+
+/* ===================== BOTÃO ===================== */
 #cadastro-box button {
     width: 100%;
     padding: 10px;
@@ -96,31 +98,7 @@ div.externa {
     background-color: #272727;
 }
 
-#cadastro-box .info-text {
-    font-size: 14px;
-    color: rgb(52, 49, 49);
-    margin-bottom: 20px;
-}
-
-#cadastro-box .info-text a {
-    color: #0066cc;
-}
-
-#cadastro-box .info-text a:hover {
-    text-decoration: underline;
-}
-
-#cadastro-box .section-title {
-    text-align: center;
-    font-size: 32px;    
-    margin-bottom: 20px;
-    color: rgb(39, 39, 39);
-    box-shadow: 3px 4px 2px rgba(0, 0, 0, 0.3);
-}
-
-
-
-/* LINKS */
+/* ===================== LINKS ===================== */
 a {
     text-decoration: none;
     color: #0066cc;
@@ -130,7 +108,7 @@ a:hover {
     text-decoration: underline;
 }
 
-/* FOOTER */
+/* ===================== FOOTER ===================== */
 #footer {
     text-align: center;
     padding: 15px;
@@ -142,23 +120,49 @@ a:hover {
     font-size: 14px;
 }
 
-/* RESPONSIVO */
+/* ===================== RESPONSIVO ===================== */
 @media (max-width: 768px) {
+
     #cadastro-box {
+        width: 95%;
         padding: 20px;
     }
 
     .section-title {
         font-size: 26px;
     }
+
+    #cadastro-form .externa_senha,
+    #cadastro-form .externa_links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-group {
+        margin: 5px 0;
+    }
 }
 
 @media (max-width: 480px) {
+
     #cadastro-box {
+        width: 100%;
         padding: 15px;
+        border-radius: 10px;
     }
 
     .section-title {
         font-size: 22px;
+    }
+
+    .info-text {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 600px) {
+    
+    footer p {
+        font-size: 10px;
     }
 }
