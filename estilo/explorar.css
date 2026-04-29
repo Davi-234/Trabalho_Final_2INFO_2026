@@ -1,0 +1,291 @@
+/* ===================== RESET ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================== BASE ===================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #e2e2e2;
+    color: #333;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+/* ===================== HEADER ===================== */
+/* HEADER */
+#header {
+    background-color: #222;
+    color: #fff;
+    padding: 15px;
+    height: auto;
+}
+
+#header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#logo {
+    margin-bottom: 30px;
+    width: 100%;
+    font-family: 'Playfair Display', serif; /* elegante */
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+    margin: 10px 0 30px 15px;
+}
+
+#menu {
+    margin-bottom: 15px;
+    min-width: 200px;
+}
+
+#menu {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex: 1;
+    gap: 10px;
+}
+
+.menu-link {
+    margin-right: 10px;
+    color: #fff;
+}
+
+#search-form {
+    display: flex;
+    gap: 5px;
+    flex: 1;
+    height: 40px;
+    min-width: 200px;
+}
+/* ===================== MAIN ===================== */
+#main {
+    flex: 1;
+    padding: 20px;
+    height: auto;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#box-conteudo {
+    flex: 1;
+    border-left: 1px solid #767676;
+    border-right: 1px solid #767676;
+    background-color: #cfcfcf;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: auto;
+}
+
+/* ===================== CONTAINER ===================== */
+#explorar-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ===================== TÍTULO ===================== */
+#explorar-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ===================== BUSCA ===================== */
+#busca {
+    margin-bottom: 20px;
+}
+
+#form-busca {
+    display: flex;
+    gap: 10px;
+}
+
+#form-busca input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+#form-busca button {
+    padding: 8px 15px;
+    background-color: #4c4c4c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#form-busca button:hover {
+    background-color: #272727;
+}
+
+/* ===================== FILTROS ===================== */
+#filtros {
+    margin-bottom: 20px;
+    background-color: #5a5656;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+#filtros h3 {
+    margin-bottom: 10px;
+    color: #222;
+}
+
+#form-filtros {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+#form-filtros label {
+    font-weight: bold;
+}
+
+#form-filtros select {
+    padding: 5px;
+}
+
+/* ===================== LISTA ===================== */
+#lista-projetos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ===================== CARD PROJETO ===================== */
+.projeto {
+    background-color: #5a5656;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 3px rgba(0,0,0,0.2);
+}
+
+.projeto h3 {
+    margin-bottom: 10px;
+    color: #222;
+}
+
+.projeto p {
+    margin-bottom: 5px;
+}
+
+.projeto a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #0066cc;
+}
+
+/* ===================== FOOTER ===================== */
+#footer {
+    justify-content: flex-end;
+    margin-top: 1px;
+    padding: 15px;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+}
+
+/* ===================== RESPONSIVO PADRÃO ===================== */
+
+/* TABLET (igual seu modelo: 800px) */
+@media (max-width: 800px) {
+
+    /* HEADER */
+    #header {
+        height: auto;
+    }
+
+    #logo {
+        font-size: 26px;
+    }
+
+    #menu,
+    #search-form {
+        flex-basis: 100%;
+    }
+
+    #menu {
+        justify-content: flex-end;
+    }
+
+    #search-form {
+        margin: 0 15px;
+        width: 100%;
+    }
+
+    /* MAIN */
+    #main {
+        padding: 15px;
+    }
+
+    #box-conteudo {
+        margin: 0 10px;
+    }
+
+    /* BUSCA */
+    #form-busca {
+        flex-direction: column;
+    }
+
+    /* FILTROS */
+    #form-filtros {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #form-filtros select {
+        width: 100%;
+    }
+}
+
+/* MOBILE (igual seu modelo: 600px) */
+@media (max-width: 600px) {
+
+    /* MAIN */
+    #main {
+        padding: 10px;
+    }
+
+    #box-conteudo {
+        border: none;
+        margin: 0;
+    }
+
+    /* TEXTO */
+    #explorar-container h1 {
+        font-size: 22px;
+    }
+
+    /* CARDS */
+    .projeto {
+        padding: 10px;
+    }
+
+    .projeto h3 {
+        font-size: 18px;
+    }
+
+    .projeto p {
+        font-size: 14px;
+    }
+
+    /* MENU */
+    .menu-link {
+        font-size: 14px;
+    }
+
+    /* FOOTER */
+    #footer p {
+        font-size: 12px;
+    }
+}

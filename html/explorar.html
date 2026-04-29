@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../estilo/explorar.css" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header id="header">
+      <h1 id="logo">Sistema de compartilhamento de Projeto</h1>
+
+      <br />
+
+      <nav id="menu">
+        <a class="menu-link" href="Index.html">Início</a>
+        <a class="menu-link" href="explorar.html">Explorar</a>
+        <a class="menu-link" href="#">Categorias</a>
+        <a class="menu-link" href="login.html">Login</a>
+        <a class="menu-link" href="cadastro.html">Cadastro</a>
+      </nav>
+
+      <br />
+    </header>
+
+    <hr />
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div id="box-conteudo">
+      <main id="main">
+        <section id="explorar-container">
+          <h1>Explorar Projetos</h1>
+
+          <!-- BUSCA -->
+          <section id="busca">
+            <form id="form-busca">
+              <input type="text" placeholder="Buscar por nome ou objetivo" />
+
+              <button type="submit">Buscar</button>
+            </form>
+          </section>
+
+          <!-- FILTROS -->
+          <section id="filtros">
+            <h3>Filtros</h3>
+
+            <form id="form-filtros">
+              <!-- TIPO -->
+              <label for="tipo">Tipo:</label>
+              <select id="tipo">
+                <option value="">Todos</option>
+                <option>Web</option>
+                <option>Mobile</option>
+                <option>Desktop</option>
+              </select>
+
+              <!-- NÍVEL -->
+              <label for="nivel">Nível:</label>
+              <select id="nivel">
+                <option value="">Todos</option>
+                <option>Iniciante</option>
+                <option>Intermediário</option>
+                <option>Avançado</option>
+              </select>
+
+              <!-- ORDENAÇÃO -->
+              <label for="ordenar">Ordenar por:</label>
+              <select id="ordenar">
+                <option>Mais bem avaliados</option>
+                <option>Mais recentes</option>
+                <option>Mais visualizados</option>
+              </select>
+            </form>
+          </section>
+
+          <!-- LISTA DE PROJETOS -->
+          <section id="lista-projetos">
+            <!-- PROJETO 1 -->
+            <div class="projeto">
+              <h3>Gerenciador de Tarefas</h3>
+
+              <p><strong>Autor:</strong> João</p>
+
+              <p>Sistema web para organizar tarefas com prioridade e prazos.</p>
+
+              <p><strong>Nível:</strong> Iniciante</p>
+              <p><strong>Tipo:</strong> Web</p>
+
+              <p><strong>Avaliação:</strong> ⭐⭐⭐⭐☆ (4.0)</p>
+
+              <a href="#">Ver projeto</a>
+            </div>
+
+            <!-- PROJETO 2 -->
+            <div class="projeto">
+              <h3>API de Pagamentos</h3>
+
+              <p><strong>Autor:</strong> Maria</p>
+
+              <p>API REST para processamento de pagamentos com autenticação.</p>
+
+              <p><strong>Nível:</strong> Avançado</p>
+              <p><strong>Tipo:</strong> Backend</p>
+
+              <p><strong>Avaliação:</strong> ⭐⭐⭐⭐⭐ (5.0)</p>
+
+              <a href="#">Ver projeto</a>
+            </div>
+
+            <!-- PROJETO 3 -->
+            <div class="projeto">
+              <h3>App de Estudos</h3>
+
+              <p><strong>Autor:</strong> Carlos</p>
+
+              <p>Aplicativo mobile para organização de estudos.</p>
+
+              <p><strong>Nível:</strong> Intermediário</p>
+              <p><strong>Tipo:</strong> Mobile</p>
+
+              <p><strong>Avaliação:</strong> ⭐⭐⭐☆☆ (3.0)</p>
+
+              <a href="#">Ver projeto</a>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+      <p>Trabalho final do 2º ano de Informática do IFMG - Campus Formiga</p>
+
+      <p>
+        Disciplinas: Desenvolvimento Web I, Banco de Dados I e Análise e Projeto
+        de Sistemas
+      </p>
+
+      <p>Autores: Davi Leandro e João Marcos Vital</p>
+    </footer>
+  </body>
+</html>
