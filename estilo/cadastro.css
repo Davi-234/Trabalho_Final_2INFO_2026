@@ -5,103 +5,205 @@
     box-sizing: border-box;
 }
 
-/* ===================== BASE ===================== */
+/* ===================== VARIÁVEIS ===================== */
+:root {
+    --bg-dark: #0d1117;
+    --bg-card: #161b22;
+    --bg-input: #0d1117;
+
+    --border: #30363d;
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+
+    --accent: #58a6ff;
+    --accent-hover: #1f6feb;
+
+    --error: #ff6b6b;
+    --success: #3fb950;
+}
+
+/* ===================== BODY ===================== */
+/*
+Centralização TOTAL + sem scroll
+*/
 body {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    /* GRADIENT TECH */
+    background: linear-gradient(135deg, #0d1117, #1f2630);
+
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #c5c5c5;
-    color: #cacaca;
-    min-height: 100vh;
+    color: var(--text-primary);
+
+    overflow: hidden;
+}
+
+/* ===================== MAIN ===================== */
+/*
+Centraliza vertical + horizontal
+*/
+#cadastro-container {
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+}
+
+/* ===================== CARD ===================== */
+#cadastro-box {
+    width: 100%;
+    max-width: 750px;
+
+    background-color: var(--bg-card);
+
+    padding: 30px;
+    border-radius: 12px;
+
+    border: 1px solid var(--border);
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+
+    animation: fadeUp 0.8s ease;
+}
+
+/* ===================== ANIMAÇÃO ===================== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================== TEXTOS ===================== */
+.section-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.info-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+/* ===================== FORM ===================== */
+
+/*
+Grid interno profissional:
+- usuário/email em linha única
+- senha lado a lado
+- links lado a lado
+*/
+#cadastro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Grupo padrão */
+.form-group {
     display: flex;
     flex-direction: column;
 }
 
-/* ===================== CONTAINER ===================== */
-#cadastro-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* ===================== BOX ===================== */
-#cadastro-box {
-    width: 800px;
-    max-width: 90%;
-    background-color: #5a5656;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 10px 10px 5px rgba(0,0,0,0.3);
-}
-
-/* ===================== TÍTULO ===================== */
-#cadastro-box h1,
-#cadastro-box .section-title {
-    text-align: center;
+/* Linha única */
+.externa_usuario,
+.externa_email {
     width: 100%;
-    font-size: 32px;
-    margin-bottom: 20px;
-    color: rgb(39, 39, 39);
-    box-shadow: 3px 4px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* ===================== TEXTO ===================== */
-#cadastro-box p,
-#cadastro-box .info-text {
-    text-align: center;
-    width: 100%;
-    margin-bottom: 25px;
-    color: rgb(52, 49, 49);
-    font-size: 14px;
+/* SENHAS lado a lado */
+.externa_senha {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
-/* ===================== LABEL ===================== */
-#cadastro-box label {
-    font-weight: bold;
-    color: rgb(40, 37, 37);
+/* LINKS lado a lado */
+.externa_links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
-/* ===================== INPUT ===================== */
-#cadastro-box input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 4px;
-    margin-bottom: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+/* ===================== INPUTS ===================== */
+
+label {
+    font-size: 0.85rem;
+    margin-bottom: 5px;
 }
 
-/* ===================== FLEX BLOCO ===================== */
-#cadastro-form .externa_senha,
-#cadastro-form .externa_links {
-    display: flex;
-    gap: 20px;
+.input-text {
+    padding: 10px;
+
+    border-radius: 6px;
+    border: 1px solid var(--border);
+
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+
+    transition: 0.3s;
 }
 
-/* ===================== DIVS INTERNAS ===================== */
-.form-group {
-    flex: 1;
-    margin: 10px;
+/* Foco */
+.input-text:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 5px var(--accent);
 }
 
 /* ===================== BOTÃO ===================== */
-#cadastro-box button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4c4c4c;
+.btn {
+    margin-top: 10px;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--accent);
     color: #fff;
-    border: 1px solid #333;
-    border-radius: 4px;
+
+    font-weight: bold;
     cursor: pointer;
+
+    transition: 0.3s;
 }
 
-#cadastro-box button:hover {
-    background-color: #272727;
+.btn:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* ===================== MENSAGENS ===================== */
+
+.erro {
+    color: var(--error);
+    font-size: 0.85rem;
+}
+
+.sucesso {
+    color: var(--success);
+    font-size: 0.85rem;
 }
 
 /* ===================== LINKS ===================== */
 a {
+    color: var(--accent);
     text-decoration: none;
-    color: #0066cc;
 }
 
 a:hover {
@@ -109,60 +211,54 @@ a:hover {
 }
 
 /* ===================== FOOTER ===================== */
+
+/*
+Separação visual clara
+*/
 #footer {
+    background-color: #010409;
+
     text-align: center;
     padding: 15px;
-    background-color: #333;
-    color: #fff;
+
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+
+    border-top: 1px solid var(--border);
 }
 
-#footer p {
-    font-size: 14px;
+/* Remove HR */
+hr {
+    display: none;
 }
 
-/* ===================== RESPONSIVO ===================== */
+/* ===================== RESPONSIVIDADE ===================== */
+
+/* Tablet */
 @media (max-width: 768px) {
 
     #cadastro-box {
-        width: 95%;
-        padding: 20px;
+        max-width: 500px;
     }
 
-    .section-title {
-        font-size: 26px;
-    }
-
-    #cadastro-form .externa_senha,
-    #cadastro-form .externa_links {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .form-group {
-        margin: 5px 0;
+    .externa_senha,
+    .externa_links {
+        grid-template-columns: 1fr; /* empilha */
     }
 }
 
+/* Mobile */
 @media (max-width: 480px) {
 
+    body {
+        overflow-y: auto; 
+        /* IMPORTANTE:
+        Em telas muito pequenas, permitir scroll evita cortar conteúdo
+        (isso é prática profissional, não erro)
+        */
+    }
+
     #cadastro-box {
-        width: 100%;
-        padding: 15px;
-        border-radius: 10px;
-    }
-
-    .section-title {
-        font-size: 22px;
-    }
-
-    .info-text {
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 600px) {
-    
-    footer p {
-        font-size: 10px;
+        padding: 20px;
     }
 }
