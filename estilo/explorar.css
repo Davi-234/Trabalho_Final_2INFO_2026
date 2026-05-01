@@ -5,287 +5,342 @@
     box-sizing: border-box;
 }
 
-/* ===================== BASE ===================== */
+/* ===================== VARIÁVEIS ===================== */
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #1f2630;
+
+    --border: #30363d;
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+
+    --accent: #58a6ff;
+    --accent-hover: #1f6feb;
+}
+
+/* ===================== BODY ===================== */
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #e2e2e2;
-    color: #333;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
 }
 
-body {
-    min-height: 100vh;
+body{
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
+
+/* ===================== ANIMAÇÕES ===================== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* ===================== HEADER ===================== */
-/* HEADER */
-#header {
-    background-color: #222;
-    color: #fff;
-    padding: 15px;
-    height: auto;
-}
-
-#header {
+header {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 40px;
+
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+
+    animation: fadeUp 0.8s ease;
 }
 
+/* Logo */
 #logo {
-    margin-bottom: 30px;
-    width: 100%;
-    font-family: 'Playfair Display', serif; /* elegante */
-    font-size: 36px;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 1px;
-    margin: 10px 0 30px 15px;
+    width: 60px;
 }
 
-#menu {
-    margin-bottom: 15px;
-    min-width: 200px;
-}
-
-#menu {
+#logo-container h1 {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    flex: 1;
+    align-items: center;
     gap: 10px;
 }
 
-.menu-link {
-    margin-right: 10px;
-    color: #fff;
+#logo-container p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
-#search-form {
+/* NAV */
+nav ul {
     display: flex;
-    gap: 5px;
-    flex: 1;
-    height: 40px;
-    min-width: 200px;
+    gap: 20px;
+    list-style: none;
 }
+
+nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--accent);
+}
+
 /* ===================== MAIN ===================== */
-#main {
-    flex: 1;
-    padding: 20px;
-    height: auto;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
+main {
+    padding: 20px 40px;
+    flex: 1 0 auto
 }
 
-#box-conteudo {
-    flex: 1;
-    border-left: 1px solid #767676;
-    border-right: 1px solid #767676;
-    background-color: #cfcfcf;
-    max-width: 1400px;
-    margin: 0 auto;
-    height: auto;
+/* ===================== BUSCA (FULL WIDTH) ===================== */
+
+/*
+Essa seção ocupa toda largura e fica acima de tudo,
+como você pediu.
+*/
+
+#buscador {
+    margin-top: 30px;
 }
 
-/* ===================== CONTAINER ===================== */
-#explorar-container {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-/* ===================== TÍTULO ===================== */
-#explorar-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* ===================== BUSCA ===================== */
 #busca {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+
+    animation: fadeUp 1s ease;
 }
 
-#form-busca {
+/* Container do formulário */
+#buscador form {
     display: flex;
     gap: 10px;
-}
-
-#form-busca input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-}
-
-#form-busca button {
-    padding: 8px 15px;
-    background-color: #4c4c4c;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-#form-busca button:hover {
-    background-color: #272727;
-}
-
-/* ===================== FILTROS ===================== */
-#filtros {
-    margin-bottom: 20px;
-    background-color: #5a5656;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-#filtros h3 {
-    margin-bottom: 10px;
-    color: #222;
-}
-
-#form-filtros {
-    display: flex;
-    gap: 15px;
     flex-wrap: wrap;
 }
 
-#form-filtros label {
+#buscador label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    align-self: center;
+    display: block;
+}
+
+/* Input */
+#buscador input {
+    flex: 1;
+    min-width: 200px;
+
+    padding: 12px;
+    border-radius: 6px;
+
+    border: 1px solid var(--border);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Botão */
+#buscador button {
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    color: white;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#buscador button:hover {
+    background-color: var(--accent-hover);
+}
+
+/* ===================== LAYOUT RESULTADOS ===================== */
+
+/*
+Aqui está o ponto principal:
+GRID com duas colunas:
+- esquerda = filtros
+- direita = projetos
+*/
+
+#resultados {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+}
+
+#resultados-header {
+    margin-bottom: 20px;
+}
+
+/* ===================== FILTROS (SIDEBAR) ===================== */
+#filtros-container {
+    display: flex;
+    height: 100%;
+}
+
+#filtros {
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+
+    height: 450px;
+
+    animation: fadeUp 1.2s ease;
+}
+
+/* Fieldset */
+#filtros fieldset {
+    border: none;
+}
+
+#filtros legend {
+    margin-bottom: 15px;
     font-weight: bold;
 }
 
-#form-filtros select {
-    padding: 5px;
+/* Inputs e selects */
+#filtros input,
+#filtros select {
+    width: 100%;
+    margin-bottom: 15px;
+
+    padding: 10px;
+
+    border-radius: 6px;
+    border: 1px solid var(--border);
+
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
 }
 
-/* ===================== LISTA ===================== */
-#lista-projetos {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* Botão */
+#filtros button {
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    color: white;
+
+    cursor: pointer;
 }
 
-/* ===================== CARD PROJETO ===================== */
+#filtros button:hover {
+    background-color: var(--accent-hover);
+}
+
+/* ===================== PROJETOS ===================== */
+
+/* Container da lista */
+#resultados>header {
+    grid-column: 2;
+    max-height: 40px;
+}
+
+/* Lista */
 .projeto {
-    background-color: #5a5656;
-    padding: 15px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
     border-radius: 10px;
-    box-shadow: 5px 5px 3px rgba(0,0,0,0.2);
+
+    padding: 20px;
+    margin-bottom: 20px;
+
+    transition: 0.3s;
 }
 
-.projeto h3 {
-    margin-bottom: 10px;
-    color: #222;
+/* Hover profissional */
+.projeto:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
 }
 
+/* Título clicável */
+.projeto h3 a {
+    text-decoration: none;
+    color: var(--accent);
+}
+
+.projeto h3 a:hover {
+    text-decoration: underline;
+}
+
+/* Texto */
 .projeto p {
-    margin-bottom: 5px;
+    color: var(--text-secondary);
+    margin: 10px 0;
 }
 
-.projeto a {
-    display: inline-block;
-    margin-top: 10px;
-    color: #0066cc;
+/* Footer */
+.projeto footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 10px;
+
+    list-style: none;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
 }
 
 /* ===================== FOOTER ===================== */
 #footer {
-    justify-content: flex-end;
-    margin-top: 1px;
-    padding: 15px;
     text-align: center;
-    background-color: #333;
-    color: #fff;
+    padding: 25px;
+
+    border-top: 1px solid var(--border);
+
+    font-size: 0.85rem;
+    color: var(--text-secondary);
 }
 
-/* ===================== RESPONSIVO PADRÃO ===================== */
+/* ===================== RESPONSIVIDADE ===================== */
 
-/* TABLET (igual seu modelo: 800px) */
-@media (max-width: 800px) {
+/* Tablet */
+@media (max-width: 900px) {
 
-    /* HEADER */
-    #header {
-        height: auto;
+    #resultados {
+        grid-template-columns: 1fr;
     }
 
-    #logo {
-        font-size: 26px;
-    }
-
-    #menu,
-    #search-form {
-        flex-basis: 100%;
-    }
-
-    #menu {
-        justify-content: flex-end;
-    }
-
-    #search-form {
-        margin: 0 15px;
-        width: 100%;
-    }
-
-    /* MAIN */
-    #main {
-        padding: 15px;
-    }
-
-    #box-conteudo {
-        margin: 0 10px;
-    }
-
-    /* BUSCA */
-    #form-busca {
-        flex-direction: column;
-    }
-
-    /* FILTROS */
-    #form-filtros {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    #form-filtros select {
-        width: 100%;
+    /* Filtros vão pra cima */
+    #resultados>header {
+        grid-column: auto;
     }
 }
 
-/* MOBILE (igual seu modelo: 600px) */
-@media (max-width: 600px) {
+/* Mobile */
+@media (max-width: 500px) {
 
-    /* MAIN */
-    #main {
-        padding: 10px;
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
     }
 
-    #box-conteudo {
-        border: none;
-        margin: 0;
+    nav ul {
+        justify-content: center;
     }
 
-    /* TEXTO */
-    #explorar-container h1 {
-        font-size: 22px;
+    main {
+        padding: 20px;
     }
 
-    /* CARDS */
-    .projeto {
-        padding: 10px;
-    }
-
-    .projeto h3 {
-        font-size: 18px;
-    }
-
-    .projeto p {
-        font-size: 14px;
-    }
-
-    /* MENU */
-    .menu-link {
-        font-size: 14px;
-    }
-
-    /* FOOTER */
-    #footer p {
-        font-size: 12px;
+    #buscador form {
+        flex-direction: column;
     }
 }

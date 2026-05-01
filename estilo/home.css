@@ -1,0 +1,311 @@
+/* ===================== RESET ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================== VARIÁVEIS ===================== */
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #1f2630;
+
+    --border: #30363d;
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+
+    --accent: #58a6ff;
+    --accent-hover: #1f6feb;
+}
+
+/* ===================== BODY ===================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* ===================== ANIMAÇÕES ===================== */
+
+/* Entrada suave */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================== HEADER ===================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 40px;
+
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+
+    animation: fadeUp 0.8s ease;
+}
+
+/* Logo */
+#logo {
+    width: 40px;
+}
+
+#logo-container h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Texto menor */
+#logo-container p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* NAV */
+nav ul {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    list-style: none;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--accent);
+}
+
+/* ===================== ÍCONE DE PERFIL (CSS PURO) ===================== */
+
+/*
+Criamos um "avatar" sem imagem:
+- círculo
+- letra central
+- cor dinâmica (simulada com gradiente)
+*/
+
+#perfil-icone {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+
+    /* Gradiente moderno */
+    background: linear-gradient(135deg, #58a6ff, #a371f7);
+
+    color: #fff;
+
+    transition: 0.3s;
+}
+
+/* Letra dentro do círculo */
+#perfil-icone::before {
+    content: "J";
+    /* <-- aqui você pode trocar dinamicamente depois */
+}
+
+/* Hover */
+#perfil-icone:hover {
+    transform: scale(1.1);
+}
+
+/* ===================== MAIN ===================== */
+
+/* Layout tipo dashboard */
+main {
+    display: grid;
+
+    /* Sidebar + conteúdo */
+    grid-template-columns: 250px 1fr;
+
+    min-height: 80vh;
+}
+
+/* ===================== SIDEBAR (ÁREA USUÁRIO) ===================== */
+
+#usuario {
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+
+    padding: 30px 20px;
+
+    animation: fadeUp 1s ease;
+}
+
+/* Boas vindas */
+#boas-vindas {
+    margin-bottom: 30px;
+}
+
+#boas-vindas p {
+    color: var(--text-secondary);
+}
+
+/* Ações */
+#acoes-usuario article {
+    background-color: var(--bg-tertiary);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+
+    transition: 0.3s;
+}
+
+#acoes-usuario article:hover {
+    border: 1px solid var(--accent);
+    transform: translateY(-3px);
+}
+
+#acoes-usuario a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+
+    color: var(--accent);
+}
+
+/* ===================== PROJETOS ===================== */
+
+#meus-projetos {
+    padding: 30px;
+
+    animation: fadeUp 1.2s ease;
+}
+
+/* Cabeçalho da seção */
+#meus-projetos header {
+    margin-bottom: 20px;
+}
+
+/* Grid de projetos */
+#lista-projetos {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 20px;
+}
+
+/* Card de projeto */
+.projeto {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    transition: 0.3s;
+}
+
+/* Hover moderno */
+.projeto:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+/* Texto */
+.projeto p {
+    color: var(--text-secondary);
+}
+
+/* Footer do card */
+.projeto footer {
+    margin-top: 15px;
+}
+
+/* Botões */
+.projeto nav ul {
+    display: flex;
+    gap: 10px;
+}
+
+/* Links estilo botão */
+.projeto a {
+    padding: 8px 12px;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    color: white;
+
+    font-size: 0.9rem;
+
+    transition: 0.3s;
+}
+
+.projeto a:hover {
+    background-color: var(--accent-hover);
+}
+
+/* ===================== FOOTER ===================== */
+
+#footer {
+    text-align: center;
+    padding: 25px;
+
+    border-top: 1px solid var(--border);
+
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
+
+/* Tablet */
+@media (max-width: 900px) {
+
+    main {
+        /* Remove sidebar fixa */
+        grid-template-columns: 1fr;
+    }
+
+    #usuario {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    #meus-projetos {
+        padding: 20px;
+    }
+}

@@ -3,130 +3,189 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Explorar Projetos</title>
     <link rel="stylesheet" href="../estilo/explorar.css" />
   </head>
   <body>
-    <!-- HEADER -->
-    <header id="header">
-      <h1 id="logo">Sistema de compartilhamento de Projeto</h1>
+    <!-- ================= HEADER ================= -->
+    <header>
+      <!-- Logo + Nome do Projeto -->
+      <div id="logo-container">
+        <h1>
+          <span>
+            <img
+              src="../img_para_projeto/logo.png"
+              alt="Project community logo"
+              id="logo"
+            />
+          </span>
+          DevShare
+        </h1>
+        <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
+      </div>
 
-      <br />
-
-      <nav id="menu">
-        <a class="menu-link" href="Index.html">Início</a>
-        <a class="menu-link" href="explorar.html">Explorar</a>
-        <a class="menu-link" href="#">Categorias</a>
-        <a class="menu-link" href="login.html">Login</a>
-        <a class="menu-link" href="cadastro.html">Cadastro</a>
+      <!-- Navegação -->
+      <nav>
+        <ul>
+          <li><a href="home.html">Voltar para Home</a></li>
+        </ul>
       </nav>
-
-      <br />
     </header>
 
-    <hr />
+    <!-- ================= MAIN ================= -->
+    <main>
+      <!-- Área de busca -->
+      <section id="busca">
+        <header>
+          <h2>Explorar Projetos</h2>
+          <p>Encontre projetos por tecnologia, nível ou popularidade</p>
+        </header>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <div id="box-conteudo">
-      <main id="main">
-        <section id="explorar-container">
-          <h1>Explorar Projetos</h1>
+        <!-- Formulário de busca -->
+        <div id="buscador">
+          <form action="#" method="get">
+            <label for="palavra-chave">Buscar</label>
+            <input
+              type="text"
+              id="palavra-chave"
+              name="q"
+              placeholder="Digite palavras-chave..."
+            />
+            <button type="submit">Pesquisar</button>
+          </form>
+        </div>
+      </section>
 
-          <!-- BUSCA -->
-          <section id="busca">
-            <form id="form-busca">
-              <input type="text" placeholder="Buscar por nome ou objetivo" />
+      <div id="conteudo">
+        <!-- Lista de projetos -->
+        <section id="resultados">
+          <!-- Formulário de filtros -->
+          <div id="filtros-container">
+            <div id="filtros">
+              <form action="#" method="get">
+                <fieldset>
+                  <legend>Filtrar Projetos</legend>
 
-              <button type="submit">Buscar</button>
-            </form>
-          </section>
+                  <!-- Nível -->
+                  <label for="nivel">Nível</label>
+                  <select id="nivel" name="nivel">
+                    <option value="">Todos</option>
+                    <option value="iniciante">Iniciante</option>
+                    <option value="intermediario">Intermediário</option>
+                    <option value="avancado">Avançado</option>
+                  </select>
 
-          <!-- FILTROS -->
-          <section id="filtros">
-            <h3>Filtros</h3>
+                  <!-- Tipo -->
+                  <label for="tipo">Tipo de Projeto</label>
+                  <select id="tipo" name="tipo">
+                    <option value="">Todos</option>
+                    <option value="web">Web</option>
+                    <option value="mobile">Mobile</option>
+                    <option value="desktop">Desktop</option>
+                    <option value="outro">Outro</option>
+                  </select>
 
-            <form id="form-filtros">
-              <!-- TIPO -->
-              <label for="tipo">Tipo:</label>
-              <select id="tipo">
-                <option value="">Todos</option>
-                <option>Web</option>
-                <option>Mobile</option>
-                <option>Desktop</option>
-              </select>
+                  <!-- Tecnologias -->
+                  <label for="tecnologias">Tecnologias</label>
+                  <input
+                    type="text"
+                    id="tecnologias"
+                    name="tecnologias"
+                    placeholder="Ex: HTML, Java, React"
+                  />
 
-              <!-- NÍVEL -->
-              <label for="nivel">Nível:</label>
-              <select id="nivel">
-                <option value="">Todos</option>
-                <option>Iniciante</option>
-                <option>Intermediário</option>
-                <option>Avançado</option>
-              </select>
+                  <!-- Ordenação -->
+                  <label for="ordenar">Ordenar por</label>
+                  <select id="ordenar" name="ordenar">
+                    <option value="recentes">Mais recentes</option>
+                    <option value="visualizacoes">Mais vistos</option>
+                    <option value="avaliacao">Mais bem avaliados</option>
+                  </select>
 
-              <!-- ORDENAÇÃO -->
-              <label for="ordenar">Ordenar por:</label>
-              <select id="ordenar">
-                <option>Mais bem avaliados</option>
-                <option>Mais recentes</option>
-                <option>Mais visualizados</option>
-              </select>
-            </form>
-          </section>
-
-          <!-- LISTA DE PROJETOS -->
-          <section id="lista-projetos">
-            <!-- PROJETO 1 -->
-            <div class="projeto">
-              <h3>Gerenciador de Tarefas</h3>
-
-              <p><strong>Autor:</strong> João</p>
-
-              <p>Sistema web para organizar tarefas com prioridade e prazos.</p>
-
-              <p><strong>Nível:</strong> Iniciante</p>
-              <p><strong>Tipo:</strong> Web</p>
-
-              <p><strong>Avaliação:</strong> ⭐⭐⭐⭐☆ (4.0)</p>
-
-              <a href="#">Ver projeto</a>
+                  <button type="submit">Aplicar Filtros</button>
+                </fieldset>
+              </form>
             </div>
+          </div>
 
-            <!-- PROJETO 2 -->
-            <div class="projeto">
-              <h3>API de Pagamentos</h3>
+          <div id="lista-projetos">
 
-              <p><strong>Autor:</strong> Maria</p>
+            <header id="resultados-header">
+              <h2>Resultados</h2>
+            </header>
 
-              <p>API REST para processamento de pagamentos com autenticação.</p>
+            <!-- Projeto 1 -->
+            <article class="projeto">
+              <header>
+                <h3><a href="#">Sistema de Controle de Tarefas</a></h3>
+              </header>
 
-              <p><strong>Nível:</strong> Avançado</p>
-              <p><strong>Tipo:</strong> Backend</p>
+              <section>
+                <p>
+                  Aplicação web para gerenciamento de tarefas com autenticação
+                  de usuários e armazenamento em banco de dados.
+                </p>
+              </section>
 
-              <p><strong>Avaliação:</strong> ⭐⭐⭐⭐⭐ (5.0)</p>
+              <footer>
+                <ul>
+                  <li>Curtidas: 120</li>
+                  <li>Visualizações: 540</li>
+                  <li>Avaliação: ★★★★☆</li>
+                  <li>Comentários: 32</li>
+                </ul>
+              </footer>
+            </article>
 
-              <a href="#">Ver projeto</a>
-            </div>
+            <!-- Projeto 2 -->
+            <article class="projeto">
+              <header>
+                <h3><a href="#">Aplicativo de Finanças Pessoais</a></h3>
+              </header>
 
-            <!-- PROJETO 3 -->
-            <div class="projeto">
-              <h3>App de Estudos</h3>
+              <section>
+                <p>
+                  App mobile para controle de gastos e planejamento financeiro
+                  com gráficos interativos.
+                </p>
+              </section>
 
-              <p><strong>Autor:</strong> Carlos</p>
+              <footer>
+                <ul>
+                  <li>Curtidas: 200</li>
+                  <li>Visualizações: 890</li>
+                  <li>Avaliação: ★★★★★</li>
+                  <li>Comentários: 58</li>
+                </ul>
+              </footer>
+            </article>
 
-              <p>Aplicativo mobile para organização de estudos.</p>
+            <!-- Projeto 3 -->
+            <article class="projeto">
+              <header>
+                <h3><a href="#">API REST de Usuários</a></h3>
+              </header>
 
-              <p><strong>Nível:</strong> Intermediário</p>
-              <p><strong>Tipo:</strong> Mobile</p>
+              <section>
+                <p>
+                  API desenvolvida para gerenciamento de usuários com
+                  autenticação JWT e integração com banco de dados.
+                </p>
+              </section>
 
-              <p><strong>Avaliação:</strong> ⭐⭐⭐☆☆ (3.0)</p>
-
-              <a href="#">Ver projeto</a>
-            </div>
-          </section>
+              <footer>
+                <ul>
+                  <li>Curtidas: 75</li>
+                  <li>Visualizações: 300</li>
+                  <li>Avaliação: ★★★☆☆</li>
+                  <li>Comentários: 12</li>
+                </ul>
+              </footer>
+            </article>
+          </div>
         </section>
-      </main>
-    </div>
+      </div>
+    </main>
 
     <!-- FOOTER -->
     <footer id="footer">
