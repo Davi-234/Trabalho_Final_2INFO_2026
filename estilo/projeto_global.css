@@ -1,0 +1,388 @@
+/* ===================== RESET ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================== VARIÁVEIS ===================== */
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #1f2630;
+
+    --border: #30363d;
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+
+    --accent: #58a6ff;
+    --accent-hover: #1f6feb;
+
+    --danger: #ff4d6d;
+}
+
+/* ===================== BODY ===================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #0d1117, #1f2630);
+    color: var(--text-primary);
+}
+
+/* ===================== ANIMAÇÕES ===================== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================== HEADER ===================== */
+/* (mantido seu padrão — já estava correto) */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 40px;
+
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+#logo {
+    width: 40px;
+}
+
+#logo-container h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo-container p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* NAV */
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+nav a:hover {
+    color: var(--accent);
+}
+
+/* ===================== MAIN ===================== */
+
+/*
+CENTRALIZA conteúdo e define largura confortável
+*/
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* ===================== PROJETO ===================== */
+
+#projeto {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 25px;
+
+    animation: fadeUp 0.8s ease;
+}
+
+/* Header do projeto */
+#projeto header h2 {
+    font-size: 1.8rem;
+}
+
+#projeto header p {
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+/* Seções internas */
+#projeto section {
+    margin-top: 20px;
+}
+
+/* Lista de tecnologias */
+#tecnologias ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+}
+
+/* Tags estilo moderno */
+#tecnologias li {
+    background-color: var(--bg-tertiary);
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+/* Link */
+#repositorio a {
+    color: var(--accent);
+}
+
+/* ===================== INTERAÇÕES ===================== */
+
+#interacoes {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+/* Estatísticas */
+#estatisticas {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* ===================== CURTIR (CORAÇÃO CSS) ===================== */
+
+/*
+Coração feito com pseudo-elementos
+*/
+#curtir button {
+    margin-top: 10px;
+
+    background: none;
+    border: none;
+
+    cursor: pointer;
+
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+
+    transition: 0.3s;
+}
+
+/* Coração visual */
+#curtir button::before {
+    content: "❤";
+}
+
+/* Hover */
+#curtir button:hover {
+    color: var(--danger);
+    transform: scale(1.2);
+}
+
+/* ===================== AVALIAÇÃO ===================== */
+
+#avaliacao {
+    margin-top: 15px;
+}
+
+#avaliacao label {
+    cursor: pointer;
+}
+
+/* ===================== DENUNCIAR ===================== */
+
+#denunciar button {
+    margin-top: 10px;
+
+    background: none;
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 6px;
+
+    color: var(--text-secondary);
+
+    cursor: pointer;
+}
+
+#denunciar button:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+/* ===================== COMENTÁRIOS ===================== */
+
+#comentarios {
+    animation: fadeUp 1s ease;
+}
+
+/* Caixa de comentário */
+#adicionar-comentario {
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+
+/* Textarea */
+#adicionar-comentario textarea {
+    width: 100%;
+    margin-top: 10px;
+
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* Botão */
+#adicionar-comentario button {
+    margin-top: 10px;
+
+    padding: 10px 15px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    color: white;
+
+    cursor: pointer;
+}
+
+/* ===================== LISTA DE COMENTÁRIOS ===================== */
+
+/*
+Design inovador:
+- estilo timeline
+- barra lateral simulando thread
+*/
+
+#lista-comentarios {
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Comentário */
+.comentario {
+    display: flex;
+    gap: 15px;
+
+    position: relative;
+}
+
+/* Linha lateral (efeito thread) */
+.comentario::before {
+    content: "";
+    position: absolute;
+
+    left: 10px;
+    top: 0;
+
+    width: 2px;
+    height: 100%;
+
+    background-color: var(--border);
+}
+
+/* Avatar fake */
+.comentario header strong::before {
+    content: "👤 ";
+}
+
+/* Caixa do comentário */
+.comentario section {
+    background-color: var(--bg-secondary);
+
+    padding: 15px;
+    border-radius: 10px;
+
+    border: 1px solid var(--border);
+
+    flex: 1;
+}
+
+/* Header comentário */
+.comentario header {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Footer ações */
+.comentario footer ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+
+    margin-top: 10px;
+}
+
+.comentario a {
+    color: var(--accent);
+    font-size: 0.85rem;
+}
+
+/* Hover */
+.comentario section:hover {
+    border-color: var(--accent);
+}
+
+/* ===================== FOOTER ===================== */
+
+#footer {
+    margin-top: 30px;
+
+    background-color: #010409;
+    text-align: center;
+    padding: 20px;
+
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
+
+@media (max-width: 768px) {
+
+    main {
+        padding: 20px;
+    }
+
+    #estatisticas {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    nav ul {
+        justify-content: center;
+    }
+}
