@@ -1,0 +1,278 @@
+/* ===================== RESET ===================== */
+/* Remove estilos padrão dos navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================== VARIÁVEIS (PADRÃO PROFISSIONAL) ===================== */
+/* Facilita manutenção e padroniza cores */
+:root {
+    --bg-primary: #0d1117;
+    /* Fundo principal (estilo GitHub dark) */
+    --bg-secondary: #161b22;
+    /* Fundo secundário */
+    --border-color: #30363d;
+    /* Bordas sutis */
+    --text-primary: #e6edf3;
+    /* Texto principal */
+    --text-secondary: #8b949e;
+    /* Texto secundário */
+    --accent: #58a6ff;
+    /* Cor destaque (azul tech) */
+    --accent-hover: #1f6feb;
+    /* Hover */
+}
+
+/* ===================== BODY ===================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+
+    /* Evita scroll horizontal em animações */
+    overflow-x: hidden;
+}
+
+/* ===================== ANIMAÇÕES ===================== */
+/* Entrada da esquerda */
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Entrada da direita */
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Fade simples */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ===================== HEADER ===================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 40px;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+
+    /* Animação */
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Logo */
+#logo-container h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo {
+    width: 40px;
+}
+
+/* Subtítulo */
+#logo-container p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Navegação */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+/* Links */
+nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+/* Hover moderno */
+nav a:hover {
+    color: var(--accent);
+}
+
+/* ===================== HERO ===================== */
+#hero {
+    padding: 80px 40px;
+    text-align: center;
+
+    /* Animação vindo da esquerda */
+    animation: slideLeft 1s ease forwards;
+}
+
+/* Título principal */
+#hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* Texto */
+#hero p {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ===================== FUNCIONALIDADES ===================== */
+#funcionalidades {
+    display: grid;
+
+    /* Grid responsivo automático */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 30px;
+    padding: 60px 40px;
+
+    /* Animação vindo da direita */
+    animation: slideRight 1s ease forwards;
+}
+
+/* Cards */
+#funcionalidades article {
+    background-color: var(--bg-secondary);
+    padding: 25px;
+    border-radius: 10px;
+
+    border: 1px solid var(--border-color);
+
+    /* Transição suave */
+    transition: 0.3s;
+}
+
+/* Hover tipo "levantar card" */
+#funcionalidades article:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+/* Título */
+#funcionalidades h3 {
+    margin-bottom: 10px;
+}
+
+/* Texto */
+#funcionalidades p {
+    color: var(--text-secondary);
+}
+
+/* ===================== CTA ===================== */
+#cta {
+    text-align: center;
+    padding: 80px 40px;
+
+    background-color: var(--bg-secondary);
+
+    animation: fadeIn 1.5s ease;
+}
+
+#cta h2 {
+    margin-bottom: 15px;
+}
+
+/* Botões */
+#cta nav ul {
+    margin-top: 20px;
+    justify-content: center;
+}
+
+/* Estilo de botão */
+#cta a {
+    padding: 12px 20px;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    color: #fff;
+
+    transition: 0.3s;
+}
+
+/* Hover botão */
+#cta a:hover {
+    background-color: var(--accent-hover);
+}
+
+/* ===================== FOOTER ===================== */
+#footer {
+    text-align: center;
+    padding: 30px;
+
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+
+    border-top: 1px solid var(--border-color);
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
+
+/* Tablet */
+@media (max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    nav ul {
+        justify-content: center;
+    }
+
+    #hero h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+
+    #hero {
+        padding: 60px 20px;
+    }
+
+    #funcionalidades {
+        padding: 40px 20px;
+    }
+
+    #cta {
+        padding: 60px 20px;
+    }
+
+    header {
+        padding: 20px;
+    }
+}

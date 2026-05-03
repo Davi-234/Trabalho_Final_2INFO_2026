@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>projeto</title>
+    <link rel="stylesheet" href="../../estilo/projeto_global.css" />
+  </head>
+  <body>
+    <!-- ================= HEADER ================= -->
+    <header>
+      <!-- Logo + Nome do Projeto -->
+      <div id="logo-container">
+        <h1>
+          <span>
+            <img
+              src="../../img_para_projeto/logo.png"
+              alt="Project community logo"
+              id="logo"
+            />
+          </span>
+          DevShare
+        </h1>
+        <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="home.html">Home</a></li>
+          <li><a href="explorar.html">Explorar</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ================= MAIN ================= -->
+    <main>
+      <!-- Projeto -->
+      <section id="projeto">
+        <header>
+          <h2>Nome do Projeto</h2>
+          <p>Por: Usuário Exemplo</p>
+          <p>Nível: Intermediário | Tipo: Web</p>
+        </header>
+
+        <section id="descricao">
+          <h3>Descrição</h3>
+          <p>
+            Este projeto consiste em uma aplicação completa desenvolvida para
+            resolver um problema específico. Ele utiliza diversas tecnologias
+            modernas e segue boas práticas de desenvolvimento.
+          </p>
+        </section>
+
+        <section id="tecnologias">
+          <h3>Tecnologias Utilizadas</h3>
+          <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>Java</li>
+          </ul>
+        </section>
+
+        <section id="repositorio">
+          <h3>Repositório</h3>
+          <p><a href="#">Acessar projeto</a></p>
+        </section>
+
+        <!-- Interações -->
+        <section id="interacoes">
+          <header>
+            <h3>Interações</h3>
+          </header>
+
+          <div id="estatisticas">
+            <p>Visualizações: 540</p>
+            <p>Curtidas: 120</p>
+          </div>
+
+          <!-- Curtida -->
+          <div id="curtir">
+            <form action="#" method="post">
+              <button type="submit">Curtir</button>
+            </form>
+          </div>
+
+          <!-- Avaliação -->
+          <div id="avaliacao">
+            <p>Avaliação:</p>
+            <form action="#" method="post">
+              <label><input type="radio" name="estrela" value="1" /> ★</label>
+              <label><input type="radio" name="estrela" value="2" /> ★★</label>
+              <label><input type="radio" name="estrela" value="3" /> ★★★</label>
+              <label
+                ><input type="radio" name="estrela" value="4" /> ★★★★</label
+              >
+              <label
+                ><input type="radio" name="estrela" value="5" /> ★★★★★</label
+              >
+              <button type="submit">Avaliar</button>
+            </form>
+          </div>
+
+          <!-- Denunciar -->
+          <div id="denunciar">
+            <form action="#" method="post">
+              <button type="submit">Denunciar Projeto</button>
+            </form>
+          </div>
+        </section>
+      </section>
+
+      <!-- ================= COMENTÁRIOS ================= -->
+      <section id="comentarios">
+        <header>
+          <h2>Comentários</h2>
+        </header>
+
+        <!-- Adicionar comentário -->
+        <section id="adicionar-comentario">
+          <form action="#" method="post">
+            <label for="comentario">Adicionar comentário</label>
+            <textarea
+              id="comentario"
+              name="comentario"
+              rows="4"
+              placeholder="Escreva seu comentário..."
+            ></textarea>
+
+            <!-- Opções comuns -->
+            <div id="opcoes-comentario">
+              <label>
+                <input type="checkbox" name="notificar" />
+                Notificar respostas
+              </label>
+            </div>
+
+            <button type="submit">Publicar</button>
+          </form>
+        </section>
+
+        <!-- Lista de comentários -->
+        <section id="lista-comentarios">
+          <!-- Comentário 1 -->
+          <article class="comentario">
+            <header>
+              <p><strong>Usuario1</strong></p>
+              <p>Publicado em: 01/05/2026</p>
+            </header>
+
+            <section>
+              <p>
+                Muito bom projeto! Gostei bastante da organização do código.
+              </p>
+            </section>
+
+            <footer>
+              <nav>
+                <ul>
+                  <li><a href="#">Curtir</a></li>
+                  <li><a href="#">Responder</a></li>
+                  <li><a href="#">Denunciar</a></li>
+                </ul>
+              </nav>
+            </footer>
+          </article>
+
+          <!-- Comentário 2 -->
+          <article class="comentario">
+            <header>
+              <p><strong>DevMaster</strong></p>
+              <p>Publicado em: 02/05/2026</p>
+            </header>
+
+            <section>
+              <p>
+                Poderia melhorar a parte de autenticação, mas no geral está
+                excelente.
+              </p>
+            </section>
+
+            <footer>
+              <nav>
+                <ul>
+                  <li><a href="#">Curtir</a></li>
+                  <li><a href="#">Responder</a></li>
+                  <li><a href="#">Denunciar</a></li>
+                </ul>
+              </nav>
+            </footer>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer id="footer">
+      <p>Trabalho final do 2º ano de Informática do IFMG - Campus Formiga</p>
+
+      <p>
+        Disciplinas: Desenvolvimento Web I, Banco de Dados I e Análise e Projeto
+        de Sistemas
+      </p>
+
+      <p>Autores: Davi Leandro e João Marcos Vital</p>
+    </footer>
+  </body>
+</html>

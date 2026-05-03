@@ -1,0 +1,316 @@
+/* ===================== RESET ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================== VARIÁVEIS ===================== */
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #1f2630;
+
+    --border: #30363d;
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+
+    --accent: #58a6ff;
+    --accent-hover: #1f6feb;
+}
+
+/* ===================== BODY ===================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #0d1117, #1f2630);
+    color: var(--text-primary);
+}
+
+/* ===================== ANIMAÇÕES ===================== */
+
+/* Entrada suave */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Slide lateral */
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ===================== HEADER ===================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 40px;
+
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+
+    animation: fadeUp 0.6s ease;
+}
+
+#logo {
+    width: 40px;
+}
+
+#logo-container h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo-container p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* NAV */
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: var(--accent);
+}
+
+/* ===================== MAIN ===================== */
+
+/*
+Grid principal:
+- esquerda = formulário
+- direita = preview
+*/
+main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+
+    padding: 30px;
+}
+
+/* ===================== INTRO ===================== */
+#intro {
+    grid-column: 1 / -1;
+    /* ocupa tudo */
+    margin-bottom: 10px;
+
+    animation: fadeUp 0.8s ease;
+}
+
+#intro p {
+    color: var(--text-secondary);
+}
+
+/* ===================== FORMULÁRIO ===================== */
+
+#form-projeto {
+    animation: fadeUp 1s ease;
+}
+
+/* Fieldset moderno */
+fieldset {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Legend estilizado */
+legend {
+    padding: 0 10px;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+/* Inputs */
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 10px;
+    margin-bottom: 10px;
+
+    border-radius: 6px;
+    border: 1px solid var(--border);
+
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+
+    transition: 0.3s;
+}
+
+/* Foco */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 5px var(--accent);
+}
+
+/* Labels */
+label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* RADIO */
+input[type="radio"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+/* ===================== AÇÕES ===================== */
+
+#acoes-form {
+    display: flex;
+    gap: 10px;
+}
+
+#acoes-form button {
+    flex: 1;
+
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    color: #fff;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover */
+#acoes-form button:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* ===================== PREVIEW ===================== */
+
+/*
+Lateral direita estilo dashboard
+*/
+#preview {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+    padding: 20px;
+
+    height: fit-content;
+
+    animation: slideRight 1s ease;
+}
+
+/* Card preview */
+.projeto-preview {
+    background-color: var(--bg-tertiary);
+
+    padding: 15px;
+    border-radius: 8px;
+
+    margin-top: 15px;
+
+    transition: 0.3s;
+}
+
+/* Hover preview */
+.projeto-preview:hover {
+    transform: translateY(-3px);
+    border: 1px solid var(--accent);
+}
+
+/* Texto */
+.projeto-preview p {
+    color: var(--text-secondary);
+}
+
+/* Footer preview */
+.projeto-preview footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    list-style: none;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* ===================== FOOTER ===================== */
+
+#footer {
+    margin-top: 30px;
+
+    background-color: #010409;
+    text-align: center;
+    padding: 20px;
+
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
+
+/* Tablet */
+@media (max-width: 900px) {
+
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    #preview {
+        order: -1;
+        /* preview sobe */
+    }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+
+    header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    nav ul {
+        justify-content: center;
+    }
+
+    main {
+        padding: 15px;
+    }
+}

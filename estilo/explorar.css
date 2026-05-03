@@ -1,0 +1,346 @@
+/* ===================== RESET ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================== VARIÁVEIS ===================== */
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #1f2630;
+
+    --border: #30363d;
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+
+    --accent: #58a6ff;
+    --accent-hover: #1f6feb;
+}
+
+/* ===================== BODY ===================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ===================== ANIMAÇÕES ===================== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================== HEADER ===================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 40px;
+
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+
+    animation: fadeUp 0.8s ease;
+}
+
+/* Logo */
+#logo {
+    width: 60px;
+}
+
+#logo-container h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo-container p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* NAV */
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--accent);
+}
+
+/* ===================== MAIN ===================== */
+main {
+    padding: 20px 40px;
+    flex: 1 0 auto
+}
+
+/* ===================== BUSCA (FULL WIDTH) ===================== */
+
+/*
+Essa seção ocupa toda largura e fica acima de tudo,
+como você pediu.
+*/
+
+#buscador {
+    margin-top: 30px;
+}
+
+#busca {
+    margin-bottom: 30px;
+
+    animation: fadeUp 1s ease;
+}
+
+/* Container do formulário */
+#buscador form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#buscador label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    align-self: center;
+    display: block;
+}
+
+/* Input */
+#buscador input {
+    flex: 1;
+    min-width: 200px;
+
+    padding: 12px;
+    border-radius: 6px;
+
+    border: 1px solid var(--border);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Botão */
+#buscador button {
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    color: white;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#buscador button:hover {
+    background-color: var(--accent-hover);
+}
+
+/* ===================== LAYOUT RESULTADOS ===================== */
+
+/*
+Aqui está o ponto principal:
+GRID com duas colunas:
+- esquerda = filtros
+- direita = projetos
+*/
+
+#resultados {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+}
+
+#resultados-header {
+    margin-bottom: 20px;
+}
+
+/* ===================== FILTROS (SIDEBAR) ===================== */
+#filtros-container {
+    display: flex;
+    height: 100%;
+}
+
+#filtros {
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+
+    height: 450px;
+
+    animation: fadeUp 1.2s ease;
+}
+
+/* Fieldset */
+#filtros fieldset {
+    border: none;
+}
+
+#filtros legend {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Inputs e selects */
+#filtros input,
+#filtros select {
+    width: 100%;
+    margin-bottom: 15px;
+
+    padding: 10px;
+
+    border-radius: 6px;
+    border: 1px solid var(--border);
+
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* Botão */
+#filtros button {
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    color: white;
+
+    cursor: pointer;
+}
+
+#filtros button:hover {
+    background-color: var(--accent-hover);
+}
+
+/* ===================== PROJETOS ===================== */
+
+/* Container da lista */
+#resultados>header {
+    grid-column: 2;
+    max-height: 40px;
+}
+
+/* Lista */
+.projeto {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    padding: 20px;
+    margin-bottom: 20px;
+
+    transition: 0.3s;
+}
+
+/* Hover profissional */
+.projeto:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+/* Título clicável */
+.projeto h3 a {
+    text-decoration: none;
+    color: var(--accent);
+}
+
+.projeto h3 a:hover {
+    text-decoration: underline;
+}
+
+/* Texto */
+.projeto p {
+    color: var(--text-secondary);
+    margin: 10px 0;
+}
+
+/* Footer */
+.projeto footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 10px;
+
+    list-style: none;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* ===================== FOOTER ===================== */
+#footer {
+    text-align: center;
+    padding: 25px;
+
+    border-top: 1px solid var(--border);
+
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
+
+/* Tablet */
+@media (max-width: 900px) {
+
+    #resultados {
+        grid-template-columns: 1fr;
+    }
+
+    /* Filtros vão pra cima */
+    #resultados>header {
+        grid-column: auto;
+    }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    nav ul {
+        justify-content: center;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    #buscador form {
+        flex-direction: column;
+    }
+}

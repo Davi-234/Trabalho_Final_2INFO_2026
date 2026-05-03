@@ -1,0 +1,226 @@
+/* ===================== RESET ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================== VARIÁVEIS ===================== */
+:root {
+    --bg-dark: #0d1117;
+    --bg-card: #161b22;
+    --border: #30363d;
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+
+    --accent: #58a6ff;
+    --accent-hover: #1f6feb;
+
+    --error: #ff6b6b;
+    --warning: #f2cc60;
+}
+
+/* ===================== BODY ===================== */
+/*
+100vh garante altura total da tela
+flex centraliza tudo
+overflow hidden evita scroll
+*/
+body {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    /* GRADIENT MODERNO (efeito tech) */
+    background: linear-gradient(135deg, #0d1117, #1f2630);
+
+    color: var(--text-primary);
+    font-family: Arial, Helvetica, sans-serif;
+
+    overflow: hidden;
+}
+
+/* ===================== MAIN ===================== */
+/*
+Flex para centralizar o login
+*/
+#main {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+/* ===================== CAIXA DE LOGIN ===================== */
+#login-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+/*
+Card principal
+*/
+#login-box {
+    background-color: var(--bg-card);
+
+    padding: 30px;
+    border-radius: 12px;
+
+    border: 1px solid var(--border);
+
+    /* Sombra moderna */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+
+    /* Animação suave */
+    animation: fadeUp 0.8s ease;
+}
+
+/* ===================== ANIMAÇÃO ===================== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================== TEXTOS ===================== */
+
+.section-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.info-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+
+    margin-bottom: 20px;
+}
+
+/* ===================== FORM ===================== */
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels */
+label {
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+/* Inputs */
+.input-text {
+    padding: 10px;
+
+    border-radius: 6px;
+    border: 1px solid var(--border);
+
+    background-color: #0d1117;
+    color: var(--text-primary);
+
+    transition: 0.3s;
+}
+
+/* Foco (UX moderno) */
+.input-text:focus {
+    outline: none;
+    border-color: var(--accent);
+
+    /* glow leve */
+    box-shadow: 0 0 5px var(--accent);
+}
+
+/* ===================== BOTÃO ===================== */
+.btn {
+    margin-top: 15px;
+
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* ===================== MENSAGENS ===================== */
+
+/* Erro */
+.erro {
+    color: var(--error);
+    font-size: 0.85rem;
+}
+
+/* Aviso */
+.aviso {
+    color: var(--warning);
+    font-size: 0.85rem;
+}
+
+/* ===================== LINKS ===================== */
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ===================== FOOTER ===================== */
+
+/*
+Separado visualmente do resto
+*/
+#footer {
+    background-color: #010409; /* cor diferente proposital */
+
+    text-align: center;
+    padding: 15px;
+
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+
+    border-top: 1px solid var(--border);
+}
+
+/* Remove a linha <hr> visualmente */
+hr {
+    display: none;
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
+
+/* Mobile */
+@media (max-width: 500px) {
+
+    #login-box {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+}

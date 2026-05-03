@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explorar Projetos</title>
+    <link rel="stylesheet" href="../../estilo/explorar.css" />
+  </head>
+  <body>
+    <!-- ================= HEADER ================= -->
+    <header>
+      <!-- Logo + Nome do Projeto -->
+      <div id="logo-container">
+        <h1>
+          <span>
+            <img
+              src="../../img_para_projeto/logo.png"
+              alt="Project community logo"
+              id="logo"
+            />
+          </span>
+          DevShare
+        </h1>
+        <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
+      </div>
+
+      <!-- Navegação -->
+      <nav>
+        <ul>
+          <li><a href="../usuario/home.html">Voltar para Home</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ================= MAIN ================= -->
+    <main>
+      <!-- Área de busca -->
+      <section id="busca">
+        <header>
+          <h2>Explorar Projetos</h2>
+          <p>Encontre projetos por tecnologia, nível ou popularidade</p>
+        </header>
+
+        <!-- Formulário de busca -->
+        <div id="buscador">
+          <form action="#" method="get">
+            <label for="palavra-chave">Buscar</label>
+            <input
+              type="text"
+              id="palavra-chave"
+              name="q"
+              placeholder="Digite palavras-chave..."
+            />
+            <button type="submit">Pesquisar</button>
+          </form>
+        </div>
+      </section>
+
+      <div id="conteudo">
+        <!-- Lista de projetos -->
+        <section id="resultados">
+          <!-- Formulário de filtros -->
+          <div id="filtros-container">
+            <div id="filtros">
+              <form action="#" method="get">
+                <fieldset>
+                  <legend>Filtrar Projetos</legend>
+
+                  <!-- Nível -->
+                  <label for="nivel">Nível</label>
+                  <select id="nivel" name="nivel">
+                    <option value="">Todos</option>
+                    <option value="iniciante">Iniciante</option>
+                    <option value="intermediario">Intermediário</option>
+                    <option value="avancado">Avançado</option>
+                  </select>
+
+                  <!-- Tipo -->
+                  <label for="tipo">Tipo de Projeto</label>
+                  <select id="tipo" name="tipo">
+                    <option value="">Todos</option>
+                    <option value="web">Web</option>
+                    <option value="mobile">Mobile</option>
+                    <option value="desktop">Desktop</option>
+                    <option value="outro">Outro</option>
+                  </select>
+
+                  <!-- Tecnologias -->
+                  <label for="tecnologias">Tecnologias</label>
+                  <input
+                    type="text"
+                    id="tecnologias"
+                    name="tecnologias"
+                    placeholder="Ex: HTML, Java, React"
+                  />
+
+                  <!-- Ordenação -->
+                  <label for="ordenar">Ordenar por</label>
+                  <select id="ordenar" name="ordenar">
+                    <option value="recentes">Mais recentes</option>
+                    <option value="visualizacoes">Mais vistos</option>
+                    <option value="avaliacao">Mais bem avaliados</option>
+                  </select>
+
+                  <button type="submit">Aplicar Filtros</button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+
+          <div id="lista-projetos">
+
+            <header id="resultados-header">
+              <h2>Resultados</h2>
+            </header>
+
+            <!-- Projeto 1 -->
+            <article class="projeto">
+              <header>
+                <h3><a href="projeto.html">Sistema de Controle de Tarefas</a></h3>
+              </header>
+
+              <section>
+                <p>
+                  Aplicação web para gerenciamento de tarefas com autenticação
+                  de usuários e armazenamento em banco de dados.
+                </p>
+              </section>
+
+              <footer>
+                <ul>
+                  <li>Curtidas: 120</li>
+                  <li>Visualizações: 540</li>
+                  <li>Avaliação: ★★★★☆</li>
+                  <li>Comentários: 32</li>
+                </ul>
+              </footer>
+            </article>
+
+            <!-- Projeto 2 -->
+            <article class="projeto">
+              <header>
+                <h3><a href="projeto.html">Aplicativo de Finanças Pessoais</a></h3>
+              </header>
+
+              <section>
+                <p>
+                  App mobile para controle de gastos e planejamento financeiro
+                  com gráficos interativos.
+                </p>
+              </section>
+
+              <footer>
+                <ul>
+                  <li>Curtidas: 200</li>
+                  <li>Visualizações: 890</li>
+                  <li>Avaliação: ★★★★★</li>
+                  <li>Comentários: 58</li>
+                </ul>
+              </footer>
+            </article>
+
+            <!-- Projeto 3 -->
+            <article class="projeto">
+              <header>
+                <h3><a href="projeto.html">API REST de Usuários</a></h3>
+              </header>
+
+              <section>
+                <p>
+                  API desenvolvida para gerenciamento de usuários com
+                  autenticação JWT e integração com banco de dados.
+                </p>
+              </section>
+
+              <footer>
+                <ul>
+                  <li>Curtidas: 75</li>
+                  <li>Visualizações: 300</li>
+                  <li>Avaliação: ★★★☆☆</li>
+                  <li>Comentários: 12</li>
+                </ul>
+              </footer>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+      <p>Trabalho final do 2º ano de Informática do IFMG - Campus Formiga</p>
+
+      <p>
+        Disciplinas: Desenvolvimento Web I, Banco de Dados I e Análise e Projeto
+        de Sistemas
+      </p>
+
+      <p>Autores: Davi Leandro e João Marcos Vital</p>
+    </footer>
+  </body>
+</html>
