@@ -114,6 +114,11 @@ main {
 }
 
 /* Header do projeto */
+#projeto header {
+    display: flex;
+    flex-direction: column;
+}
+
 #projeto header h2 {
     font-size: 1.8rem;
 }
@@ -132,6 +137,7 @@ main {
 #tecnologias ul {
     display: flex;
     flex-wrap: wrap;
+    margin-top: 10px;
     gap: 10px;
     list-style: none;
 }
@@ -157,9 +163,21 @@ main {
     border-top: 1px solid var(--border);
 }
 
+#estatisticas-e-denunciar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#interacoes-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Estatísticas */
 #estatisticas {
     display: flex;
+    margin-top: 10px;
     gap: 20px;
     font-size: 0.9rem;
     color: var(--text-secondary);
@@ -170,15 +188,17 @@ main {
 /*
 Coração feito com pseudo-elementos
 */
+
 #curtir button {
     margin-top: 10px;
+    margin-left: 50px;
 
     background: none;
     border: none;
 
     cursor: pointer;
 
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     color: var(--text-secondary);
 
     transition: 0.3s;
@@ -197,12 +217,58 @@ Coração feito com pseudo-elementos
 
 /* ===================== AVALIAÇÃO ===================== */
 
-#avaliacao {
-    margin-top: 15px;
+#avaliacao form {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
 }
 
-#avaliacao label {
+.rating {
+  display: flex;
+  flex-direction: row-reverse; /* importante para o efeito */
+  justify-content: flex-start;
+}
+
+.rating input {
+  display: none; /* esconde os radios */
+}
+
+.rating label {
+  font-size: 30px;
+  color: gray;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+/* Quando passa o mouse */
+.rating label:hover,
+.rating label:hover ~ label {
+  color: gold;
+}
+
+/* Quando seleciona */
+.rating input:checked ~ label {
+  color: gold;
+}
+
+#avaliacao button {
+    padding: 6px 12px;
+    border-radius: 6px;
+
+    border: 1px solid var(--border);
+    background: none;
+
+    color: var(--text-secondary);
+
     cursor: pointer;
+    transition: 0.2s;
+}
+
+/* Hover mais integrado ao tema */
+#avaliacao button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 /* ===================== DENUNCIAR ===================== */
