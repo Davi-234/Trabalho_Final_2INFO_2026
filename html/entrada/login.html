@@ -1,87 +1,78 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../estilo/login.css" />
-    <title>Login</title>
-  </head>
-  <body>
-    <!-- CONTEÚDO PRINCIPAL -->
-    <div id="main">
-      <main id="login-container">
-        <section id="login-box">
-          <h1 class="section-title">Login</h1>
 
-          <p class="info-text">
-            Acesse sua conta para comentar, avaliar e publicar projetos.
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../estilo/login.css" />
+  <title>Login</title>
+</head>
+
+<body>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div id="main">
+    <main id="login-container">
+      <section id="login-box">
+        <h1 class="section-title">Login</h1>
+
+        <p class="info-text">
+          Acesse sua conta para comentar, avaliar e publicar projetos.
+        </p>
+
+        <!-- FORMULÁRIO DE LOGIN -->
+        <form action="" method="post" id="login-form">
+          <!-- EMAIL -->
+          <label for="email">E-mail:</label><br />
+          <input class="input-text" type="email" id="email" name="email" placeholder="Digite seu e-mail"
+            required /><br /><br />
+
+          <!-- SENHA -->
+          <label for="senha">Senha:</label><br />
+          <input class="input-text" type="password" id="senha" name="senha" placeholder="Digite sua senha"
+            required /><br /><br />
+
+          <!-- BOTÃO -->
+          <button class="btn" type="submit">Entrar</button>
+        </form>
+
+        <br />
+
+        <!-- MENSAGENS (RNF17) -->
+        <div id="mensagens">
+          <!-- Exemplo de erro -->
+          <p class="erro">
+            <!-- Email ou senha inválidos -->
           </p>
 
-          <!-- FORMULÁRIO DE LOGIN -->
-          <form id="login-form">
-            <!-- EMAIL -->
-            <label for="email">E-mail:</label><br />
-            <input
-              class="input-text"
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Digite seu e-mail"
-              required
-            /><br /><br />
-
-            <!-- SENHA -->
-            <label for="senha">Senha:</label><br />
-            <input
-              class="input-text"
-              type="password"
-              id="senha"
-              name="senha"
-              placeholder="Digite sua senha"
-              required
-            /><br /><br />
-
-            <!-- BOTÃO -->
-            <button class="btn" type="submit">Entrar</button>
-          </form>
-
-          <br />
-
-          <!-- MENSAGENS (RNF17) -->
-          <div id="mensagens">
-            <!-- Exemplo de erro -->
-            <p class="erro">
-              <!-- Email ou senha inválidos -->
-            </p>
-
-            <!-- Exemplo de aviso -->
-            <p class="aviso">
-              <!-- Conta não ativada. Verifique seu e-mail. -->
-            </p>
-          </div>
-
-          <br />
-
-          <!-- LINKS AUXILIARES -->
-          <p>
-            Não possui conta?
-            <a href="cadastro.html">Cadastre-se</a>
+          <!-- Exemplo de aviso -->
+          <p class="aviso">
+            <!-- Conta não ativada. Verifique seu e-mail. -->
           </p>
-        </section>
-      </main>
-    </div>
-    <hr />
+        </div>
 
-    <!-- FOOTER -->
-    <footer id="footer">
-      <p>Trabalho final do 2º ano de Informática do IFMG - Campus Formiga</p>
+        <br />
 
-      <p>
-        Disciplinas: Desenvolvimento Web I, Banco de Dados I e Análise e Projeto
-        de Sistemas
-      </p>
+        <!-- LINKS AUXILIARES -->
+        <p>
+          Não possui conta?
+          <a href="cadastro.html">Cadastre-se</a>
+        </p>
+      </section>
+    </main>
+  </div>
+  <hr />
 
-      <p>Autores: Davi Leandro e João Marcos Vital</p>
-    </footer>
-  </body>
+  <!-- FOOTER -->
+  <footer id="footer">
+    <p>Trabalho final do 2º ano de Informática do IFMG - Campus Formiga</p>
+
+    <p>
+      Disciplinas: Desenvolvimento Web I, Banco de Dados I e Análise e Projeto
+      de Sistemas
+    </p>
+
+    <p>Autores: Davi Leandro e João Marcos Vital</p>
+  </footer>
+</body>
+
 </html>
