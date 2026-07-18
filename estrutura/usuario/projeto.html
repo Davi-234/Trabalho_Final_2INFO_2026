@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projeto</title>
+  <link rel="stylesheet" href="../../estilo/usuario/projeto.css" />
+</head>
+
+<body>
+  <!-- ================= HEADER ================= -->
+  <header>
+    <!-- Logo + Nome do Projeto -->
+    <div id="logo-container">
+      <h1>
+        <span>
+          <img src="../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
+        </span>
+        DevShare
+      </h1>
+      <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+    <!-- Introdução -->
+    <section id="intro">
+      <header>
+        <h2>Adicionar / Editar Projeto</h2>
+        <p>
+          Compartilhe seu trabalho com a comunidade e receba feedbacks
+          valiosos.
+        </p>
+      </header>
+    </section>
+
+    <!-- Formulário principal -->
+    <section id="form-projeto">
+      <form id="form" action="#" method="get">
+        <!-- Informações básicas -->
+        <fieldset>
+          <legend>Informações do Projeto</legend>
+
+          <label for="nome">Nome do Projeto</label>
+          <input type="text" id="nome" name="nome" placeholder="Digite o nome do projeto" required maxlength="200" />
+
+          <label for="descricao">Descrição</label>
+          <textarea id="descricao" name="descricao" rows="6"
+            placeholder="Descreva seu projeto (Máximo de 500 carácteres)" maxlength="500" required></textarea>
+
+          <label for="link">Link do Repositório</label>
+          <input type="url" id="link" name="link" placeholder="https://github.com/seu-projeto" required />
+        </fieldset>
+
+        <!-- Classificação -->
+        <fieldset>
+          <legend>Classificação</legend>
+
+          <label for="nivel">Nível</label>
+          <select id="nivel" name="nivel">
+            <option value="iniciante">Iniciante</option>
+            <option value="intermediario">Intermediário</option>
+            <option value="avancado">Avançado</option>
+          </select>
+
+          <label for="tipo">Tipo de Projeto</label>
+          <select id="tipo" name="tipo">
+            <option value="web">Web</option>
+            <option value="mobile">Mobile</option>
+            <option value="desktop">Desktop</option>
+            <option value="outro">Outro</option>
+          </select>
+
+          <label for="tecnologias">Tecnologias Utilizadas</label>
+          <input type="text" id="tecnologias" name="tecnologias" placeholder="Ex: HTML, CSS, JavaScript" required/>
+        </fieldset>
+
+        <!-- Visibilidade -->
+        <fieldset>
+          <legend>Visibilidade</legend>
+
+          <label>
+            <input type="radio" name="visibilidade" value="publico" checked />
+            Público
+          </label>
+
+          <label>
+            <input type="radio" name="visibilidade" value="privado" />
+            Privado
+          </label>
+        </fieldset>
+
+        <!-- Informações adicionais -->
+        <fieldset>
+          <legend>Detalhes Extras</legend>
+
+          <label for="imagem">Imagem do Projeto</label>
+          <input type="file" id="imagem" name="imagem" />
+
+          <label for="tags">Tags</label>
+          <input type="text" id="tags" name="tags" placeholder="Ex: API, Front-end, Backend" required />
+
+          <label for="status">Status do Projeto</label>
+          <select id="status" name="status">
+            <option value="em-desenvolvimento">Em desenvolvimento</option>
+            <option value="concluido">Concluído</option>
+            <option value="pausado">Pausado</option>
+          </select>
+        </fieldset>
+
+        <!-- Ações -->
+        <section id="acoes-form">
+          <button type="submit" onclick="verificar_inputs()">Salvar Projeto</button>
+          <button type="reset">Limpar</button>
+        </section>
+      </form>
+    </section>
+
+    <!-- Pré-visualização (simulação) -->
+    <section id="preview">
+      <header>
+        <h2>Pré-visualização</h2>
+        <p>Veja como seu projeto poderá aparecer para outros usuários</p>
+      </header>
+
+      <article class="projeto-preview">
+        <header>
+          <h3 id="preview_title">Nome do Projeto</h3>
+          <p>Nível: <span id="preview_nivel">Intermediário</span>|Tipo: <span id="preview_type">Web</span></p>
+        </header>
+
+        <section>
+          <p id="preview_description">
+            Aqui aparecerá a descrição do projeto informada no formulário,
+            permitindo uma visão geral antes da publicação.
+          </p>
+        </section>
+
+        <footer>
+          <ul>
+            <li>Curtidas: 0</li>
+            <li>Visualizações: 0</li>
+            <li>Avaliação: ☆☆☆☆☆</li>
+            <li>Comentários: 0</li>
+          </ul>
+        </footer>
+      </article>
+    </section>
+  </main>
+  <!-- ================= FOOTER ================= -->
+  <footer id="footer">
+    DevShare - Sempre abertos à comunidade
+  </footer>
+</body>
+
+<script src="../../JS/jquerry.js"></script>
+<script src="../../JS/usuario/pre_visualizacao.js"></script>
+<script>
+  // confotro para o usuário.
+  // Avisa que falta alguma informação nos inputs
+  let inputs = $("input").toArray()
+  let camposFaltando = [];
+  let tela_error;
+
+  function verificar_inputs() {
+    $(".tela_falta_dados").remove();
+    camposFaltando = [];
+    $("input[required], textarea[required]").each(function () {
+      if ($(this).val().trim() === "") {
+        camposFaltando.push($(this).attr("name"));
+      }
+    });
+
+    if (camposFaltando.length > 0) {
+      tela_error = $(`
+            <div class="tela_falta_dados">
+              <div>
+                Faltam os dados dos campos:
+                ${camposFaltando.join(", ")}
+              </div>
+            </div>
+        `);
+
+      $("body").append(tela_error);
+      return false;
+    }
+
+    return true;
+  }
+</script>
+
+</html>

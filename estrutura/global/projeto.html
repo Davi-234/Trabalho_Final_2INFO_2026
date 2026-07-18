@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>projeto</title>
-    <link rel="stylesheet" href="../../estilo/projeto_global.css" />
+    <link rel="stylesheet" href="../../estilo/global/projeto_global.css" />
   </head>
   <body>
     <!-- ================= HEADER ================= -->
@@ -26,7 +26,7 @@
 
       <nav>
         <ul>
-          <li><a href="home.html">Home</a></li>
+          <li><a href="../usuario/home.html">Home</a></li>
           <li><a href="explorar.html">Explorar</a></li>
         </ul>
       </nav>
@@ -43,7 +43,7 @@
         </header>
 
         <section id="descricao">
-          <h3>Descrição</h3>
+          <h3>Descrição:</h3>
           <p>
             Este projeto consiste em uma aplicação completa desenvolvida para
             resolver um problema específico. Ele utiliza diversas tecnologias
@@ -52,7 +52,7 @@
         </section>
 
         <section id="tecnologias">
-          <h3>Tecnologias Utilizadas</h3>
+          <h3>Tecnologias Utilizadas:</h3>
           <ul>
             <li>HTML</li>
             <li>CSS</li>
@@ -62,7 +62,7 @@
         </section>
 
         <section id="repositorio">
-          <h3>Repositório</h3>
+          <h3>Repositório:</h3>
           <p><a href="#">Acessar projeto</a></p>
         </section>
 
@@ -71,41 +71,51 @@
           <header>
             <h3>Interações</h3>
           </header>
+          <div id="interacoes-container">
+            <!-- Curtida -->
+            <div id="curtir">
+              <form action="#" method="post">
+                <button type="submit"></button>
+              </form>
+            </div>
 
-          <div id="estatisticas">
-            <p>Visualizações: 540</p>
-            <p>Curtidas: 120</p>
+            <!-- Avaliação -->
+            <div id="avaliacao">
+              <form>
+                <div class="rating">
+                  <input type="radio" name="estrela" id="estrela5" value="5" />
+                  <label for="estrela5">★</label>
+
+                  <input type="radio" name="estrela" id="estrela4" value="4" />
+                  <label for="estrela4">★</label>
+
+                  <input type="radio" name="estrela" id="estrela3" value="3" />
+                  <label for="estrela3">★</label>
+
+                  <input type="radio" name="estrela" id="estrela2" value="2" />
+                  <label for="estrela2">★</label>
+
+                  <input type="radio" name="estrela" id="estrela1" value="1" />
+                  <label for="estrela1">★</label>
+                </div>
+
+                <button type="submit">Avaliar</button>
+              </form>
+            </div>
           </div>
 
-          <!-- Curtida -->
-          <div id="curtir">
-            <form action="#" method="post">
-              <button type="submit">Curtir</button>
-            </form>
-          </div>
+          <div id="estatisticas-e-denunciar">
+            <!-- Denunciar -->
+            <div id="denunciar">
+              <form action="#" method="post">
+                <button type="submit">Denunciar Projeto</button>
+              </form>
+            </div>
 
-          <!-- Avaliação -->
-          <div id="avaliacao">
-            <p>Avaliação:</p>
-            <form action="#" method="post">
-              <label><input type="radio" name="estrela" value="1" /> ★</label>
-              <label><input type="radio" name="estrela" value="2" /> ★★</label>
-              <label><input type="radio" name="estrela" value="3" /> ★★★</label>
-              <label
-                ><input type="radio" name="estrela" value="4" /> ★★★★</label
-              >
-              <label
-                ><input type="radio" name="estrela" value="5" /> ★★★★★</label
-              >
-              <button type="submit">Avaliar</button>
-            </form>
-          </div>
-
-          <!-- Denunciar -->
-          <div id="denunciar">
-            <form action="#" method="post">
-              <button type="submit">Denunciar Projeto</button>
-            </form>
+            <div id="estatisticas">
+              <p>Visualizações: 540</p>
+              <p>Curtidas: 120</p>
+            </div>
           </div>
         </section>
       </section>

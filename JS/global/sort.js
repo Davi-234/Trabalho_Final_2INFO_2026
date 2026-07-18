@@ -70,6 +70,7 @@ function ordenar() {
 
   if ($("#inverter").prop("checked")) {
     projetos.reverse();
+    
   }
 }
 
@@ -133,3 +134,4 @@ function criarCardsProjeto() {
 }
 
 $("#ordenar").on("change", criarCardsProjeto);
+$("#inverter").on("change", criarCardsProjeto);

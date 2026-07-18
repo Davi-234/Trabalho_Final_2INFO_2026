@@ -266,14 +266,17 @@ main {
 /* ===================== FOOTER ===================== */
 
 #footer {
+    background-color: #010409; /* cor diferente proposital */
+
     text-align: center;
-    padding: 25px;
+    padding: 15px;
+
+    font-size: 0.8rem;
+    color: var(--text-secondary);
 
     border-top: 1px solid var(--border);
-
-    font-size: 0.85rem;
-    color: var(--text-secondary);
 }
+
 
 /* ===================== RESPONSIVIDADE ===================== */
 

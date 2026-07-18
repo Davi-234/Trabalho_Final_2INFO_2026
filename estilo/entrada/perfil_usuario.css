@@ -1,0 +1,127 @@
+/* ===================== RESET ===================== */
+/* Remove estilos padrão dos navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================== VARIÁVEIS (PADRÃO PROFISSIONAL) ===================== */
+/* Facilita manutenção e padroniza cores */
+:root {
+    --bg-primary: #0d1117;
+    /* Fundo principal (estilo GitHub dark) */
+    --bg-secondary: #161b22;
+    /* Fundo secundário */
+    --border-color: #30363d;
+    /* Bordas sutis */
+    --text-primary: #e6edf3;
+    /* Texto principal */
+    --text-secondary: #8b949e;
+    /* Texto secundário */
+    --accent: #58a6ff;
+    /* Cor destaque (azul tech) */
+    --accent-hover: #1f6feb;
+    /* Hover */
+}
+
+/* ===================== BODY ===================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+
+    /* Evita scroll horizontal em animações */
+    overflow-x: hidden;
+}
+
+/* ===================== ANIMAÇÕES ===================== */
+/* Entrada da esquerda */
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Entrada da direita */
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Fade simples */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ===================== HEADER ===================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 40px;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+
+    /* Animação */
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Logo */
+#logo-container h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo {
+    width: 40px;
+}
+
+/* Subtítulo */
+#logo-container p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Navegação */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+/* Links */
+nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+/* Hover moderno */
+nav a:hover {
+    color: var(--accent);
+}

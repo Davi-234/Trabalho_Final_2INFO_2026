@@ -216,7 +216,7 @@ a:hover {
 Separação visual clara
 */
 #footer {
-    background-color: #010409;
+    background-color: #010409; /* cor diferente proposital */
 
     text-align: center;
     padding: 15px;
@@ -226,6 +226,7 @@ Separação visual clara
 
     border-top: 1px solid var(--border);
 }
+
 
 /* Remove HR */
 hr {

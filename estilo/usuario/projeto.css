@@ -235,6 +235,11 @@ Lateral direita estilo dashboard
     animation: slideRight 1s ease;
 }
 
+#preview header {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Card preview */
 .projeto-preview {
     background-color: var(--bg-tertiary);
@@ -261,7 +266,6 @@ Lateral direita estilo dashboard
 /* Footer preview */
 .projeto-preview footer ul {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
 
     list-style: none;
@@ -269,17 +273,31 @@ Lateral direita estilo dashboard
     color: var(--text-secondary);
 }
 
+#preview,
+.projeto-preview,
+#preview_description {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.projeto-preview section {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 /* ===================== FOOTER ===================== */
 
 #footer {
-    margin-top: 30px;
-
     background-color: #010409;
+    /* cor diferente proposital */
+
     text-align: center;
-    padding: 20px;
+    padding: 15px;
+
+    font-size: 0.8rem;
+    color: var(--text-secondary);
 
     border-top: 1px solid var(--border);
-    color: var(--text-secondary);
 }
 
 /* ===================== RESPONSIVIDADE ===================== */
@@ -313,4 +331,30 @@ Lateral direita estilo dashboard
     main {
         padding: 15px;
     }
+}
+
+.tela_falta_dados {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 60px;
+
+    background: var(--bg-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 99999;
+
+    box-shadow: 0 3px 8px rgba(0,0,0,.3);
+}
+
+.tela_falta_dados > div{
+    background: var(--bg-tertiary);
+    color: red;
+    padding: 20px;
+    border-radius: 10px;
 }
