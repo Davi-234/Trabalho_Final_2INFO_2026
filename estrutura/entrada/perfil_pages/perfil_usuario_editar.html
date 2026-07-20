@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
-    <link rel="stylesheet" href="../../../estilo/entrada/perfil_usuario.css">
+    <link rel="stylesheet" href="../../../estilo/entrada/perfil_estilos/tela_edicao.css">
+    <link rel="stylesheet" href="../../../estilo/entrada/perfil_estilos/perfil_usuario.css">
     <link rel="stylesheet" href="../../../estilo/utilidades/estrela.css">
     <link rel="stylesheet" href="../../../estilo/utilidades/projetos.css">
 </head>
@@ -17,7 +18,7 @@
         <div id="logo-container">
             <h1>
                 <span>
-                    <img src="../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
+                    <img src="../../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
                 </span>
                 DevShare
             </h1>
@@ -33,8 +34,9 @@
                     <div id="perfil_icone_body"></div>
                 </div>
             </label>
+
             <button id="adicionar_foto_perfil" name="adicionar_Foto_Perfil">
-                Adicionar foto de perfil
+                Alterar foto de perfil
             </button>
         </section>
 
@@ -43,8 +45,6 @@
                 <legend>Dados Pessoais:</legend>
                 <label for="name">Nome:</label>
                 <input type="text" id="name" name="name" disabled>
-                <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" disabled>
             </fieldset>
         </section>
 
@@ -55,6 +55,8 @@
                 <input type="text" id="link_git" link_git="name" disabled>
                 <label for="linkedin">Linkedin:</label>
                 <input type="text" id="linkedin" name="linkedin" disabled>
+                <label for="email">E-mail:</label>
+                <input type="text" id="email" name="email" disabled>
             </fieldset>
         </section>
 
@@ -113,7 +115,7 @@
         </section>
 
         <section id="btns_alterar">
-            <button type="button" class="btn" id="confirmar_alteracoes">Editar dados do perfil</button>
+            <button type="button" class="btn" id="editar_dados">Editar dados do perfil</button>
         </section>
     </main>
 
@@ -122,5 +124,6 @@
         DevShare - Sempre abertos à comunidade
     </footer>
 </body>
-
+<script src="../../../JS/jquerry.js"></script>
+<script src="../../../JS/entrada/perfil_usuario/criar_janelaModal.js"></script>
 </html>

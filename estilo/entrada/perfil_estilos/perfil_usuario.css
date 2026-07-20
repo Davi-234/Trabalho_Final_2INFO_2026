@@ -290,12 +290,13 @@ dt {
 }
 
 .projeto {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color) !important;
 }
 
 /* ============================================== */
 .btn {
-    width: 10%;
+    width: auto;
+    height: auto;
     padding: 12px;
     border: none;
     border-radius: 6px;
@@ -329,7 +330,7 @@ dt {
 }
 
 /*========================================== RESPONSIVIDADE /*==========================================*/
-@media (max-width: 1000px) {
+@media (max-width: 800px) {
 
     dl,
     dt {
@@ -337,8 +338,6 @@ dt {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
-
-        width: 100%;
     }
 
     dt {
