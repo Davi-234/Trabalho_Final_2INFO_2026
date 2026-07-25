@@ -278,6 +278,7 @@ Lateral direita estilo dashboard
 #preview_description {
     overflow-wrap: break-word;
     word-break: break-word;
+    text-align: justify;
 }
 
 .projeto-preview section {

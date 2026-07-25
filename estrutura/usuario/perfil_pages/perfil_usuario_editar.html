@@ -6,10 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
-    <link rel="stylesheet" href="../../../estilo/entrada/perfil_estilos/tela_edicao.css">
-    <link rel="stylesheet" href="../../../estilo/entrada/perfil_estilos/perfil_usuario.css">
+    <link rel="stylesheet" href="../../../estilo/utilidades/tela_modal.css">
+    <link rel="stylesheet" href="../../../estilo/usuario/perfil_estilos/perfil_usuario.css">
     <link rel="stylesheet" href="../../../estilo/utilidades/estrela.css">
     <link rel="stylesheet" href="../../../estilo/utilidades/projetos.css">
+    <link rel="icon" type="image/png" href="../../../img_para_projeto/logo.png">
 </head>
 
 <body>
@@ -24,6 +25,12 @@
             </h1>
             <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
         </div>
+        <nav>
+            <ul>
+                <li><a href="../../usuario/home.html">Home</a></li>
+                <li><a href="../../global/explorar.html">Explorar</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
@@ -66,7 +73,7 @@
                 <dl id="dados_totais_projetos">
                     <dt>
                         <label for="link_git">Projetos:</label>
-                        <input type="text" id="link_git" link_git="name" disabled>
+                        <input type="text" id="link_git" name="link_git" disabled>
                     </dt>
                     <dt>
                         <label for="linkedin">Curtidas:</label>
@@ -77,40 +84,6 @@
                         <input type="text" id="views" name="views" disabled>
                     </dt>
                 </dl>
-
-                <div id="lista_projetos">
-                    <article class="projeto">
-                        <header>
-                            <h3><a href="projeto.html" class="titulo">Sistema de Controle de Tarefas</a></h3>
-                        </header>
-
-                        <section>
-                            <p class="descricao">
-                                Aplicação web para gerenciamento de tarefas com autenticação
-                                de usuários e armazenamento em banco de dados.
-                            </p>
-                        </section>
-
-                        <footer>
-                            <ul>
-                                <li class="Curtidas">Curtidas: 120</li>
-                                <li class="viws">Visualizações: 540</li>
-                                <li class="avaliacao">
-                                    <ul style="gap:1px;">
-                                        <li>Avaliação:</li>
-                                        <li class="estrela-moderna"></li>
-                                        <li class="estrela-moderna"></li>
-                                        <li class="estrela-moderna"></li>
-                                        <li class="estrela-moderna"></li>
-                                        <li class="estrela-moderna desativada"></li>
-                                    </ul>
-                                </li>
-                                <li class="comentarios">Comentários: 32</li>
-                            </ul>
-                        </footer>
-                    </article>
-                </div>
-
             </fieldset>
         </section>
 
@@ -126,4 +99,6 @@
 </body>
 <script src="../../../JS/jquerry.js"></script>
 <script src="../../../JS/entrada/perfil_usuario/criar_janelaModal.js"></script>
+<script src="../../../JS/entrada/perfil_usuario/janela_modal_backend.js"></script>
+
 </html>

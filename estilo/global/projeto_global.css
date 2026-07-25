@@ -319,7 +319,7 @@ Coração feito com pseudo-elementos
 }
 
 /* Botão */
-#adicionar-comentario button {
+.btn {
     margin-top: 10px;
 
     padding: 10px 15px;
@@ -453,4 +453,13 @@ Design inovador:
     nav ul {
         justify-content: center;
     }
+}
+
+#nome_dono_projeto {
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+#nome_dono_projeto:hover {
+    color: var(--accent);
 }
