@@ -1,145 +1,182 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="../../estilo/entrada/cadastro.css" />
-    <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
-  </head>
-  <body>
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main id="cadastro-container">
-      <section id="cadastro-box">
-        <h1 class="section-title">Cadastro de Usuário</h1>
 
-        <p class="info-text">
-          Crie sua conta para compartilhar, comentar e avaliar projetos.
-        </p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="../../estilo/entrada/cadastro.css" />
+  <link rel="stylesheet" href="../../estilo/utilidades/mensagem_erro.css">
+  <link rel="stylesheet" href="../../estilo/global/erros_senha.css">
+  <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+</head>
 
-        <!-- FORMULÁRIO -->
-        <form id="cadastro-form">
-          <div class="externa_usuario">
-            <div id="div_usu" class="form-group">
-              <!-- USUÁRIO -->
-              <label for="usuario">Nome de usuário:</label><br />
-              <input
-                class="input-text"
-                type="text"
-                id="usuario"
-                name="usuario"
-                placeholder="Digite seu nome de usuário"
-                required
-              />
-            </div>
+<body>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main id="cadastro-container">
+    <section id="cadastro-box">
+      <h1 class="section-title">Cadastro de Usuário</h1>
+
+      <p class="info-text">
+        Crie sua conta para compartilhar, comentar e avaliar projetos.
+      </p>
+
+      <!-- FORMULÁRIO -->
+      <form id="form">
+        <div class="externa_usuario">
+          <div id="div_usu" class="form-group">
+            <label for="usuario">Nome de usuário:</label><br />
+            <input class="input-text" type="text" id="usuario" name="usuario" placeholder="Digite seu nome de usuário"
+              mensagem_correspondente="#usuario_erro" />
+            <p class="mensagem_erro" id="usuario_erro">
+              O nome de usuário está vazio
+            </p>
           </div>
-
-          <div class="externa_email">
-            <div id="div_email" class="form-group">
-              <!-- EMAIL -->
-              <label for="email">E-mail:</label><br />
-              <input
-                class="input-text"
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Digite seu e-mail"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="externa_senha">
-            <div id="div_senha" class="form-group">
-              <!-- SENHA -->
-              <label for="senha">Senha:</label><br />
-              <input
-                class="input-text"
-                type="password"
-                id="senha"
-                name="senha"
-                placeholder="Digite sua senha"
-                required
-              />
-            </div>
-            <div id="div_confirmar_senha" class="form-group">
-              <!-- CONFIRMAR SENHA -->
-              <label for="confirmar-senha">Confirmar senha:</label><br />
-              <input
-                class="input-text"
-                type="password"
-                id="confirmar-senha"
-                name="confirmarSenha"
-                placeholder="Confirme sua senha"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="externa_links">
-            <div id="div_github" class="form-group">
-              <!-- GITHUB (opcional) -->
-              <label for="github">GitHub (opcional):</label><br />
-              <input
-                class="input-text"
-                type="url"
-                id="github"
-                name="github"
-                placeholder="https://github.com/seuusuario"
-              />
-            </div>
-
-            <div id="div_linkedin" class="form-group">
-              <!-- LINKEDIN (opcional) -->
-              <label for="linkedin">LinkedIn (opcional):</label><br />
-              <input
-                class="input-text"
-                type="url"
-                id="linkedin"
-                name="linkedin"
-                placeholder="https://linkedin.com/in/seuusuario"
-              />
-            </div>
-          </div>
-
-          <br /><br />
-
-          <!-- BOTÃO -->
-          <button class="btn" type="submit">Cadastrar</button>
-        </form>
-
-        <br />
-
-        <!-- MENSAGENS -->
-        <div id="mensagens">
-          <p class="erro">
-            <!-- Exemplo: E-mail já cadastrado -->
-          </p>
-
-          <p class="erro">
-            <!-- Exemplo: Senhas não coincidem -->
-          </p>
-
-          <p class="sucesso">
-            <!-- Exemplo: Cadastro realizado. Verifique seu e-mail para ativar a conta -->
-          </p>
         </div>
 
-        <br />
+        <div class="externa_email">
+          <div id="div_email" class="form-group">
+            <label for="email">E-mail:</label><br />
+            <input class="input-text" type="email" id="email" name="email" placeholder="Digite seu e-mail"
+              mensagem_correspondente="#email_erro" />
+            <p class="mensagem_erro" id="email_erro">
+              O e-mail está vazio
+            </p>
+          </div>
+        </div>
 
-        <!-- LINK LOGIN -->
-        <p class="info-text">
-          Já possui conta?
-          <a href="login.html">Faça login</a>
+        <div class="externa_senha">
+          <div id="div_senha" class="form-group">
+            <label for="senha">Senha:</label><br />
+            <input class="input-text" type="password" id="senha" name="senha" placeholder="Digite sua senha"
+              mensagem_correspondente="#senha_erro" />
+            <p class="mensagem_erro" id="senha_erro">
+              A senha está vazia
+            </p>
+          </div>
+
+          <div id="div_confirmar_senha" class="form-group">
+            <label for="confirmar-senha">Confirmar senha:</label><br />
+            <input class="input-text" type="password" id="confirmar-senha" name="confirmarSenha"
+              placeholder="Confirme sua senha" mensagem_correspondente="#confirmar_senha_erro" />
+            <p class="mensagem_erro" id="confirmar_senha_erro">
+              A confirmação da senha está vazia
+            </p>
+          </div>
+        </div>
+
+        <div class="externa_links">
+          <div id="div_github" class="form-group">
+            <label for="github">GitHub (opcional):</label><br />
+            <input class="input-text" type="url" id="github" name="github"
+              placeholder="https://github.com/seuusuario" />
+          </div>
+
+          <div id="div_linkedin" class="form-group">
+            <label for="linkedin">LinkedIn (opcional):</label><br />
+            <input class="input-text" type="url" id="linkedin" name="linkedin"
+              placeholder="https://linkedin.com/in/seuusuario" />
+          </div>
+        </div>
+
+        <br><br>
+
+        <p id="tela_erros_senha">
+          <span id="titulo_erro_senha">Erros na senha:</span>
+          <span class="mensagem_erro" id="senha_pequena">Senha muito pequena. (Mínimo de 8 caracteres)</span>
+          <span class="mensagem_erro" id="caracteres_especiais">Caracteres especiais.</span>
+          <span class="mensagem_erro" id="letras_maiusculas">Letras maiusculas.</span>
+          <span class="mensagem_erro" id="letras_minusculas">Letras minúsculas.</span>
+          <span class="mensagem_erro" id="contem_numeros">Contém números.</span>
+          <!-- <br>
+          <span class="mensagem_erro" id="tempo_quebra">.</span> 
+          Será adicionado postumamente.-->
         </p>
-      </section>
-    </main>
 
-    <hr />
+        <button class="btn" type="submit">Cadastrar</button>
+      </form>
+      <br />
+      <br />
 
-    <!-- FOOTER -->
-    <footer id="footer">
-       DevShare - Sempre abertos à comunidade 
-    </footer>
-  </body>
+      <!-- LINK LOGIN -->
+      <p class="info-text">
+        Já possui conta?
+        <a href="login.html">Faça login</a>
+      </p>
+    </section>
+  </main>
+
+  <hr />
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    DevShare - Sempre abertos à comunidade
+  </footer>
+</body>
+<script src="../../JS/jquerry.js"></script>
+<script src="../../JS/util/apagar_elemento.js"></script>
+<script src="../../JS/util/mostrar_erro_campos_vazios.js"></script>
+<script src="../../JS/util/criar_tela_erro.js"></script>
+<script>
+  const inputs = $("input");
+  let enviar_form = true;
+
+  function verificar_inputs(event) {
+    enviar_form = true;
+
+    inputs.each(function () {
+      let input_local = $(this);
+      if (input_local.val().trim() === "") {
+        mostrar_erro(input_local);
+        enviar_form = false;
+      }
+    });
+    apagar_elemento('tela_falta_dados');
+
+    // Postumamente será adicionada uma tela dizendo que o nome ou a senha são inválidos
+
+    // ------------------------------------------------------------------------------- //
+
+    if (!enviar_form) {
+      event.preventDefault();
+    }
+  }
+</script>
+<script>
+  // Eventos de formulário
+  document.getElementById("form").addEventListener("submit", verificar_inputs);
+</script>
+<script src="../../JS/global/validação_senhas/validar_senha.js"></script>
+<script>
+  let valores_senha = validar_senha($('#senha').val());
+
+  $(':input').on('input', function () {
+    apagar_erros($(this));
+    if ($(this).attr('id') === 'senha') {
+      valores_senha = validar_senha($(this).val());
+
+      valores_senha.requisitos_senha.tamanho_minimo ? $('#senha_pequena').removeClass('visivel') : $('#senha_pequena').addClass('visivel');
+      valores_senha.requisitos_senha.tem_caracteres_especiais ? $('#caracteres_especiais').removeClass('visivel') : $('#caracteres_especiais').addClass('visivel');
+      valores_senha.requisitos_senha.tem_numeros ? $('#contem_numeros').removeClass('visivel') : $('#contem_numeros').addClass('visivel');
+      valores_senha.requisitos_senha.tem_letras_minusculas ? $('#letras_minusculas').removeClass('visivel') : $('#letras_minusculas').addClass('visivel');
+      valores_senha.requisitos_senha.tem_letras_maiusculas ? $('#letras_maiusculas').removeClass('visivel') : $('#letras_maiusculas').addClass('visivel');
+
+      ha_erros_na_senha();
+    }
+  });
+</script>
+<script>
+  $("#titulo_erro_senha").hide();
+  var ha_erros_na_senha = function() {
+    let erros_senha = Array.from(document.getElementsByClassName('mensagem_erro'));
+    let ha_erros = false;
+    erros_senha.forEach(erro => {
+      if (erro.classList.contains('mensagem_erro')) {
+        ha_erros = true
+      } 
+    });
+    ha_erros ? $("#titulo_erro_senha").show() : $("#titulo_erro_senha").hide();
+  };
+</script>
+
 </html>

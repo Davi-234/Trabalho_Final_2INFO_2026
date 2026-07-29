@@ -53,3 +53,18 @@
     font-size: 0.85rem;
     color: var(--text-secondary);
 }
+
+
+#preview_status {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#preview_status span {
+    font-weight: bolder;
+        color: var(--text-primary);
+}

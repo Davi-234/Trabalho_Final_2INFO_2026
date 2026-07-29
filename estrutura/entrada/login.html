@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../../estilo/entrada/login.css" />
+  <link rel="stylesheet" href="../../estilo/utilidades/mensagem_erro.css">
   <title>Login</title>
   <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
 </head>
@@ -21,37 +22,24 @@
         </p>
 
         <!-- FORMULÁRIO DE LOGIN -->
-        <form action="" method="post" id="login-form">
+        <form action="" method="post" id="form">
           <!-- EMAIL -->
-          <label for="email">E-mail:</label><br />
-          <input class="input-text" type="email" id="email" name="email" placeholder="Digite seu e-mail"
-            required /><br /><br />
+          <label for="nome">Nome Usuário:</label><br />
+          <input class="input-text" type="text" id="nome" name="nome"
+            placeholder="Digite seu Nome de Usuário" mensagem_correspondente="#nome_usuario_erro"/><br /><br />
+          <p class="mensagem_erro" id="nome_usuario_erro">O Nome de Usuário está vazio</p>
 
           <!-- SENHA -->
           <label for="senha">Senha:</label><br />
-          <input class="input-text" type="password" id="senha" name="senha" placeholder="Digite sua senha"
-            required /><br /><br />
+          <input class="input-text" type="password" id="senha" name="senha"
+            placeholder="Digite sua senha" mensagem_correspondente="#senha_erro"/><br /><br />
+          <p class="mensagem_erro" id="senha_erro">A senha está vazia</p>
 
           <!-- BOTÃO -->
           <button class="btn" type="submit">Entrar</button>
         </form>
 
-        <br />
-
-        <!-- MENSAGENS (RNF17) -->
-        <div id="mensagens">
-          <!-- Exemplo de erro -->
-          <p class="erro">
-            <!-- Email ou senha inválidos -->
-          </p>
-
-          <!-- Exemplo de aviso -->
-          <p class="aviso">
-            <!-- Conta não ativada. Verifique seu e-mail. -->
-          </p>
-        </div>
-
-        <br />
+        <br /><br />
 
         <!-- LINKS AUXILIARES -->
         <p>
@@ -59,14 +47,54 @@
           <a href="cadastro.html">Cadastre-se</a>
         </p>
       </section>
+
+      
     </main>
   </div>
   <hr />
 
   <!-- FOOTER -->
   <footer id="footer">
-     DevShare - Sempre abertos à comunidade 
+    DevShare - Sempre abertos à comunidade
   </footer>
 </body>
+<script src="../../JS/jquerry.js"></script>
+<script src="../../JS/util/apagar_elemento.js"></script>
+<script src="../../JS/util/mostrar_erro_campos_vazios.js"></script>
+<script src="../../JS/util/criar_tela_erro.js"></script>
+<script>
+  const inputs = $("input");
+  let enviar_form = true;
+
+  function verificar_inputs(event) {
+    enviar_form = true;
+
+    inputs.each(function () {
+      let input_local = $(this);
+      if (input_local.val().trim() === "") {
+        mostrar_erro(input_local);
+        enviar_form = false;
+      }
+    });
+    apagar_elemento('tela_falta_dados');
+
+    // Postumamente será adicionada uma tela dizendo que o nome ou a senha são inválidos
+
+    // ------------------------------------------------------------------------------- //
+
+    if (!enviar_form) {
+      event.preventDefault();
+    }
+  }
+</script>
+<script>
+  // Eventos de formulário
+  document.getElementById("form").addEventListener("submit", verificar_inputs);
+</script>
+<script>
+  $(':input').on('input', function() {
+    apagar_erros($(this));
+  });
+</script>
 
 </html>

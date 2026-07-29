@@ -1,0 +1,12 @@
+.mensagem_erro{
+    color: red;
+    font-size: small;
+    font-style: italic; 
+    font-weight: 800;
+    font-family: 'Times New Roman', Times, serif;
+    visibility: collapse;
+}
+
+.visivel {
+    visibility: visible;
+}

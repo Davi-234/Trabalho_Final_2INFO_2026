@@ -188,7 +188,7 @@
             <nav>
               <ul>
                 <li><a href="#">Curtir</a></li>
-                <li><a href="#">Denunciar</a></li>
+                <li><a href="#" id="denuncia_btn">Denunciar</a></li>
               </ul>
             </nav>
           </footer>
@@ -204,7 +204,9 @@
 </body>
 <script src="../../JS/jquerry.js"></script>
 <script>
-  $("#denunciar button").on("click", function () {
+  $("#denunciar button, #denuncia_btn").on("click", aparecer_tela_denuncia);
+
+  function aparecer_tela_denuncia() {
     const modal_window = $(`
     <div id="tela_modal">
         <h1>Denunciar Projeto</h1>
@@ -222,7 +224,7 @@
     `);
     $("body").append(modal_window);
     $("body").addClass("esconder");
-  });
+  }
 </script>
 
 </html>

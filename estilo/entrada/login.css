@@ -109,7 +109,7 @@ Card principal
 
 /* ===================== FORM ===================== */
 
-#login-form {
+#form {
     display: flex;
     flex-direction: column;
 }
@@ -131,6 +131,7 @@ label {
     color: var(--text-primary);
 
     transition: 0.3s;
+    width: 100%;
 }
 
 /* Foco (UX moderno) */
