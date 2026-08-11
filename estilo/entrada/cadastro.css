@@ -1,60 +1,15 @@
-/* ===================== RESET ===================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* ===================== VARIÁVEIS ===================== */
-:root {
-    --bg-dark: #0d1117;
-    --bg-card: #161b22;
-    --bg-input: #0d1117;
-
-    --border: #30363d;
-
-    --text-primary: #e6edf3;
-    --text-secondary: #8b949e;
-
-    --accent: #58a6ff;
-    --accent-hover: #1f6feb;
-
-    --error: #ff6b6b;
-    --success: #3fb950;
-}
-
-/* ===================== BODY ===================== */
-/*
-Centralização TOTAL + sem scroll
-*/
-body {
-    height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-
-    /* GRADIENT TECH */
-    background: linear-gradient(135deg, #0d1117, #1f2630);
-
-    font-family: Arial, Helvetica, sans-serif;
-    color: var(--text-primary);
-
-    overflow: hidden;
-}
-
 /* ===================== MAIN ===================== */
 /*
-Centraliza vertical + horizontal
+Flex para centralizar o login
 */
-#cadastro-container {
+main {
     flex: 1;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     padding: 20px;
-
 }
 
 /* ===================== CARD ===================== */
@@ -69,7 +24,7 @@ Centraliza vertical + horizontal
 
     border: 1px solid var(--border);
 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 
     animation: fadeUp 0.8s ease;
 }
@@ -80,6 +35,7 @@ Centraliza vertical + horizontal
         opacity: 0;
         transform: translateY(25px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -107,14 +63,7 @@ Grid interno profissional:
 - senha lado a lado
 - links lado a lado
 */
-#form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Grupo padrão */
-.form-group {
+form {
     display: flex;
     flex-direction: column;
 }
@@ -139,67 +88,6 @@ Grid interno profissional:
     gap: 10px;
 }
 
-/* ===================== INPUTS ===================== */
-
-label {
-    font-size: 0.85rem;
-    margin-bottom: 5px;
-}
-
-.input-text {
-    padding: 10px;
-
-    border-radius: 6px;
-    border: 1px solid var(--border);
-
-    background-color: var(--bg-input);
-    color: var(--text-primary);
-
-    transition: 0.3s;
-}
-
-/* Foco */
-.input-text:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 5px var(--accent);
-}
-
-/* ===================== BOTÃO ===================== */
-.btn {
-    margin-top: 10px;
-
-    padding: 12px;
-
-    border: none;
-    border-radius: 6px;
-
-    background-color: var(--accent);
-    color: #fff;
-
-    font-weight: bold;
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-.btn:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-2px);
-}
-
-/* ===================== MENSAGENS ===================== */
-
-.erro {
-    color: var(--error);
-    font-size: 0.85rem;
-}
-
-.sucesso {
-    color: var(--success);
-    font-size: 0.85rem;
-}
-
 /* ===================== LINKS ===================== */
 a {
     color: var(--accent);
@@ -216,7 +104,8 @@ a:hover {
 Separação visual clara
 */
 #footer {
-    background-color: #010409; /* cor diferente proposital */
+    background-color: #010409;
+    /* cor diferente proposital */
 
     text-align: center;
     padding: 15px;
@@ -233,6 +122,24 @@ hr {
     display: none;
 }
 
+.col-md-4 {
+    display: flex!important;
+    flex-direction: column!important;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.col-md-4 .col-md-4, .col-md-4-2 {
+    display: flex!important;
+    flex-direction: row!important;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.col-md-4 .col-md-4 div, .col-md-4-2 div {
+    width: 48%;
+}
+
 /* ===================== RESPONSIVIDADE ===================== */
 
 /* Tablet */
@@ -244,7 +151,8 @@ hr {
 
     .externa_senha,
     .externa_links {
-        grid-template-columns: 1fr; /* empilha */
+        grid-template-columns: 1fr;
+        /* empilha */
     }
 }
 
@@ -252,7 +160,7 @@ hr {
 @media (max-width: 480px) {
 
     body {
-        overflow-y: auto; 
+        overflow-y: auto;
         /* IMPORTANTE:
         Em telas muito pequenas, permitir scroll evita cortar conteúdo
         (isso é prática profissional, não erro)

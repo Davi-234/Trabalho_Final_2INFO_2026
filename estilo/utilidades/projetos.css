@@ -1,4 +1,3 @@
-
 /* ===================== PROJETOS ===================== */
 
 /* Container da lista */
@@ -67,4 +66,46 @@
 #preview_status span {
     font-weight: bolder;
         color: var(--text-primary);
+}
+
+
+/* Container da lista */
+#resultados>header {
+    grid-column: 2;
+    max-height: 40px;
+}
+
+/* Hover profissional */
+.projeto:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+/* Título clicável */
+.projeto h3 a {
+    text-decoration: none;
+    color: var(--accent);
+}
+
+.projeto h3 a:hover {
+    text-decoration: underline;
+}
+
+/* Texto */
+.projeto p {
+    color: var(--text-secondary);
+    margin: 10px 0;
+}
+
+/* Footer */
+.projeto footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 10px;
+
+    list-style: none;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
 }

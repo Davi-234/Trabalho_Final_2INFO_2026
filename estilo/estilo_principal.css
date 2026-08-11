@@ -1,0 +1,115 @@
+/* ===================== RESET ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================== VARIÁVEIS ===================== */
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #1f2630;
+
+    --border: #30363d;
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+
+    --accent: #58a6ff;
+    --accent-hover: #1f6feb;
+
+    --danger: #ff4d6d;
+    --success: #3fb950;
+}
+
+/* ===================== BODY ===================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/* ===================== FOOTER ===================== */
+#footer {
+    background-color: #010409; /* cor diferente proposital */
+
+    text-align: center;
+    padding: 15px;
+
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+
+    border-top: 1px solid var(--border);
+}
+
+/* ===================== ANIMAÇÕES ===================== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Slide lateral */
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Entrada da esquerda */
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Entrada da direita */
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Fade simples */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
