@@ -73,56 +73,8 @@
         <h2>Meus Projetos</h2>
         <p>Projetos que você publicou na plataforma</p>
       </header>
-
-      <!-- Lista de projetos -->
       <section id="lista-projetos">
-        <!-- Projeto exemplo -->
-        <article class="projeto">
-          <header>
-            <h3>Nome do Projeto</h3>
-            <p>Visibilidade: Público</p>
-          </header>
-
-          <section>
-            <p>
-              Descrição do projeto. Aqui ficará um resumo do que foi
-              desenvolvido e quais tecnologias foram utilizadas.
-            </p>
-          </section>
-
-          <!-- Ações do projeto -->
-          <footer>
-            <nav>
-              <ul>
-                <li><a href="../global/projeto.html">Ver</a></li>
-                <li><a href="projeto.html">Editar</a></li>
-                <li><a href="#">Excluir</a></li>
-              </ul>
-            </nav>
-          </footer>
-        </article>
-
-        <!-- Outro projeto exemplo -->
-        <article class="projeto">
-          <header>
-            <h3>Outro Projeto</h3>
-            <p>Visibilidade: Privado</p>
-          </header>
-
-          <section>
-            <p>Outro exemplo de projeto com descrição breve e objetiva.</p>
-          </section>
-
-          <footer>
-            <nav>
-              <ul>
-                <li><a href="../global/projeto.html">Ver</a></li>
-                <li><a href="projeto.html">Editar</a></li>
-                <li><a href="#">Excluir</a></li>
-              </ul>
-            </nav>
-          </footer>
-        </article>
+        
       </section>
     </section>
   </main>
@@ -133,5 +85,9 @@
 </body>
 <script src="../../JS/jquerry.js"></script>
 <script src="../../JS/usuario/card.js"></script>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        carregarProjetos();
+    });
+</script>
 </html>
