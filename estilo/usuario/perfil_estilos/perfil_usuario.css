@@ -74,81 +74,10 @@
     animation: fadeUp 1s ease;
 }
 
-/* Fieldset moderno */
-fieldset {
-    background-color: var(--bg-secondary);
+input {
     border: 1px solid var(--border);
-
-    border-radius: 10px;
-    padding: 20px;
-    margin: 0 2% 20px 2%;
 }
 
-/* Legend estilizado */
-legend {
-    padding: 0 10px;
-    color: var(--accent);
-    font-weight: bold;
-}
-
-/* Inputs */
-input,
-textarea,
-select {
-    width: 100%;
-
-    padding: 10px;
-    margin-bottom: 10px;
-
-    border-radius: 6px;
-    border: 1px solid var(--border);
-
-    background-color: var(--bg-tertiary);
-    color: var(--text-primary);
-
-    transition: 0.3s;
-}
-
-/* Foco */
-input:focus,
-textarea:focus,
-select:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 5px var(--accent);
-}
-
-/* Labels */
-label {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-
-/* RADIO */
-input[type="radio"] {
-    width: auto;
-    margin-right: 5px;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/*========================================== LISTAS ==========================================*/
-dl,
-dt {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-
-dt {
-    gap: 8px;
-    justify-content: center;
-}
 
 /* ============================ PROJETOS ======================================================= */
 #dados_totais_projetos {
@@ -160,16 +89,6 @@ dt {
 }
 
 /* ============================================== */
-.btn {
-    width: auto;
-    height: auto;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    background-color: var(--accent);
-    color: white;
-    cursor: pointer;
-}
 
 .btn:hover {
     background-color: var(--accent-hover);
@@ -182,21 +101,6 @@ dt {
 
 fieldset {
     animation: fadeUp 0.8s ease;
-}
-
-/* ===================== FOOTER ===================== */
-
-#footer {
-    background-color: #010409;
-    /* cor diferente proposital */
-
-    text-align: center;
-    padding: 15px;
-
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-
-    border-top: 1px solid var(--border);
 }
 
 /*========================================== RESPONSIVIDADE /*==========================================*/

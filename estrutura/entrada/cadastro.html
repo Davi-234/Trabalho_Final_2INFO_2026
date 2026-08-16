@@ -2,153 +2,617 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadastro</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="../../estilo/entrada/cadastro.css" />
-  <link rel="stylesheet" href="../../estilo/utilidades/formularios.css">
-  <link rel="stylesheet" href="../../estilo/estilo_principal.css">
-  <link rel="stylesheet" href="../../estilo/header.css">
-  <link rel="stylesheet" href="../../estilo/utilidades/mensagem_erro.css">
-  <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../estilo/utilidades/formularios.css">
+    <link rel="stylesheet" href="../../estilo/estilo_principal.css">
+    <link rel="stylesheet" href="../../estilo/entrada/cadastro.css" />
+    <link rel="stylesheet" href="../../estilo/utilidades/mensagem_erro.css">
+    <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+    <style>
+        .step-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
-  <!-- CONTEÚDO PRINCIPAL -->
-  <main>
-    <section id="cadastro-box">
-      <h1 class="section-title">Cadastro de Usuário</h1>
 
-      <p class="info-text">
-        Crie sua conta para compartilhar, comentar e avaliar projetos.
-      </p>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main>
 
-      <!-- FORMULÁRIO -->
-      <form class="row g-3 needs-validation" novalidate>
-        <div>
-          <label for="validationCustom01" class="form-label">Nome Usuário:</label>
-          <input type="text" class="form-control" id="validationCustom01" placeholder="Digite o seu nome" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
+        <!-- BARRA DE PROGRESSO
+         Fica deliberadamente FORA do #cadastro-box -->
+        <div id="progress-container">
+
+            <ul id="progressbar">
+
+                <li id="step1" class="active" data-step="1">
+                    Dados Pessoais
+                </li>
+                <li id="step2" data-step="2">
+                    Senha
+                </li>
+                <li id="step3" data-step="3">
+                    Contatos Adicionais
+                </li>
+
+            </ul>
+
+            <div id="progress">
+                <div id="progress-bar"></div>
+            </div>
+
         </div>
 
-        <div>
-          <label for="validationCustom02" class="form-label">E-mail:</label>
-          <input type="email" class="form-control" id="validationCustom02" placeholder="Digite o seu E-mail" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
 
-        <div class="col-md-4">
-          <div class="col-md-4">
-            <div>
-              <label for="validationCustom03" class="form-label">Senha:</label>
-              <input type="password" class="form-control" id="validationCustom03" placeholder="Digite a sua senha"
-                required>
-            </div>
-            <div>
-              <label for="validationCustom04" class="form-label">Confirmar Senha:</label>
-              <input type="password" class="form-control" id="validationCustom04" placeholder="Confirme a sua senha"
-                required>
-            </div>
-          </div>
-          <div class="valid-feedback">
-            <p id="tela_erros_senha">
-              <span id="titulo_erro_senha">Erros na senha:</span>
-              <span class="mensagem_erro" id="senha_pequena">Senha muito pequena. (Mínimo de 8 caracteres)</span>
-              <span class="mensagem_erro" id="caracteres_especiais">Caracteres especiais.</span>
-              <span class="mensagem_erro" id="letras_maiusculas">Letras maiusculas.</span>
-              <span class="mensagem_erro" id="letras_minusculas">Letras minúsculas.</span>
-              <span class="mensagem_erro" id="contem_numeros">Contém números.</span>
-              <!-- <br><span class="mensagem_erro" id="tempo_quebra">.</span>  Será adicionado postumamente.-->
+        <!-- CARD DO CADASTRO -->
+        <section id="cadastro-box">
+
+            <h1 class="section-title">
+                Cadastro de Usuário
+            </h1>
+
+            <p class="info-text">
+                Crie sua conta para compartilhar, comentar e avaliar projetos.
             </p>
-          </div>
-        </div>
 
-        <div class="col-md-4-2">
-          <div>
-            <label for="validationCustom05" class="form-label">Link GitHub (Opcional):</label>
-            <input type="url" class="form-control" id="validationCustom05" placeholder="Digite o seu perfil do GitHub">
-          </div>
-          <div>
-            <label for="validationCustom06" class="form-label">Link Likedin (Opcional):</label>
-            <input type="url" class="form-control" id="validationCustom06"
-              placeholder="Digite o seu perfil do Linkedin">
-          </div>
-        </div>
 
-        <div class="col-12">
-          <button class="btn btn-primary" type="submit">Cadastrar-se</button>
-        </div>
-      </form>
-      <br />
-      <!-- LINK LOGIN -->
-      <p class="info-text">
-        Já possui conta?
-        <a href="login.html">Faça login</a>
-      </p>
-    </section>
-  </main>
+            <!-- FORMULÁRIO -->
+            <form id="form-cadastro" class="needs-validation" novalidate>
 
-  <hr />
+                <section>
+                    <div class="externa_usuario">
 
-  <!-- FOOTER -->
-  <footer id="footer">
-    DevShare - Sempre abertos à comunidade
-  </footer>
-</body>
-<script src="../../JS/jquerry.js"></script>
-<script>
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (() => {
-    'use strict'
+                        <label for="validationCustom01" class="form-label">
+                            Nome de usuário:
+                        </label>
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    const forms = document.querySelectorAll('.needs-validation')
+                        <input type="text" class="form-control" id="validationCustom01" placeholder="Digite o seu nome"
+                            required>
 
-    // Loop over them and prevent submission
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
+                        <div class="invalid-feedback">
+                            Informe um nome de usuário.
+                        </div>
+
+                    </div>
+
+                    <div class="externa_email">
+
+                        <label for="validationCustom02" class="form-label">
+                            E-mail:
+                        </label>
+
+                        <input type="email" class="form-control" id="validationCustom02"
+                            placeholder="Digite o seu e-mail" required>
+
+                        <div class="invalid-feedback">
+                            Informe um endereço de e-mail válido.
+                        </div>
+                    </div>
+
+                    <div class="step-buttons">
+
+                        <button type="button" class="next-step btn btn-primary">
+                            Próximo
+                        </button>
+
+                    </div>
+                </section>
+
+                <section>
+
+                    <div class="externa_senha">
+
+                        <div>
+
+                            <label for="validationCustom03" class="form-label">
+                                Senha:
+                            </label>
+
+                            <input type="password" class="form-control" id="validationCustom03"
+                                placeholder="Digite a sua senha" minlength="8" required>
+
+                        </div>
+
+
+                        <div>
+
+                            <label for="validationCustom04" class="form-label">
+                                Confirmar senha:
+                            </label>
+
+                            <input type="password" class="form-control" id="validationCustom04"
+                                placeholder="Confirme a sua senha" required>
+
+                            <div id="feedback_confirmacao_senha" class="invalid-feedback">
+                                As senhas não coincidem.
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <ul id="tela_erros_senha">
+
+                        <li id="titulo_erro_senha">
+                            Requisitos da senha:
+                        </li>
+
+                        <li class="mensagem_erro" id="senha_pequena">
+                            A senha deve possuir no mínimo 8 caracteres.
+                        </li>
+
+                        <li class="mensagem_erro" id="caracteres_especiais">
+                            A senha deve possuir caracteres especiais.
+                        </li>
+
+                        <li class="mensagem_erro" id="letras_maiusculas">
+                            A senha deve possuir letras maiúsculas.
+                        </li>
+
+                        <li class="mensagem_erro" id="letras_minusculas">
+                            A senha deve possuir letras minúsculas.
+                        </li>
+
+                        <li class="mensagem_erro" id="contem_numeros">
+                            A senha deve possuir números.
+                        </li>
+                    </ul>
+                    <div class="step-buttons">
+                        <button type="button" class="next-step btn btn-primary">
+                            Próximo
+                        </button>
+
+                        <button type="button" class="previous-step btn btn-secondary">
+                            Voltar
+                        </button>
+                    </div>
+                </section>
+
+                <section style="margin-bottom: 3%;">
+                    <p class="info-text">
+                        Os campos abaixo são opcionais.
+                    </p>
+
+                    <div class="externa_links">
+
+                        <div>
+
+                            <label for="validationCustom05" class="form-label">
+                                Link GitHub:
+                            </label>
+
+                            <input type="url" class="form-control" id="validationCustom05"
+                                placeholder="https://github.com/seu_usuario">
+
+                        </div>
+
+                        <div>
+
+                            <label for="validationCustom06" class="form-label">
+                                Link LinkedIn:
+                            </label>
+
+                            <input type="url" class="form-control" id="validationCustom06"
+                                placeholder="https://linkedin.com/in/seu_usuario">
+
+                        </div>
+
+                    </div>
+
+                    <div class="step-buttons">
+
+                        <button type="button" class="previous-step btn btn-secondary">
+                            Voltar
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            Cadastrar-se
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </form>
+            <p class="info-text">
+
+                Já possui conta?
+
+                <a href="login.html">
+                    Faça login
+                </a>
+            </p>
+        </section>
+    </main>
+    <hr>
+    <footer id="footer">
+        DevShare - Sempre abertos à comunidade
+    </footer>
+
+
+    <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
+    <!-- Seu arquivo de validação de senha -->
+    <script src="../../JS/global/validação_senhas/validar_senha.js"></script>
+
+
+    <script>
+        const form = document.getElementById("form-cadastro");
+
+        const sections = Array.from(
+            form.querySelectorAll("section")
+        );
+
+        const progressItems = Array.from(
+            document.querySelectorAll("#progressbar li")
+        );
+
+        const progressBar =
+            document.getElementById("progress-bar");
+
+        let etapaAtual = 0;
+
+        function atualizarProgresso() {
+
+            const porcentagem =
+                ((etapaAtual + 1) / sections.length) * 100;
+
+            progressBar.style.width =
+                `${porcentagem}%`;
+
+
+            progressItems.forEach(
+                (item, index) => {
+
+                    item.classList.remove("active");
+                    item.classList.remove("completed");
+
+                    if (index < etapaAtual) {
+                        item.classList.add("completed");
+                    }
+
+                    if (index === etapaAtual) {
+                        item.classList.add("active");
+                    }
+
+                }
+            );
+
         }
 
-        form.classList.add('was-validated')
-      }, false)
-    })
-  })()
-</script>
-<script src="../../JS/global/validação_senhas/validar_senha.js"></script>
-<script>
-  $('#validationCustom03').on('input', function () {
-    let valores_senha = validar_senha($(this).val());
+        function mostrarEtapa(numero) {
 
-    valores_senha.requisitos_senha.tamanho_minimo ? $('#senha_pequena').removeClass('visivel') : $('#senha_pequena').addClass('visivel');
-    valores_senha.requisitos_senha.tem_caracteres_especiais ? $('#caracteres_especiais').removeClass('visivel') : $('#caracteres_especiais').addClass('visivel');
-    valores_senha.requisitos_senha.tem_numeros ? $('#contem_numeros').removeClass('visivel') : $('#contem_numeros').addClass('visivel');
-    valores_senha.requisitos_senha.tem_letras_minusculas ? $('#letras_minusculas').removeClass('visivel') : $('#letras_minusculas').addClass('visivel');
-    valores_senha.requisitos_senha.tem_letras_maiusculas ? $('#letras_maiusculas').removeClass('visivel') : $('#letras_maiusculas').addClass('visivel');
+            sections.forEach(
+                (section, index) => {
 
-    ha_erros_na_senha();
-  });
-</script>
-<script>
-  $("#titulo_erro_senha").hide();
-  var ha_erros_na_senha = function () {
-    let erros_senha = Array.from(document.getElementsByClassName('mensagem_erro'));
-    let ha_erros = false;
-    erros_senha.forEach(erro => {
-      if (erro.classList.contains('mensagem_erro')) {
-        ha_erros = true
-      }
-    });
-    ha_erros ? $("#titulo_erro_senha").show() : $("#titulo_erro_senha").hide();
-  };
-</script>
+                    section.style.display =
+                        index === numero
+                            ? "block"
+                            : "none";
+
+                }
+            );
+
+            etapaAtual = numero;
+
+            atualizarProgresso();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+        const campoSenha =
+            document.getElementById("validationCustom03");
+
+        const campoConfirmacao =
+            document.getElementById("validationCustom04");
+
+        function atualizarRequisitosSenha() {
+
+            const valoresSenha =
+                validar_senha(campoSenha.value);
+
+
+            const requisitos =
+                valoresSenha.requisitos_senha;
+
+            const requisitoMinimo =
+                document.getElementById("senha_pequena");
+
+            const requisitoEspecial =
+                document.getElementById("caracteres_especiais");
+
+            const requisitoNumeros =
+                document.getElementById("contem_numeros");
+
+            const requisitoMinusculas =
+                document.getElementById("letras_minusculas");
+
+            const requisitoMaiusculas =
+                document.getElementById("letras_maiusculas");
+
+            requisitoMinimo.classList.toggle(
+                "visivel",
+                !requisitos.tamanho_minimo
+            );
+
+            requisitoEspecial.classList.toggle(
+                "visivel",
+                !requisitos.tem_caracteres_especiais
+            );
+
+            requisitoNumeros.classList.toggle(
+                "visivel",
+                !requisitos.tem_numeros
+            );
+
+            requisitoMinusculas.classList.toggle(
+                "visivel",
+                !requisitos.tem_letras_minusculas
+            );
+
+            requisitoMaiusculas.classList.toggle(
+                "visivel",
+                !requisitos.tem_letras_maiusculas
+            );
+
+
+            atualizarTituloRequisitos();
+
+        }
+
+        function atualizarTituloRequisitos() {
+
+            const mensagens =
+                Array.from(
+                    document.querySelectorAll(".mensagem_erro")
+                );
+
+            const existeErro =
+                mensagens.some(
+                    mensagem =>
+                        mensagem.classList.contains("visivel")
+                );
+
+
+            document.getElementById(
+                "titulo_erro_senha"
+            ).style.display =
+                existeErro
+                    ? "block"
+                    : "none";
+
+        }
+
+        function validarConfirmacaoSenha() {
+
+            const senha =
+                campoSenha.value;
+
+            const confirmacao =
+                campoConfirmacao.value;
+
+
+            if (
+                confirmacao.length > 0 &&
+                senha !== confirmacao
+            ) {
+
+                campoConfirmacao.setCustomValidity(
+                    "As senhas não coincidem."
+                );
+
+                return false;
+
+            }
+
+
+            campoConfirmacao.setCustomValidity("");
+
+            return true;
+
+        }
+
+        campoSenha.addEventListener(
+            "input",
+            () => {
+
+                atualizarRequisitosSenha();
+                validarConfirmacaoSenha();
+
+            }
+        );
+
+        campoConfirmacao.addEventListener(
+            "input",
+            () => {
+
+                validarConfirmacaoSenha();
+
+            }
+        );
+
+        function validarEtapa(numero) {
+
+            const campos =
+                Array.from(
+                    sections[numero].querySelectorAll(
+                        "input, select, textarea"
+                    )
+                );
+
+
+            let etapaValida = true;
+
+
+            campos.forEach(
+                campo => {
+                    if (
+                        campo.required &&
+                        !campo.checkValidity()
+                    ) {
+
+                        etapaValida = false;
+
+                    }
+
+                }
+            );
+
+            if (numero === 1) {
+
+                atualizarRequisitosSenha();
+
+                const mensagens =
+                    Array.from(
+                        document.querySelectorAll(".mensagem_erro")
+                    );
+
+                const senhaPossuiErros =
+                    mensagens.some(
+                        mensagem =>
+                            mensagem.classList.contains("visivel")
+                    );
+
+
+                if (senhaPossuiErros) {
+
+                    campoSenha.setCustomValidity(
+                        "A senha não atende aos requisitos."
+                    );
+
+                    etapaValida = false;
+
+                } else {
+
+                    campoSenha.setCustomValidity("");
+
+                }
+
+                if (!validarConfirmacaoSenha()) {
+
+                    etapaValida = false;
+
+                }
+
+            }
+
+            sections[numero].classList.add(
+                "was-validated"
+            );
+
+
+            return etapaValida;
+
+        }
+
+        document
+            .querySelectorAll(".next-step")
+            .forEach(
+                botao => {
+
+                    botao.addEventListener(
+                        "click",
+                        () => {
+
+                            if (
+                                !validarEtapa(etapaAtual)
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            if (
+                                etapaAtual <
+                                sections.length - 1
+                            ) {
+
+                                mostrarEtapa(
+                                    etapaAtual + 1
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        document
+            .querySelectorAll(".previous-step")
+            .forEach(
+                botao => {
+
+                    botao.addEventListener(
+                        "click",
+                        () => {
+
+                            if (etapaAtual > 0) {
+
+                                mostrarEtapa(
+                                    etapaAtual - 1
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        form.addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+                if (!validarEtapa(etapaAtual)) {
+
+                    return;
+
+                }
+
+                for (
+                    let i = 0;
+                    i < sections.length;
+                    i++
+                ) {
+
+                    if (!validarEtapa(i)) {
+
+                        mostrarEtapa(i);
+
+                        return;
+
+                    }
+                }
+                window.location.href = "../usuario/home.html"
+            }
+        );
+
+        atualizarProgresso();
+        atualizarRequisitosSenha();
+
+    </script>
+
+</body>
 
 </html>
