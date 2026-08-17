@@ -92,14 +92,14 @@ main {
 
 /* ===================== PROJETOS ===================== */
 
-#meus-projetos {
-    padding: 30px;
+#meus-projetos, #lista-denuncias {
+    padding: 20px;
 
     animation: fadeUp 1.2s ease;
 }
 
 /* Cabeçalho da seção */
-#meus-projetos header {
+#meus-projetos header, #lista-denuncias header {
     margin-bottom: 20px;
 }
 
@@ -150,11 +150,12 @@ main {
 }
 
 /* Links estilo botão */
-.projeto a {
+.projeto button {
     padding: 8px 12px;
     border-radius: 6px;
 
     background-color: var(--accent);
+    border: 1px #58a6ff solid ;
     color: white;
 
     font-size: 0.9rem;
@@ -162,8 +163,17 @@ main {
     transition: 0.3s;
 }
 
-.projeto a:hover {
+.projeto button:hover {
     background-color: var(--accent-hover);
+}
+
+a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent-hover);
 }
 
 /* ===================== FOOTER ===================== */

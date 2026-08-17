@@ -12,25 +12,11 @@
     <link rel="stylesheet" href="../../estilo/entrada/cadastro.css" />
     <link rel="stylesheet" href="../../estilo/utilidades/mensagem_erro.css">
     <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
-    <style>
-        .step-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 
 <body>
-
-    <!-- CONTEÚDO PRINCIPAL -->
     <main>
 
-        <!-- BARRA DE PROGRESSO
-         Fica deliberadamente FORA do #cadastro-box -->
         <div id="progress-container">
 
             <ul id="progressbar">
@@ -54,7 +40,6 @@
         </div>
 
 
-        <!-- CARD DO CADASTRO -->
         <section id="cadastro-box">
 
             <h1 class="section-title">
@@ -66,7 +51,6 @@
             </p>
 
 
-            <!-- FORMULÁRIO -->
             <form id="form-cadastro" class="needs-validation" novalidate>
 
                 <section>
@@ -101,7 +85,7 @@
 
                     <div class="step-buttons">
 
-                        <button type="button" class="next-step btn btn-primary">
+                        <button type="button" class="next-step btn btn-primary" style="width: 100%;">
                             Próximo
                         </button>
 
@@ -167,17 +151,17 @@
                         </li>
                     </ul>
                     <div class="step-buttons">
-                        <button type="button" class="next-step btn btn-primary">
+                        <button type="button" class="next-step btn btn-primary" style="width: 50%;">
                             Próximo
                         </button>
 
-                        <button type="button" class="previous-step btn btn-secondary">
+                        <button type="button" class="previous-step btn btn-secondary" style="width: 50%;">
                             Voltar
                         </button>
                     </div>
                 </section>
 
-                <section style="margin-bottom: 3%;">
+                <section>
                     <p class="info-text">
                         Os campos abaixo são opcionais.
                     </p>
@@ -210,11 +194,11 @@
 
                     <div class="step-buttons">
 
-                        <button type="button" class="previous-step btn btn-secondary">
+                        <button type="button" class="previous-step btn btn-secondary" style="width: 50%;">
                             Voltar
                         </button>
 
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" style="width: 50%;">
                             Cadastrar-se
                         </button>
 
@@ -223,7 +207,7 @@
                 </section>
 
             </form>
-            <p class="info-text">
+            <p class="info-text" style="margin-top: 3%;">
 
                 Já possui conta?
 
@@ -238,12 +222,6 @@
         DevShare - Sempre abertos à comunidade
     </footer>
 
-
-    <!-- =====================================================
-       JAVASCRIPT
-       ===================================================== -->
-
-    <!-- Seu arquivo de validação de senha -->
     <script src="../../JS/global/validação_senhas/validar_senha.js"></script>
 
 

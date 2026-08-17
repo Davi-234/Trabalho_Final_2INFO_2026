@@ -277,7 +277,7 @@ hr {
 .step-buttons {
     display: flex;
 
-    justify-content: space-between;
+    justify-content: center;
 
     gap: 10px;
 
@@ -290,10 +290,6 @@ hr {
 
 .step-buttons .previous-step:hover {
     background-color: #444 !important;
-}
-
-.step-buttons .next-step {
-    margin-left: auto;
 }
 
 /* =========================
