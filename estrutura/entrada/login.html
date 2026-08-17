@@ -1,87 +1,93 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../estilo/entrada/login.css" />
-    <title>Login</title>
-  </head>
-  <body>
-    <!-- CONTEÚDO PRINCIPAL -->
-    <div id="main">
-      <main id="login-container">
-        <section id="login-box">
-          <h1 class="section-title">Login</h1>
 
-          <p class="info-text">
-            Acesse sua conta para comentar, avaliar e publicar projetos.
-          </p>
+<head>
+  <meta charset="UTF-8" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../estilo/entrada/login.css" />
+  <link rel="stylesheet" href="../../estilo/utilidades/formularios.css">
+  <link rel="stylesheet" href="../../estilo/estilo_principal.css">
+  <link rel="stylesheet" href="../../estilo/header.css">
+  <title>Login</title>
+  <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+</head>
 
-          <!-- FORMULÁRIO DE LOGIN -->
-          <form id="login-form">
-            <!-- EMAIL -->
-            <label for="email">E-mail:</label><br />
-            <input
-              class="input-text"
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Digite seu e-mail"
-              required
-            /><br /><br />
+<body>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main>
+    <div id="login-container">
+      <section id="login-box">
+        <h1 class="section-title">Login</h1>
 
-            <!-- SENHA -->
-            <label for="senha">Senha:</label><br />
-            <input
-              class="input-text"
-              type="password"
-              id="senha"
-              name="senha"
-              placeholder="Digite sua senha"
-              required
-            /><br /><br />
-
-            <!-- BOTÃO -->
-            <button class="btn" type="submit">Entrar</button>
-          </form>
-
-          <br />
-
-          <!-- MENSAGENS (RNF17) -->
-          <div id="mensagens">
-            <!-- Exemplo de erro -->
-            <p class="erro">
-              <!-- Email ou senha inválidos -->
-            </p>
-
-            <!-- Exemplo de aviso -->
-            <p class="aviso">
-              <!-- Conta não ativada. Verifique seu e-mail. -->
-            </p>
+        <p class="info-text">
+          Acesse sua conta para comentar, avaliar e publicar projetos.
+        </p>
+        <form class="row g-3 needs-validation" novalidate>
+          <div>
+            <label for="validationCustom01" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="validationCustom01" placeholder="Digite o seu nome" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
           </div>
+          <div>
+            <label for="validationCustom02" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="validationCustom02" placeholder="Digite a sua senha"
+              required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-12">
+            <button class="" id="btn" type="submit">Cadastrar</button>
+          </div>
+        </form>
 
-          <br />
+        <br /><br />
 
-          <!-- LINKS AUXILIARES -->
-          <p>
-            Não possui conta?
-            <a href="cadastro.html">Cadastre-se</a>
-          </p>
-        </section>
-      </main>
+        <!-- LINKS AUXILIARES -->
+        <p>
+          Não possui conta?
+          <a href="cadastro.html">Cadastre-se</a>
+        </p>
+      </section>
     </div>
-    <hr />
+  </main>
+  <hr />
 
-    <!-- FOOTER -->
-    <footer id="footer">
-      <p>Trabalho final do 2º ano de Informática do IFMG - Campus Formiga</p>
+  <!-- FOOTER -->
+  <footer id="footer">
+    DevShare - Sempre abertos à comunidade
+  </footer>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="../../JS/jquerry.js"></script>
+<script src="../../JS/util/apagar_elemento.js"></script>
+<script src="../../JS/util/criar_tela_erro.js"></script>
+<script src="../../JS/entrada/perfil_usuario/login.js"></script>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (() => {
+    'use strict'
 
-      <p>
-        Disciplinas: Desenvolvimento Web I, Banco de Dados I e Análise e Projeto
-        de Sistemas
-      </p>
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
 
-      <p>Autores: Davi Leandro e João Marcos Vital</p>
-    </footer>
-  </body>
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+
 </html>

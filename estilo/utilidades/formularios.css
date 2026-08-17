@@ -1,0 +1,62 @@
+/* ===================== FORM ===================== */
+
+form,
+.col-12 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+/* ===================== INPUTS ===================== */
+
+label {
+    font-size: 0.85rem !important;
+    margin-bottom: 5px !important;
+    color: var(--text-secondary);
+}
+
+input {
+    padding: 8px !important;
+
+    border-radius: 6px !important;
+    border: 1px solid var(--border);
+
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+
+    transition: 0.3s !important;
+    width: 100% !important;
+    height: min-content;
+}
+
+/* Foco */
+input:focus {
+    outline: none !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 5px var(--accent) !important;
+    transition: fadeUP 0.3s !important;
+}
+
+/* ===================== BOTÃO ===================== */
+button {
+    margin-top: 10px !important;
+
+    padding: 12px !important;
+
+    border: none !important;
+    border-radius: 6px !important;
+
+    background-color: var(--accent) !important;
+    color: #fff !important;
+
+    font-weight: bold !important;
+    cursor: pointer !important;
+
+    transition: 0.3s !important;
+}
+
+button:hover {
+    background-color: var(--accent-hover) !important;
+    transform: translateY(-2px) !important;
+}

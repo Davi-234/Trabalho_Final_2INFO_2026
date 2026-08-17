@@ -1,0 +1,217 @@
+/* ===================== ÍCONE DE PERFIL (CSS PURO) ===================== */
+
+#perfil-icone {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    font-weight: bold;
+
+    /* Gradiente moderno */
+    background: linear-gradient(135deg, #58a6ff, #a371f7);
+
+    color: #fff;
+
+    transition: 0.3s;
+
+    gap: 0.5em;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Hover */
+#perfil-icone:hover {
+    transform: scale(1.1);
+}
+
+#perfil_icone_head {
+    background-color: whitesmoke;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+
+#perfil_icone_body {
+    background-color: whitesmoke;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    width: 60px;
+    height: 70px;
+}
+
+#adicionar_foto_perfil {
+    margin-right: auto;
+    margin-left: auto;
+    width: 20%;
+    height: 40px;
+    background-color: var(--bg-secondary);
+    color: var(--accent);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: fadeIn;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+#adicionar_foto_perfil:hover {
+    transform: scale(1.1);
+    border-bottom-color: var(--accent-hover);
+    transition: 0.2;
+}
+
+/* ===================== FORMULÁRIO ===================== */
+
+#form-projeto {
+    animation: fadeUp 1s ease;
+}
+
+/* Fieldset moderno */
+fieldset {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0 2% 20px 2%;
+}
+
+/* Legend estilizado */
+legend {
+    padding: 0 10px;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+/* Inputs */
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 10px;
+    margin-bottom: 10px;
+
+    border-radius: 6px;
+    border: 1px solid var(--border);
+
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+
+    transition: 0.3s;
+}
+
+/* Foco */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 5px var(--accent);
+}
+
+/* Labels */
+label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* RADIO */
+input[type="radio"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/*========================================== LISTAS ==========================================*/
+dl,
+dt {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+dt {
+    gap: 8px;
+    justify-content: center;
+}
+
+/* ============================ PROJETOS ======================================================= */
+#dados_totais_projetos {
+    margin-bottom: 10px;
+}
+
+.projeto {
+    border: 1px solid var(--border-color) !important;
+}
+
+/* ============================================== */
+.btn {
+    width: auto;
+    height: auto;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--accent);
+    color: white;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--accent-hover);
+}
+
+#btns_alterar {
+    display: flex;
+    justify-content: center;
+}
+
+fieldset {
+    animation: fadeUp 0.8s ease;
+}
+
+/* ===================== FOOTER ===================== */
+
+#footer {
+    background-color: #010409;
+    /* cor diferente proposital */
+
+    text-align: center;
+    padding: 15px;
+
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+
+    border-top: 1px solid var(--border);
+}
+
+/*========================================== RESPONSIVIDADE /*==========================================*/
+@media (max-width: 800px) {
+
+    dl,
+    dt {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    dt {
+        gap: 8px;
+        justify-content: center;
+    }
+}

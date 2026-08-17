@@ -1,151 +1,154 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="../../estilo/entrada/cadastro.css" />
-  </head>
-  <body>
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main id="cadastro-container">
-      <section id="cadastro-box">
-        <h1 class="section-title">Cadastro de Usuário</h1>
+<html lang="pt-br">
 
-        <p class="info-text">
-          Crie sua conta para compartilhar, comentar e avaliar projetos.
-        </p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../estilo/entrada/cadastro.css" />
+  <link rel="stylesheet" href="../../estilo/utilidades/formularios.css">
+  <link rel="stylesheet" href="../../estilo/estilo_principal.css">
+  <link rel="stylesheet" href="../../estilo/header.css">
+  <link rel="stylesheet" href="../../estilo/utilidades/mensagem_erro.css">
+  <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+</head>
 
-        <!-- FORMULÁRIO -->
-        <form id="cadastro-form">
-          <div class="externa_usuario">
-            <div id="div_usu" class="form-group">
-              <!-- USUÁRIO -->
-              <label for="usuario">Nome de usuário:</label><br />
-              <input
-                class="input-text"
-                type="text"
-                id="usuario"
-                name="usuario"
-                placeholder="Digite seu nome de usuário"
-                required
-              />
-            </div>
-          </div>
+<body>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main>
+    <section id="cadastro-box">
+      <h1 class="section-title">Cadastro de Usuário</h1>
 
-          <div class="externa_email">
-            <div id="div_email" class="form-group">
-              <!-- EMAIL -->
-              <label for="email">E-mail:</label><br />
-              <input
-                class="input-text"
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Digite seu e-mail"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="externa_senha">
-            <div id="div_senha" class="form-group">
-              <!-- SENHA -->
-              <label for="senha">Senha:</label><br />
-              <input
-                class="input-text"
-                type="password"
-                id="senha"
-                name="senha"
-                placeholder="Digite sua senha"
-                required
-              />
-            </div>
-            <div id="div_confirmar_senha" class="form-group">
-              <!-- CONFIRMAR SENHA -->
-              <label for="confirmar-senha">Confirmar senha:</label><br />
-              <input
-                class="input-text"
-                type="password"
-                id="confirmar-senha"
-                name="confirmarSenha"
-                placeholder="Confirme sua senha"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="externa_links">
-            <div id="div_github" class="form-group">
-              <!-- GITHUB (opcional) -->
-              <label for="github">GitHub (opcional):</label><br />
-              <input
-                class="input-text"
-                type="url"
-                id="github"
-                name="github"
-                placeholder="https://github.com/seuusuario"
-              />
-            </div>
-
-            <div id="div_linkedin" class="form-group">
-              <!-- LINKEDIN (opcional) -->
-              <label for="linkedin">LinkedIn (opcional):</label><br />
-              <input
-                class="input-text"
-                type="url"
-                id="linkedin"
-                name="linkedin"
-                placeholder="https://linkedin.com/in/seuusuario"
-              />
-            </div>
-          </div>
-
-          <br /><br />
-
-          <!-- BOTÃO -->
-          <button class="btn" type="submit">Cadastrar</button>
-        </form>
-
-        <br />
-
-        <!-- MENSAGENS -->
-        <div id="mensagens">
-          <p class="erro">
-            <!-- Exemplo: E-mail já cadastrado -->
-          </p>
-
-          <p class="erro">
-            <!-- Exemplo: Senhas não coincidem -->
-          </p>
-
-          <p class="sucesso">
-            <!-- Exemplo: Cadastro realizado. Verifique seu e-mail para ativar a conta -->
-          </p>
-        </div>
-
-        <br />
-
-        <!-- LINK LOGIN -->
-        <p class="info-text">
-          Já possui conta?
-          <a href="login.html">Faça login</a>
-        </p>
-      </section>
-    </main>
-
-    <hr />
-
-    <!-- FOOTER -->
-    <footer id="footer">
-      <p>Trabalho final do 2º ano de Informática do IFMG - Campus Formiga</p>
-
-      <p>
-        Disciplinas: Desenvolvimento Web I, Banco de Dados I e Análise e Projeto
-        de Sistemas
+      <p class="info-text">
+        Crie sua conta para compartilhar, comentar e avaliar projetos.
       </p>
 
-      <p>Autores: Davi Leandro e João Marcos Vital</p>
-    </footer>
-  </body>
+      <!-- FORMULÁRIO -->
+      <form class="row g-3 needs-validation" novalidate>
+        <div>
+          <label for="validationCustom01" class="form-label">Nome Usuário:</label>
+          <input type="text" class="form-control" id="validationCustom01" placeholder="Digite o seu nome" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+
+        <div>
+          <label for="validationCustom02" class="form-label">E-mail:</label>
+          <input type="email" class="form-control" id="validationCustom02" placeholder="Digite o seu E-mail" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="col-md-4">
+            <div>
+              <label for="validationCustom03" class="form-label">Senha:</label>
+              <input type="password" class="form-control" id="validationCustom03" placeholder="Digite a sua senha"
+                required>
+            </div>
+            <div>
+              <label for="validationCustom04" class="form-label">Confirmar Senha:</label>
+              <input type="password" class="form-control" id="validationCustom04" placeholder="Confirme a sua senha"
+                required>
+            </div>
+          </div>
+          <div class="valid-feedback">
+            <p id="tela_erros_senha">
+              <span id="titulo_erro_senha">Erros na senha:</span>
+              <span class="mensagem_erro" id="senha_pequena">Senha muito pequena. (Mínimo de 8 caracteres)</span>
+              <span class="mensagem_erro" id="caracteres_especiais">Caracteres especiais.</span>
+              <span class="mensagem_erro" id="letras_maiusculas">Letras maiusculas.</span>
+              <span class="mensagem_erro" id="letras_minusculas">Letras minúsculas.</span>
+              <span class="mensagem_erro" id="contem_numeros">Contém números.</span>
+              <!-- <br><span class="mensagem_erro" id="tempo_quebra">.</span>  Será adicionado postumamente.-->
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4-2">
+          <div>
+            <label for="validationCustom05" class="form-label">Link GitHub (Opcional):</label>
+            <input type="url" class="form-control" id="validationCustom05" placeholder="Digite o seu perfil do GitHub">
+          </div>
+          <div>
+            <label for="validationCustom06" class="form-label">Link Likedin (Opcional):</label>
+            <input type="url" class="form-control" id="validationCustom06"
+              placeholder="Digite o seu perfil do Linkedin">
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit">Cadastrar-se</button>
+        </div>
+      </form>
+      <br />
+      <!-- LINK LOGIN -->
+      <p class="info-text">
+        Já possui conta?
+        <a href="login.html">Faça login</a>
+      </p>
+    </section>
+  </main>
+
+  <hr />
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    DevShare - Sempre abertos à comunidade
+  </footer>
+</body>
+<script src="../../JS/jquerry.js"></script>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+<script src="../../JS/global/validação_senhas/validar_senha.js"></script>
+<script>
+  $('#validationCustom03').on('input', function () {
+    let valores_senha = validar_senha($(this).val());
+
+    valores_senha.requisitos_senha.tamanho_minimo ? $('#senha_pequena').removeClass('visivel') : $('#senha_pequena').addClass('visivel');
+    valores_senha.requisitos_senha.tem_caracteres_especiais ? $('#caracteres_especiais').removeClass('visivel') : $('#caracteres_especiais').addClass('visivel');
+    valores_senha.requisitos_senha.tem_numeros ? $('#contem_numeros').removeClass('visivel') : $('#contem_numeros').addClass('visivel');
+    valores_senha.requisitos_senha.tem_letras_minusculas ? $('#letras_minusculas').removeClass('visivel') : $('#letras_minusculas').addClass('visivel');
+    valores_senha.requisitos_senha.tem_letras_maiusculas ? $('#letras_maiusculas').removeClass('visivel') : $('#letras_maiusculas').addClass('visivel');
+
+    ha_erros_na_senha();
+  });
+</script>
+<script>
+  $("#titulo_erro_senha").hide();
+  var ha_erros_na_senha = function () {
+    let erros_senha = Array.from(document.getElementsByClassName('mensagem_erro'));
+    let ha_erros = false;
+    erros_senha.forEach(erro => {
+      if (erro.classList.contains('mensagem_erro')) {
+        ha_erros = true
+      }
+    });
+    ha_erros ? $("#titulo_erro_senha").show() : $("#titulo_erro_senha").hide();
+  };
+</script>
+
 </html>

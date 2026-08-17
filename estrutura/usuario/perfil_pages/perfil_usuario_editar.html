@@ -1,0 +1,107 @@
+<!-- Essa página aparece para o usuário dono do perfil -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="../../../estilo/utilidades/tela_modal.css">
+    <link rel="stylesheet" href="../../../estilo/usuario/perfil_estilos/perfil_usuario.css">
+    <link rel="stylesheet" href="../../../estilo/utilidades/estrela.css">
+    <link rel="stylesheet" href="../../../estilo/utilidades/projetos.css">
+    <link rel="stylesheet" href="../../estilo/estilo_principal.css">
+    <link rel="stylesheet" href="../../estilo/header.css">
+    <link rel="stylesheet" href="../../../estilo/utilidades/formularios.css">
+    <link rel="icon" type="image/png" href="../../../img_para_projeto/logo.png">
+</head>
+
+<body>
+    <header>
+        <!-- Logo + Nome do Projeto -->
+        <div id="logo-container">
+            <h1>
+                <span>
+                    <img src="../../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
+                </span>
+                DevShare
+            </h1>
+            <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../usuario/home.html">Home</a></li>
+                <li><a href="../../global/explorar.html">Explorar</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="foto_perfil">
+            <label for="adicionar_Foto_Perfil">
+                <div id="perfil-icone">
+                    <div id="perfil_icone_head"></div>
+                    <div id="perfil_icone_body"></div>
+                </div>
+            </label>
+
+            <button id="adicionar_foto_perfil" name="adicionar_Foto_Perfil">
+                Alterar foto de perfil
+            </button>
+        </section>
+
+        <section id="dados_pessoais_perfil">
+            <fieldset>
+                <legend>Dados Pessoais:</legend>
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" disabled>
+            </fieldset>
+        </section>
+
+        <section id="dados_contato_perfil">
+            <fieldset>
+                <legend>Contatos:</legend>
+                <label for="link_git">GitHub:</label>
+                <input type="text" id="link_git" link_git="name" disabled>
+                <label for="linkedin">Linkedin:</label>
+                <input type="text" id="linkedin" name="linkedin" disabled>
+                <label for="email">E-mail:</label>
+                <input type="text" id="email" name="email" disabled>
+            </fieldset>
+        </section>
+
+        <section id="dados_projetos_perfil">
+            <fieldset>
+                <legend>Dados dos Projetos:</legend>
+                <dl id="dados_totais_projetos">
+                    <dt>
+                        <label for="link_git">Projetos:</label>
+                        <input type="text" id="link_git" name="link_git" disabled>
+                    </dt>
+                    <dt>
+                        <label for="linkedin">Curtidas:</label>
+                        <input type="text" id="linkedin" name="linkedin" disabled>
+                    </dt>
+                    <dt>
+                        <label for="views">Visualizações:</label>
+                        <input type="text" id="views" name="views" disabled>
+                    </dt>
+                </dl>
+            </fieldset>
+        </section>
+
+        <section id="btns_alterar">
+            <button type="button" class="btn" id="editar_dados">Editar dados do perfil</button>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        DevShare - Sempre abertos à comunidade
+    </footer>
+</body>
+<script src="../../../JS/jquerry.js"></script>
+<script src="../../../JS/entrada/perfil_usuario/criar_janelaModal.js"></script>
+<script src="../../../JS/entrada/perfil_usuario/janela_modal_backend.js"></script>
+
+</html>

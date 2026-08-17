@@ -1,106 +1,3 @@
-/* ===================== RESET ===================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* ===================== VARIÁVEIS ===================== */
-:root {
-    --bg-primary: #0d1117;
-    --bg-secondary: #161b22;
-    --bg-tertiary: #1f2630;
-
-    --border: #30363d;
-
-    --text-primary: #e6edf3;
-    --text-secondary: #8b949e;
-
-    --accent: #58a6ff;
-    --accent-hover: #1f6feb;
-}
-
-/* ===================== BODY ===================== */
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #0d1117, #1f2630);
-    color: var(--text-primary);
-}
-
-/* ===================== ANIMAÇÕES ===================== */
-
-/* Entrada suave */
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Slide lateral */
-@keyframes slideRight {
-    from {
-        opacity: 0;
-        transform: translateX(60px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* ===================== HEADER ===================== */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 20px 40px;
-
-    background-color: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-
-    animation: fadeUp 0.6s ease;
-}
-
-#logo {
-    width: 40px;
-}
-
-#logo-container h1 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-#logo-container p {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-
-/* NAV */
-nav ul {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-}
-
-nav a {
-    text-decoration: none;
-    color: var(--text-primary);
-    font-weight: bold;
-}
-
-nav a:hover {
-    color: var(--accent);
-}
-
 /* ===================== MAIN ===================== */
 
 /*
@@ -168,6 +65,7 @@ select {
     color: var(--text-primary);
 
     transition: 0.3s;
+    resize: none;
 }
 
 /* Foco */
@@ -235,6 +133,11 @@ Lateral direita estilo dashboard
     animation: slideRight 1s ease;
 }
 
+#preview header {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Card preview */
 .projeto-preview {
     background-color: var(--bg-tertiary);
@@ -261,7 +164,6 @@ Lateral direita estilo dashboard
 /* Footer preview */
 .projeto-preview footer ul {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
 
     list-style: none;
@@ -269,10 +171,24 @@ Lateral direita estilo dashboard
     color: var(--text-secondary);
 }
 
+#preview,
+.projeto-preview,
+#preview_description {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    text-align: justify;
+}
+
+.projeto-preview section {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 /* ===================== FOOTER ===================== */
 
 #footer {
-    background-color: #010409; /* cor diferente proposital */
+    background-color: #010409;
+    /* cor diferente proposital */
 
     text-align: center;
     padding: 15px;
@@ -314,4 +230,30 @@ Lateral direita estilo dashboard
     main {
         padding: 15px;
     }
+}
+
+#tela_falta_dados {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 60px;
+
+    background: var(--bg-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 99999;
+
+    box-shadow: 0 3px 8px rgba(0,0,0,.3);
+}
+
+#tela_falta_dados > div{
+    background: var(--bg-tertiary);
+    color: red;
+    padding: 20px;
+    border-radius: 10px;
 }

@@ -1,218 +1,232 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>projeto</title>
-    <link rel="stylesheet" href="../../estilo/global/projeto_global.css" />
-  </head>
-  <body>
-    <!-- ================= HEADER ================= -->
-    <header>
-      <!-- Logo + Nome do Projeto -->
-      <div id="logo-container">
-        <h1>
-          <span>
-            <img
-              src="../../img_para_projeto/logo.png"
-              alt="Project community logo"
-              id="logo"
-            />
-          </span>
-          DevShare
-        </h1>
-        <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
-      </div>
 
-      <nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>projeto</title>
+  <link rel="stylesheet" href="../../estilo/global/projeto_global.css" />
+  <link rel="stylesheet" href="../../estilo/utilidades/tela_modal.css">
+  <link rel="stylesheet" href="../../estilo/estilo_principal.css">
+  <link rel="stylesheet" href="../../estilo/header.css">
+  <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+</head>
+
+<body>
+  <!-- ================= HEADER ================= -->
+  <header>
+    <!-- Logo + Nome do Projeto -->
+    <div id="logo-container">
+      <h1>
+        <span>
+          <img src="../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
+        </span>
+        DevShare
+      </h1>
+      <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="../usuario/home.html">Home</a></li>
+        <li><a href="explorar.html">Explorar</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+    <!-- Projeto -->
+    <section id="projeto">
+      <header>
+        <h2>Nome do Projeto</h2>
+        <p>Por:
+          <a href="../usuario/perfil_pages/perfil_usuario_visivel.html" id="nome_dono_projeto">
+            Exemplo
+          </a>
+        </p>
+        <p>Nível: Intermediário | Tipo: Web</p>
+      </header>
+
+      <section id="descricao">
+        <h3>Descrição:</h3>
+        <p>
+          Este projeto consiste em uma aplicação completa desenvolvida para
+          resolver um problema específico. Ele utiliza diversas tecnologias
+          modernas e segue boas práticas de desenvolvimento.
+        </p>
+      </section>
+
+      <section id="tecnologias">
+        <h3>Tecnologias Utilizadas:</h3>
         <ul>
-          <li><a href="../usuario/home.html">Home</a></li>
-          <li><a href="explorar.html">Explorar</a></li>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+          <li>Java</li>
         </ul>
-      </nav>
-    </header>
+      </section>
 
-    <!-- ================= MAIN ================= -->
-    <main>
-      <!-- Projeto -->
-      <section id="projeto">
+      <section id="repositorio">
+        <h3>Repositório:</h3>
+        <p><a href="#">Acessar projeto</a></p>
+      </section>
+
+      <!-- Interações -->
+      <section id="interacoes">
         <header>
-          <h2>Nome do Projeto</h2>
-          <p>Por: Usuário Exemplo</p>
-          <p>Nível: Intermediário | Tipo: Web</p>
+          <h3>Interações</h3>
         </header>
+        <div id="interacoes-container">
+          <!-- Curtida -->
+          <div id="curtir">
+            <form action="#" method="post">
+              <button type="submit"></button>
+            </form>
+          </div>
 
-        <section id="descricao">
-          <h3>Descrição:</h3>
-          <p>
-            Este projeto consiste em uma aplicação completa desenvolvida para
-            resolver um problema específico. Ele utiliza diversas tecnologias
-            modernas e segue boas práticas de desenvolvimento.
-          </p>
-        </section>
+          <!-- Avaliação -->
+          <div id="avaliacao">
+            <form>
+              <div class="rating">
+                <input type="radio" name="estrela" id="estrela5" value="5" />
+                <label for="estrela5">★</label>
 
-        <section id="tecnologias">
-          <h3>Tecnologias Utilizadas:</h3>
-          <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-            <li>Java</li>
-          </ul>
-        </section>
+                <input type="radio" name="estrela" id="estrela4" value="4" />
+                <label for="estrela4">★</label>
 
-        <section id="repositorio">
-          <h3>Repositório:</h3>
-          <p><a href="#">Acessar projeto</a></p>
-        </section>
+                <input type="radio" name="estrela" id="estrela3" value="3" />
+                <label for="estrela3">★</label>
 
-        <!-- Interações -->
-        <section id="interacoes">
+                <input type="radio" name="estrela" id="estrela2" value="2" />
+                <label for="estrela2">★</label>
+
+                <input type="radio" name="estrela" id="estrela1" value="1" />
+                <label for="estrela1">★</label>
+              </div>
+
+              <button type="submit">Avaliar</button>
+            </form>
+          </div>
+        </div>
+
+        <div id="estatisticas-e-denunciar">
+          <!-- Denunciar -->
+          <div id="denunciar">
+            <button type="submit">Denunciar Projeto</button>
+          </div>
+          <div id="estatisticas">
+            <p>Visualizações: 540</p>
+            <p>Curtidas: 120</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ================= COMENTÁRIOS ================= -->
+    <section id="comentarios">
+      <header>
+        <h2>Comentários</h2>
+      </header>
+
+      <!-- Adicionar comentário -->
+      <section id="adicionar-comentario">
+        <form action="#" method="post">
+          <label for="comentario">Adicionar comentário</label>
+          <textarea id="comentario" name="comentario" rows="4" placeholder="Escreva seu comentário..."></textarea>
+
+          <!-- Opções comuns -->
+          <div id="opcoes-comentario">
+            <label>
+              <input type="checkbox" name="notificar" />
+              Notificar respostas
+            </label>
+          </div>
+
+          <button class="btn" type="submit">Publicar</button>
+        </form>
+      </section>
+
+      <!-- Lista de comentários -->
+      <section id="lista-comentarios">
+        <!-- Comentário 1 -->
+        <article class="comentario">
           <header>
-            <h3>Interações</h3>
+            <p><strong>Usuario1</strong></p>
+            <p>Publicado em: 01/05/2026</p>
           </header>
-          <div id="interacoes-container">
-            <!-- Curtida -->
-            <div id="curtir">
-              <form action="#" method="post">
-                <button type="submit"></button>
-              </form>
-            </div>
 
-            <!-- Avaliação -->
-            <div id="avaliacao">
-              <form>
-                <div class="rating">
-                  <input type="radio" name="estrela" id="estrela5" value="5" />
-                  <label for="estrela5">★</label>
+          <section>
+            <p>
+              Muito bom projeto! Gostei bastante da organização do código.
+            </p>
+          </section>
 
-                  <input type="radio" name="estrela" id="estrela4" value="4" />
-                  <label for="estrela4">★</label>
+          <footer>
+            <nav>
+              <ul>
+                <li><a href="#">Curtir</a></li>
+                <li><a href="#">Denunciar</a></li>
+              </ul>
+            </nav>
+          </footer>
+        </article>
 
-                  <input type="radio" name="estrela" id="estrela3" value="3" />
-                  <label for="estrela3">★</label>
+        <!-- Comentário 2 -->
+        <article class="comentario">
+          <header>
+            <p><strong>DevMaster</strong></p>
+            <p>Publicado em: 02/05/2026</p>
+          </header>
 
-                  <input type="radio" name="estrela" id="estrela2" value="2" />
-                  <label for="estrela2">★</label>
+          <section>
+            <p>
+              Poderia melhorar a parte de autenticação, mas no geral está
+              excelente.
+            </p>
+          </section>
 
-                  <input type="radio" name="estrela" id="estrela1" value="1" />
-                  <label for="estrela1">★</label>
-                </div>
-
-                <button type="submit">Avaliar</button>
-              </form>
-            </div>
-          </div>
-
-          <div id="estatisticas-e-denunciar">
-            <!-- Denunciar -->
-            <div id="denunciar">
-              <form action="#" method="post">
-                <button type="submit">Denunciar Projeto</button>
-              </form>
-            </div>
-
-            <div id="estatisticas">
-              <p>Visualizações: 540</p>
-              <p>Curtidas: 120</p>
-            </div>
-          </div>
-        </section>
+          <footer>
+            <nav>
+              <ul>
+                <li><a href="#">Curtir</a></li>
+                <li><a href="#" id="denuncia_btn">Denunciar</a></li>
+              </ul>
+            </nav>
+          </footer>
+        </article>
       </section>
+    </section>
+  </main>
 
-      <!-- ================= COMENTÁRIOS ================= -->
-      <section id="comentarios">
-        <header>
-          <h2>Comentários</h2>
-        </header>
+  <!-- ================= FOOTER ================= -->
+  <footer id="footer">
+    DevShare - Sempre abertos à comunidade
+  </footer>
+</body>
+<script src="../../JS/jquerry.js"></script>
+<script>
+  $("#denunciar button, #denuncia_btn").on("click", aparecer_tela_denuncia);
 
-        <!-- Adicionar comentário -->
-        <section id="adicionar-comentario">
-          <form action="#" method="post">
-            <label for="comentario">Adicionar comentário</label>
-            <textarea
-              id="comentario"
-              name="comentario"
-              rows="4"
-              placeholder="Escreva seu comentário..."
-            ></textarea>
+  function aparecer_tela_denuncia() {
+    const modal_window = $(`
+    <div id="tela_modal">
+        <h1>Denunciar Projeto</h1>
+        <fieldset>
+            <form id="form_uptade" name="form_uptade" action="#" method="get">
+              <legend>Motivo da denúncia:</legend>
 
-            <!-- Opções comuns -->
-            <div id="opcoes-comentario">
-              <label>
-                <input type="checkbox" name="notificar" />
-                Notificar respostas
-              </label>
-            </div>
+            </form>
+        </fieldset>
+        <div>
+            <button type="submit" id="confirmar_alteracoes" class="btn">Confirmar Alterações</button>
+            <button type="" id="sair_edicao_dados" class="btn" onclick="$('#tela_modal').remove(); $('body').removeClass('esconder')">Sair da edição</button>
+        </div>
+    </div>
+    `);
+    $("body").append(modal_window);
+    $("body").addClass("esconder");
+  }
+</script>
 
-            <button type="submit">Publicar</button>
-          </form>
-        </section>
-
-        <!-- Lista de comentários -->
-        <section id="lista-comentarios">
-          <!-- Comentário 1 -->
-          <article class="comentario">
-            <header>
-              <p><strong>Usuario1</strong></p>
-              <p>Publicado em: 01/05/2026</p>
-            </header>
-
-            <section>
-              <p>
-                Muito bom projeto! Gostei bastante da organização do código.
-              </p>
-            </section>
-
-            <footer>
-              <nav>
-                <ul>
-                  <li><a href="#">Curtir</a></li>
-                  <li><a href="#">Responder</a></li>
-                  <li><a href="#">Denunciar</a></li>
-                </ul>
-              </nav>
-            </footer>
-          </article>
-
-          <!-- Comentário 2 -->
-          <article class="comentario">
-            <header>
-              <p><strong>DevMaster</strong></p>
-              <p>Publicado em: 02/05/2026</p>
-            </header>
-
-            <section>
-              <p>
-                Poderia melhorar a parte de autenticação, mas no geral está
-                excelente.
-              </p>
-            </section>
-
-            <footer>
-              <nav>
-                <ul>
-                  <li><a href="#">Curtir</a></li>
-                  <li><a href="#">Responder</a></li>
-                  <li><a href="#">Denunciar</a></li>
-                </ul>
-              </nav>
-            </footer>
-          </article>
-        </section>
-      </section>
-    </main>
-
-    <!-- ================= FOOTER ================= -->
-    <footer id="footer">
-      <p>Trabalho final do 2º ano de Informática do IFMG - Campus Formiga</p>
-
-      <p>
-        Disciplinas: Desenvolvimento Web I, Banco de Dados I e Análise e Projeto
-        de Sistemas
-      </p>
-
-      <p>Autores: Davi Leandro e João Marcos Vital</p>
-    </footer>
-  </body>
 </html>

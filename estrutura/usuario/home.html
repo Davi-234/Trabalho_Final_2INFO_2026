@@ -1,143 +1,93 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
-    <link rel="stylesheet" href="../../estilo/usuario/home.css" />
-  </head>
-  <body>
-    <!-- ================= HEADER ================= -->
-    <header>
-      <!-- Logo + Nome do Projeto -->
-      <div id="logo-container">
-        <h1>
-          <span>
-            <img
-              src="../../img_para_projeto/logo.png"
-              alt="Project community logo"
-              id="logo"
-            />
-          </span>
-          DevShare
-        </h1>
-        <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
-      </div>
 
-      <!-- Navegação principal -->
-      <nav>
-        <ul>
-          <li><a href="../global/explorar.html">Explorar Projetos</a></li>
-          <li>
-            <!-- Foto de perfil (placeholder para CSS) -->
-            <a href="#">
-              <div id="perfil-icone"></div>
-            </a>
-          </li>
-          <li><a href="../entrada/index.html">Sair</a></li>
-        </ul>
-      </nav>
-    </header>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link rel="stylesheet" href="../../estilo/usuario/home.css" />
+  <link rel="stylesheet" href="../../estilo/estilo_principal.css">
+  <link rel="stylesheet" href="../../estilo/header.css">
+  <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+</head>
 
-    <!-- ================= MAIN ================= -->
-    <main>
-      <!-- Área do usuário -->
-      <section id="usuario">
-        <article id="boas-vindas">
-          <h2>Bem-vindo ao seu painel</h2>
-          <p>
-            Gerencie seus projetos, acompanhe avaliações e evolua como
-            desenvolvedor.
-          </p>
+<body>
+  <!-- ================= HEADER ================= -->
+  <header>
+    <!-- Logo + Nome do Projeto -->
+    <div id="logo-container">
+      <h1>
+        <span>
+          <img src="../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
+        </span>
+        DevShare
+      </h1>
+      <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
+    </div>
+
+    <!-- Navegação principal -->
+    <nav>
+      <ul>
+        <li><a href="../global/explorar.html">Explorar Projetos</a></li>
+        <li>
+          <!-- Foto de perfil (placeholder para CSS) -->
+          <a href="#">
+            <div id="perfil-icone"></div>
+          </a>
+        </li>
+        <li><a href="../entrada/index.html">Sair</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+    <!-- Área do usuário -->
+    <section id="usuario">
+      <article id="boas-vindas">
+        <h2>Bem-vindo ao seu painel</h2>
+        <p>
+          Gerencie seus projetos, acompanhe avaliações e evolua como
+          desenvolvedor.
+        </p>
+      </article>
+
+      <!-- Ações do usuário -->
+      <section id="acoes-usuario">
+        <article>
+          <h3>Adicionar novo projeto</h3>
+          <a href="projeto.html">Criar Projeto</a>
         </article>
 
-        <!-- Ações do usuário -->
-        <section id="acoes-usuario">
-          <article>
-            <h3>Adicionar novo projeto</h3>
-            <a href="projeto.html">Criar Projeto</a>
-          </article>
-
-          <article>
-            <h3>Editar perfil</h3>
-            <a href="#">Configurações do Perfil</a>
-          </article>
-        </section>
+        <article>
+          <h3>Editar perfil</h3>
+          <a href="../entrada/perfil_pages/perfil_usuario_editar.html">Configurações do Perfil</a>
+        </article>
       </section>
+    </section>
 
-      <!-- Projetos do usuário -->
-      <section id="meus-projetos">
-        <header>
-          <h2>Meus Projetos</h2>
-          <p>Projetos que você publicou na plataforma</p>
-        </header>
-
-        <!-- Lista de projetos -->
-        <section id="lista-projetos">
-          <!-- Projeto exemplo -->
-          <article class="projeto">
-            <header>
-              <h3>Nome do Projeto</h3>
-              <p>Visibilidade: Público</p>
-            </header>
-
-            <section>
-              <p>
-                Descrição do projeto. Aqui ficará um resumo do que foi
-                desenvolvido e quais tecnologias foram utilizadas.
-              </p>
-            </section>
-
-            <!-- Ações do projeto -->
-            <footer>
-              <nav>
-                <ul>
-                  <li><a href="../global/projeto.html">Ver</a></li>
-                  <li><a href="projeto.html">Editar</a></li>
-                  <li><a href="#">Excluir</a></li>
-                </ul>
-              </nav>
-            </footer>
-          </article>
-
-          <!-- Outro projeto exemplo -->
-          <article class="projeto">
-            <header>
-              <h3>Outro Projeto</h3>
-              <p>Visibilidade: Privado</p>
-            </header>
-
-            <section>
-              <p>Outro exemplo de projeto com descrição breve e objetiva.</p>
-            </section>
-
-            <footer>
-              <nav>
-                <ul>
-                  <li><a href="../global/projeto.html">Ver</a></li>
-                  <li><a href="projeto.html">Editar</a></li>
-                  <li><a href="#">Excluir</a></li>
-                </ul>
-              </nav>
-            </footer>
-          </article>
-        </section>
+    <!-- Projetos do usuário -->
+    <section id="meus-projetos">
+      <header>
+        <h2>Meus Projetos</h2>
+        <p>Projetos que você publicou na plataforma</p>
+      </header>
+      <section id="lista-projetos">
+        
       </section>
-    </main>
-    <!-- FOOTER -->
-    <footer id="footer">
-      <p>Trabalho final do 2º ano de Informática do IFMG - Campus Formiga</p>
-
-      <p>
-        Disciplinas: Desenvolvimento Web I, Banco de Dados I e Análise e Projeto
-        de Sistemas
-      </p>
-
-      <p>Autores: Davi Leandro e João Marcos Vital</p>
-    </footer>
-  </body>
+    </section>
+  </main>
+  <!-- FOOTER -->
+  <footer id="footer">
+    DevShare - Sempre abertos à comunidade
+  </footer>
+</body>
+<script src="../../JS/jquerry.js"></script>
+<script src="../../JS/usuario/card.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        carregarProjetos();
+    });
+</script>
 </html>
