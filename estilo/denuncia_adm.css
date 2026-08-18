@@ -1,0 +1,87 @@
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+#data {
+    border-top: 1px solid var(--border);
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-bottom: 1px solid var(--border);
+}
+
+#denunciado {
+    padding-bottom: 2%;
+    border-bottom: 1px solid var(--border);
+}
+
+#data {
+    border-top: 1px solid var(--border);
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-bottom: 1px solid var(--border);
+}
+
+#denunciado {
+    padding-bottom: 2%;
+    border-bottom: 1px solid var(--border);
+}
+
+#denuncia {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 25px;
+
+    animation: fadeUp 0.8s ease;
+}
+
+/* Header do projeto */
+#denuncia header {
+    display: flex;
+    flex-direction: column;
+}
+
+#denuncia header h2 {
+    font-size: 1.8rem;
+}
+
+#denuncia header p {
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+/* Seções internas */
+#denuncia section {
+    margin-top: 20px;
+}
+
+#denuncia footer {
+    padding-top: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer nav ul li button {
+    padding: 8px 12px;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    border: 1px #58a6ff solid;
+    color: white;
+
+    font-size: 0.9rem;
+
+    transition: 0.3s;
+}
+
+footer nav ul li button:hover {
+    background-color: var(--accent-hover);
+}

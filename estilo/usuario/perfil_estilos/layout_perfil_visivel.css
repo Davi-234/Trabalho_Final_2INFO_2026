@@ -1,0 +1,9 @@
+@media (min-width:850px) {
+    main {
+        margin-top: 2%;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: repeat(1, 1fr);
+        grid-area: "dados projetos";
+    }
+}

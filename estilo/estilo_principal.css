@@ -29,9 +29,6 @@ body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     overflow-x: hidden;
-}
-
-body{
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -40,7 +37,8 @@ body{
 
 /* ===================== FOOTER ===================== */
 #footer {
-    background-color: #010409; /* cor diferente proposital */
+    background-color: #010409;
+    /* cor diferente proposital */
 
     text-align: center;
     padding: 15px;
@@ -49,6 +47,19 @@ body{
     color: var(--text-secondary);
 
     border-top: 1px solid var(--border);
+}
+
+/* ===================== LINKS ==================== */
+
+a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+a:hover {
+    color: var(--accent);
 }
 
 /* ===================== ANIMAÇÕES ===================== */
