@@ -32,7 +32,7 @@
         <li><a href="../global/explorar.html">Explorar Projetos</a></li>
         <li>
           <!-- Foto de perfil (placeholder para CSS) -->
-          <a href="#">
+          <a>
             <div id="perfil-icone"></div>
           </a>
         </li>
@@ -62,7 +62,7 @@
 
         <article>
           <h3>Editar perfil</h3>
-          <a href="../entrada/perfil_pages/perfil_usuario_editar.html">Configurações do Perfil</a>
+          <a href="perfil_usuario_editar.html">Configurações do Perfil</a>
         </article>
       </section>
     </section>
@@ -79,7 +79,7 @@
         <!-- Projeto exemplo -->
         <article class="projeto">
           <header>
-            <h3>Nome do Projeto</h3>
+            <h3><a href="..\global\projeto.html">Nome do Projeto</a></h3>
             <p>Visibilidade: Público</p>
           </header>
 
@@ -94,9 +94,8 @@
           <footer>
             <nav>
               <ul>
-                <li><a href="../global/projeto.html">Ver</a></li>
-                <li><a href="projeto.html">Editar</a></li>
-                <li><a href="#">Excluir</a></li>
+                <li><button>Editar</button></li>
+                <li><button class="btn-excluir">Excluir</button></li>
               </ul>
             </nav>
           </footer>
@@ -105,7 +104,7 @@
         <!-- Outro projeto exemplo -->
         <article class="projeto">
           <header>
-            <h3>Outro Projeto</h3>
+            <h3><a href="..\global\projeto.html">Nome do Projeto</a></h3>
             <p>Visibilidade: Privado</p>
           </header>
 
@@ -116,9 +115,8 @@
           <footer>
             <nav>
               <ul>
-                <li><a href="../global/projeto.html">Ver</a></li>
-                <li><a href="projeto.html">Editar</a></li>
-                <li><a href="#">Excluir</a></li>
+                <li><button><a href="..\global\projeto.html">Editar</a></button></li>
+                <li><button class="btn-excluir">Excluir</button></li>
               </ul>
             </nav>
           </footer>

@@ -33,6 +33,7 @@ nav ul {
     display: flex;
     gap: 20px;
     list-style: none;
+    align-items: center;
 }
 
 nav a {
@@ -44,4 +45,18 @@ nav a {
 
 nav a:hover {
     color: var(--accent);
+}
+
+
+@media (max-width: 480px) {
+
+    header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    nav ul {
+        justify-content: center;
+    }
 }
