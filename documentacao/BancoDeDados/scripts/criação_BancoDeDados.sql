@@ -47,10 +47,12 @@ CREATE TABLE IF NOT EXISTS `dev_share`.`projeto` (
   `nome` VARCHAR(200) NOT NULL,
   `status` ENUM('em_desenvolvimento', 'completo', 'pausado') NOT NULL,
   `nivel` ENUM('iniciante', 'intermediario', 'avancado') NOT NULL,
+  `imagem_projeto` VARCHAR(300) NULL,
+  `views` INT NOT NULL,
+  `link_repositorio` VARCHAR(255) NOT NULL,
   `usuario_id` INT NOT NULL,
-  `imagem_projeto` VARCHAR(300) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_projeto_usuario1_idx` (`usuario_id` ASC) VISIBLE,
+  INDEX `fk_projeto_usuario_idx` (`usuario_id` ASC) VISIBLE,
   CONSTRAINT `fk_projeto_usuario`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `dev_share`.`usuario` (`id`)
@@ -66,7 +68,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `dev_share`.`avaliacao` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nota` INT UNSIGNED NOT NULL CHECK (nota <= 10),
-  `data_criacao` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `data_criacao` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP,
   `projeto_id` INT NOT NULL,
   `usuario_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -104,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `dev_share`.`comentario` (
   CONSTRAINT `fk_comentario_comentario`
     FOREIGN KEY (`comentario_pai_id`)
     REFERENCES `dev_share`.`comentario` (`id`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE CASCADE,
   CONSTRAINT `fk_comentario_projeto`
     FOREIGN KEY (`projeto_id`)
@@ -128,97 +130,36 @@ CREATE TABLE IF NOT EXISTS `dev_share`.`denuncia` (
   `motivo` VARCHAR(100) NOT NULL,
   `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` ENUM('pendente', 'removida', 'analisando') NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `dev_share`.`denuncia_comentario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dev_share`.`denuncia_comentario` (
-  `denuncia_id` INT NOT NULL,
-  `denunciado_id` INT NOT NULL,
-  `denunciante_id` INT NOT NULL,
-  PRIMARY KEY (`denuncia_id`),
-  INDEX `fk_table3_denuncia1_idx` (`denuncia_id` ASC) VISIBLE,
-  INDEX `fk_denuncia_comentario_comentario1_idx` (`denunciado_id` ASC) VISIBLE,
-  INDEX `fk_denuncia_comentario_usuario1_idx` (`denunciante_id` ASC) VISIBLE,
-  CONSTRAINT `fk_denuncia_comentario_comentario`
-    FOREIGN KEY (`denunciado_id`)
+  `tipo` ENUM("projeto", "usuario", "comentario") NOT NULL,
+  `denunciante_id` INT NULL,
+  `comentario_denunciado_id` INT NULL,
+  `projeto_denunciado_id` INT NULL,
+  `usuario_denunciado_id` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_denuncia_usuario1_idx` (`denunciante_id` ASC) VISIBLE,
+  INDEX `fk_denuncia_comentario1_idx` (`comentario_denunciado_id` ASC) VISIBLE,
+  INDEX `fk_denuncia_projeto1_idx` (`projeto_denunciado_id` ASC) VISIBLE,
+  INDEX `fk_denuncia_usuario2_idx` (`usuario_denunciado_id` ASC) VISIBLE,
+  CONSTRAINT `fk_denuncia_usuario1`
+    FOREIGN KEY (`denunciante_id`)
+    REFERENCES `dev_share`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_denuncia_comentario1`
+    FOREIGN KEY (`comentario_denunciado_id`)
     REFERENCES `dev_share`.`comentario` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_denuncia_comentario_usuario`
-    FOREIGN KEY (`denunciante_id`)
-    REFERENCES `dev_share`.`usuario` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_denuncia_comentario_denuncia`
-    FOREIGN KEY (`denuncia_id`)
-    REFERENCES `dev_share`.`denuncia` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `dev_share`.`denuncia_projeto`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dev_share`.`denuncia_projeto` (
-  `denuncia_id` INT NOT NULL,
-  `denunciado_id` INT NOT NULL,
-  `denunciante_id` INT NOT NULL,
-  PRIMARY KEY (`denuncia_id`),
-  INDEX `fk_table1_denuncia1_idx` (`denuncia_id` ASC) VISIBLE,
-  INDEX `fk_denuncia_projeto_projeto1_idx` (`denunciado_id` ASC) VISIBLE,
-  INDEX `fk_denuncia_projeto_usuario1_idx` (`denunciante_id` ASC) VISIBLE,
-  CONSTRAINT `fk_denuncia_projeto_projeto`
-    FOREIGN KEY (`denunciado_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_denuncia_projeto1`
+    FOREIGN KEY (`projeto_denunciado_id`)
     REFERENCES `dev_share`.`projeto` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_denuncia_projeto_usuario`
-    FOREIGN KEY (`denunciante_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_denuncia_usuario2`
+    FOREIGN KEY (`usuario_denunciado_id`)
     REFERENCES `dev_share`.`usuario` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_denuncia_projeto_denuncia`
-    FOREIGN KEY (`denuncia_id`)
-    REFERENCES `dev_share`.`denuncia` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `dev_share`.`denuncia_usuario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dev_share`.`denuncia_usuario` (
-  `denuncia_id` INT NOT NULL,
-  `denunciado_id` INT NOT NULL,
-  `denunciante_id` INT NOT NULL,
-  PRIMARY KEY (`denuncia_id`),
-  INDEX `fk_table2_denuncia1_idx` (`denuncia_id` ASC) VISIBLE,
-  INDEX `fk_denuncia_usuario_usuario1_idx` (`denunciado_id` ASC) VISIBLE,
-  INDEX `fk_denuncia_usuario_usuario2_idx` (`denunciante_id` ASC) VISIBLE,
-  CONSTRAINT `fk_denuncia_usuario_usuario1`
-    FOREIGN KEY (`denunciado_id`)
-    REFERENCES `dev_share`.`usuario` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_denuncia_usuario_usuario`
-    FOREIGN KEY (`denunciante_id`)
-    REFERENCES `dev_share`.`usuario` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_denuncia_usuario_denuncia`
-    FOREIGN KEY (`denuncia_id`)
-    REFERENCES `dev_share`.`denuncia` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -242,8 +183,8 @@ CREATE TABLE IF NOT EXISTS `dev_share`.`projeto_tag` (
   `projeto_id` INT NOT NULL,
   `tag_id` INT NOT NULL,
   PRIMARY KEY (`projeto_id`, `tag_id`),
-  INDEX `fk_projeto_has_tag_tag1_idx` (`tag_id` ASC) VISIBLE,
-  INDEX `fk_projeto_has_tag_projeto1_idx` (`projeto_id` ASC) VISIBLE,
+  INDEX `fk_projeto_tag_tag_idx` (`tag_id` ASC) VISIBLE,
+  INDEX `fk_projeto_tag_projeto_idx` (`projeto_id` ASC) VISIBLE,
   CONSTRAINT `fk_projeto_tag_projeto`
     FOREIGN KEY (`projeto_id`)
     REFERENCES `dev_share`.`projeto` (`id`)
@@ -277,8 +218,8 @@ CREATE TABLE IF NOT EXISTS `dev_share`.`projeto_tecnologia` (
   `tecnologias_id` INT NOT NULL,
   `projeto_id` INT NOT NULL,
   PRIMARY KEY (`tecnologias_id`, `projeto_id`),
-  INDEX `fk_tecnologias_has_projeto_projeto1_idx` (`projeto_id` ASC) VISIBLE,
-  INDEX `fk_tecnologias_has_projeto_tecnologias1_idx` (`tecnologias_id` ASC) VISIBLE,
+  INDEX `fk_tecnologias_projeto_projeto_idx` (`projeto_id` ASC) VISIBLE,
+  INDEX `fk_tecnologias_projeto_tecnologias_idx` (`tecnologias_id` ASC) VISIBLE,
   CONSTRAINT `fk_tecnologias_projeto_projeto`
     FOREIGN KEY (`projeto_id`)
     REFERENCES `dev_share`.`projeto` (`id`)
@@ -288,50 +229,6 @@ CREATE TABLE IF NOT EXISTS `dev_share`.`projeto_tecnologia` (
     FOREIGN KEY (`tecnologias_id`)
     REFERENCES `dev_share`.`tecnologia` (`id`)
     ON DELETE RESTRICT
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `dev_share`.`url`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dev_share`.`url` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `link` VARCHAR(255) NOT NULL,
-  `projeto_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `link_unique` (`link` ASC) VISIBLE,
-  INDEX `fk_url_projeto_idx` (`projeto_id` ASC) VISIBLE,
-  CONSTRAINT `fk_url_projeto`
-    FOREIGN KEY (`projeto_id`)
-    REFERENCES `dev_share`.`projeto` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `dev_share`.`visualizacao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dev_share`.`visualizacao` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `usuario_id` INT NOT NULL,
-  `projeto_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_visualizacao_usuario1_idx` (`usuario_id` ASC) VISIBLE,
-  INDEX `fk_visualizacao_projeto1_idx` (`projeto_id` ASC) VISIBLE,
-  CONSTRAINT `fk_visualizacao_projeto`
-    FOREIGN KEY (`projeto_id`)
-    REFERENCES `dev_share`.`projeto` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_visualizacao_usuario`
-    FOREIGN KEY (`usuario_id`)
-    REFERENCES `dev_share`.`usuario` (`id`)
-    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
