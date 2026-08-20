@@ -92,19 +92,22 @@ main {
 
 /* ===================== PROJETOS ===================== */
 
-#meus-projetos {
-    padding: 30px;
+#meus-projetos,
+#lista-denuncias {
+    padding: 20px;
 
     animation: fadeUp 1.2s ease;
 }
 
 /* Cabeçalho da seção */
-#meus-projetos header {
+#meus-projetos header,
+#lista-denuncias header {
     margin-bottom: 20px;
 }
 
 /* Grid de projetos */
-#lista-projetos {
+#lista-projetos,
+#lista-denuncias {
     display: grid;
 
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -113,7 +116,10 @@ main {
 }
 
 /* Card de projeto */
-.projeto {
+.projeto,
+.denuncia_usuario,
+.denuncia_projeto,
+.denuncia_comentario {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -128,33 +134,49 @@ main {
 }
 
 /* Hover moderno */
-.projeto:hover {
+.projeto:hover,
+.denuncia_usuario:hover,
+.denuncia_projeto:hover,
+.denuncia_comentario:hover {
     transform: translateY(-5px);
     border-color: var(--accent);
 }
 
 /* Texto */
-.projeto p {
+.projeto p,
+.denuncia_usuario p,
+.denuncia_projeto p,
+.denuncia_comentario p {
     color: var(--text-secondary);
 }
 
 /* Footer do card */
-.projeto footer {
+.projeto footer,
+.denuncia_usuario footer,
+.denuncia_projeto footer,
+.denuncia_comentario footer {
     margin-top: 15px;
 }
 
 /* Botões */
-.projeto nav ul {
+.projeto nav ul,
+.denuncia_usuario nav ul,
+.denuncia_projeto nav ul,
+.denuncia_comentario nav ul {
     display: flex;
     gap: 10px;
 }
 
 /* Links estilo botão */
-.projeto a {
+.projeto button,
+.denuncia_usuario button,
+.denuncia_projeto button,
+.denuncia_comentario button {
     padding: 8px 12px;
     border-radius: 6px;
 
     background-color: var(--accent);
+    border: 1px #58a6ff solid;
     color: white;
 
     font-size: 0.9rem;
@@ -162,14 +184,27 @@ main {
     transition: 0.3s;
 }
 
-.projeto a:hover {
+.projeto button:hover,
+.denuncia_usuario button:hover,
+.denuncia_projeto button:hover,
+.denuncia_comentario button:hover {
     background-color: var(--accent-hover);
+}
+
+a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent-hover);
 }
 
 /* ===================== FOOTER ===================== */
 
 #footer {
-    background-color: #010409; /* cor diferente proposital */
+    background-color: #010409;
+    /* cor diferente proposital */
 
     text-align: center;
     padding: 15px;
@@ -180,6 +215,17 @@ main {
     border-top: 1px solid var(--border);
 }
 
+.btn-excluir {
+    background: none!important;
+    border: 1px solid var(--border)!important;
+    color: var(--text-secondary)!important;
+    cursor: pointer;
+}
+
+.btn-excluir:hover {
+    border-color: red!important;
+    color: red!important;
+}
 
 /* ===================== RESPONSIVIDADE ===================== */
 

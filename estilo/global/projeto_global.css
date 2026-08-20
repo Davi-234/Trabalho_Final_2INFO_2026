@@ -325,21 +325,6 @@ Design inovador:
     border-color: var(--accent);
 }
 
-/* ===================== FOOTER ===================== */
-
-#footer {
-    background-color: #010409; /* cor diferente proposital */
-
-    text-align: center;
-    padding: 15px;
-
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-
-    border-top: 1px solid var(--border);
-}
-
-
 /* ===================== RESPONSIVIDADE ===================== */
 
 @media (max-width: 768px) {
@@ -351,19 +336,6 @@ Design inovador:
     #estatisticas {
         flex-direction: column;
         gap: 5px;
-    }
-}
-
-@media (max-width: 480px) {
-
-    header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-
-    nav ul {
-        justify-content: center;
     }
 }
 
