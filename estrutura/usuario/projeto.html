@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projeto</title>
+  <link rel="stylesheet" href="../../estilo/utilidades/mensagem_erro.css">
+  <link rel="stylesheet" href="../../estilo/usuario/projeto.css" />
+  <link rel="stylesheet" href="../../estilo/utilidades/projetos.css">
+  <link rel="stylesheet" href="../../estilo/estilo_principal.css">
+  <link rel="stylesheet" href="../../estilo/header.css">
+  <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+</head>
+
+<body id="body">
+  <!-- ================= HEADER ================= -->
+  <header>
+    <!-- Logo + Nome do Projeto -->
+    <div id="logo-container">
+      <h1>
+        <span>
+          <img src="../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
+        </span>
+        DevShare
+      </h1>
+      <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+    <!-- Introdução -->
+    <section id="intro">
+      <header>
+        <h2>Adicionar / Editar Projeto</h2>
+        <p>
+          Compartilhe seu trabalho com a comunidade e receba feedbacks
+          valiosos.
+        </p>
+      </header>
+    </section>
+
+    <!-- Formulário principal -->
+    <section id="form-projeto">
+      <form id="form" action="#" method="post" enctype="multipart/form-data">
+        <!-- Informações básicas -->
+        <fieldset>
+          <legend>Informações do Projeto</legend>
+
+          <label for="titulo">Nome do Projeto</label>
+          <input type="text" id="titulo" name="titulo" placeholder="Digite o nome do projeto" required maxlength="200"
+            mensagem_correspondente="#aviso_erro_titulo" />
+          <p class="mensagem_erro" id="aviso_erro_titulo">Campo nome está vazio.</p>
+
+          <label for="descricao">Descrição</label>
+          <textarea id="descricao" name="descricao" rows="6"
+            placeholder="Descreva seu projeto (Máximo de 500 caracteres)" maxlength="500"
+            mensagem_correspondente="#aviso_erro_descricao" required></textarea>
+          <p class="mensagem_erro" id="aviso_erro_descricao">Campo descrição está vazio.</p>
+
+          <label for="link">Link do projeto</label>
+          <input type="url" id="link" name="link" mensagem_correspondente="#aviso_erro_gitlink"
+            placeholder="Ex: https://github.com/seu-projeto, https://localdoprojeto" required />
+          <p class="mensagem_erro" id="aviso_erro_gitlink">Campo link do projeto está vazio.</p>
+        </fieldset>
+
+        <!-- Classificação -->
+        <fieldset>
+          <legend>Classificação</legend>
+
+          <label for="nivel">Nível</label>
+          <select id="nivel" name="nivel">
+            <option value="iniciante">Iniciante</option>
+            <option value="intermediario">Intermediário</option>
+            <option value="avancado">Avançado</option>
+          </select>
+
+          <label for="tipo">Tipo de Projeto</label>
+          <select id="tipo" name="tipo">
+            <option value="web">Web</option>
+            <option value="mobile">Mobile</option>
+            <option value="desktop">Desktop</option>
+            <option value="outro">Outro</option>
+          </select>
+
+          <label for="tecnologias">Tecnologias Utilizadas</label>
+          <input type="text" id="tecnologias" name="tecnologias" placeholder="Ex: HTML, CSS, JavaScript"
+            mensagem_correspondente="#aviso_erro_tecnologias" required />
+          <p class="mensagem_erro" id="aviso_erro_tecnologias">Campo tecnologias está vazio.</p>
+        </fieldset>
+
+        <!-- Visibilidade -->
+        <fieldset>
+          <legend>Visibilidade</legend>
+
+          <label>
+            <input type="radio" name="visibilidade" value="publico" checked />
+            Público
+          </label>
+
+          <label>
+            <input type="radio" name="visibilidade" value="privado" />
+            Privado
+          </label>
+        </fieldset>
+
+        <!-- Informações adicionais -->
+        <fieldset>
+          <legend>Detalhes Extras</legend>
+
+          <label for="imagem">Imagem do Projeto</label>
+          <input type="file" id="imagem" name="imagem" />
+
+          <label for="tags">Tags</label>
+          <input type="text" id="tags" name="tags" placeholder="Ex: API, Front-end, Backend"
+            mensagem_correspondente="#aviso_erro_tags" required />
+          <p class="mensagem_erro" id="aviso_erro_tags">Campo tags está vazio.</p>
+
+          <label for="status">Status do Projeto</label>
+          <select id="status" name="status">
+            <option value="em-desenvolvimento">Em desenvolvimento</option>
+            <option value="concluido">Concluído</option>
+            <option value="pausado">Pausado</option>
+          </select>
+        </fieldset>
+
+        <!-- Ações -->
+        <section id="acoes-form">
+          <button type="submit" id="btn_submit">Salvar Projeto</button>
+          <button type="reset">Limpar</button>
+        </section>
+      </form>
+    </section>
+
+    <!-- Pré-visualização (simulação) -->
+    <section id="preview">
+      <header>
+        <h2>Pré-visualização</h2>
+        <p>Veja como seu projeto poderá aparecer para outros usuários</p>
+      </header>
+
+      <article class="projeto-preview">
+        <header>
+          <h3 id="preview_titulo">Nome do Projeto</h3>
+          <p>Nível: <span id="preview_nivel">Iniciante</span> | Tipo: <span id="preview_tipo">Web</span></p>
+        </header>
+
+        <section>
+          <p id="preview_descricao">
+            Aqui aparecerá a descrição do projeto informada no formulário,
+            permitindo uma visão geral antes da publicação.
+          </p>
+        </section>
+
+        <footer>
+          <ul>
+            <li>Curtidas: 0</li>
+            <li>Visualizações: 0</li>
+            <li>Avaliação: ☆☆☆☆☆</li>
+            <li>Comentários: 0</li>
+          </ul>
+          <div id="preview_status">
+            Em desenvolvimento
+          </div>
+        </footer>
+      </article>
+    </section>
+  </main>
+  <!-- ================= FOOTER ================= -->
+  <footer id="footer">
+    DevShare - Sempre abertos à comunidade
+  </footer>
+</body>
+
+<script src="../../JS/util/apagar_elemento.js"></script>
+<script src="../../JS/jquerry.js"></script>
+<script src="../../JS/util/criar_tela_erro.js"></script>
+<script src="../../JS/util/mostrar_erro_campos_vazios.js"></script>
+<script>
+  // confotro para o usuário.
+  // Avisa quantos inputs estão vazios
+  let camposFaltando = 0;
+  var inputs = $("input[required], textarea[required]");
+
+  function verificar_inputs() {
+    apagar_elemento('tela_falta_dados');
+    camposFaltando = 0;
+    inputs.each(function () {
+      if ($(this).val().trim() === "") {
+        camposFaltando++;
+        mostrar_erro($(this))
+      }
+    });
+
+    if (camposFaltando > 0) {
+      criar_tela_erro(camposFaltando + " campos estão vazios")
+    }
+  }
+</script>
+<script src="../../JS/usuario/pre_visualizacao.js"></script>
+<script>
+  // Eventos de formulário
+  document.getElementById("form").addEventListener("reset", function () {
+    setTimeout(() => {
+      alterar_PreVisualizacao("titulo");
+      alterar_PreVisualizacao("descricao");
+      apagar_elemento('tela_falta_dados');
+
+      inputs.each(function () {
+        apagar_erros($(this));
+      });
+    }, 0);
+  });
+  document.getElementById("btn_submit").addEventListener("click", function () {
+    setTimeout(() => {
+      verificar_inputs();
+    }, 0);
+  });
+</script>
+
+</html>

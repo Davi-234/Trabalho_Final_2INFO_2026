@@ -1,0 +1,373 @@
+/* ===================== MAIN ===================== */
+/*
+Flex para centralizar o login
+*/
+main {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+/* ===================== CARD ===================== */
+#cadastro-box {
+    width: 100%;
+    max-width: 750px;
+
+    background-color: var(--bg-card);
+
+    padding: 30px;
+    border-radius: 12px;
+
+    border: 1px solid var(--border);
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+    animation: fadeUp 0.8s ease;
+}
+
+/* ===================== TEXTOS ===================== */
+.section-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.info-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+/* ===================== FORM ===================== */
+
+/*
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Linha única */
+.externa_usuario,
+.externa_email {
+    width: 100%;
+}
+
+/* SENHAS lado a lado */
+.externa_senha {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* LINKS lado a lado */
+.externa_links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* ===================== LINKS ===================== */
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ===================== FOOTER ===================== */
+
+/*
+Separação visual clara
+*/
+#footer {
+    background-color: #010409;
+    /* cor diferente proposital */
+
+    text-align: center;
+    padding: 15px;
+
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+
+    border-top: 1px solid var(--border);
+}
+
+
+/* Remove HR */
+hr {
+    display: none;
+}
+
+.col-md-4 {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.col-md-4 .col-md-4,
+.col-md-4-2 {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.col-md-4 .col-md-4 div,
+.col-md-4-2 div {
+    width: 48%;
+}
+
+
+/* =========================
+       FORMULÁRIO POR ETAPAS
+       ========================= */
+
+#form-cadastro {
+    position: relative;
+}
+
+#form-cadastro section {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    display: none;
+}
+
+#form-cadastro section:first-of-type {
+    display: block;
+}
+
+/* =========================
+       BARRA DE ETAPAS
+       ========================= */
+
+#progress-container {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto 25px auto;
+    padding: 0 30px;
+}
+
+#progressbar {
+    display: flex;
+    position: relative;
+
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+#progressbar::before {
+    content: "";
+
+    position: absolute;
+    top: 25px;
+    left: 12.5%;
+    right: 12.5%;
+
+    height: 2px;
+
+    background-color: var(--border);
+
+    z-index: 0;
+}
+
+#progressbar li {
+    position: relative;
+
+    width: 50%;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    z-index: 1;
+}
+
+#progressbar li::before {
+    content: attr(data-step);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 50px;
+    height: 50px;
+
+    margin: 0 auto 8px auto;
+
+    border-radius: 50%;
+
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--border);
+
+    color: var(--text-secondary);
+
+    transition: 0.3s ease;
+}
+
+#progressbar li.active {
+    color: var(--accent);
+}
+
+#progressbar li.active::before {
+    background-color: var(--accent);
+    border-color: var(--accent);
+
+    color: white;
+}
+
+/* Etapas já concluídas */
+
+#progressbar li.completed::before {
+    content: "✓";
+
+    background-color: var(--success);
+    border-color: var(--success);
+
+    color: white;
+}
+
+/* =========================
+       BARRA DE PROGRESSO
+       ========================= */
+
+#progress {
+    width: 100%;
+    height: 5px;
+
+    margin-top: 15px;
+
+    background-color: var(--bg-secondary);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+#progress-bar {
+    width: 50%;
+    height: 100%;
+
+    background-color: var(--accent);
+
+    border-radius: 10px;
+
+    transition: width 0.4s ease;
+}
+
+/* =========================
+       BOTÕES
+       ========================= */
+
+.step-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.step-buttons .previous-step {
+    background-color: #616161 !important;
+}
+
+.step-buttons .previous-step:hover {
+    background-color: #444 !important;
+}
+
+/* =========================
+       MENSAGENS DA SENHA
+       ========================= */
+
+#tela_erros_senha {
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+#titulo_erro_senha {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--danger);
+
+    font-weight: bold;
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
+
+/* Tablet */
+@media (max-width: 768px) {
+
+    #cadastro-box {
+        max-width: 500px;
+    }
+
+    .externa_senha,
+    .externa_links {
+        grid-template-columns: 1fr;
+        /* empilha */
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+
+    body {
+        overflow-y: auto;
+        /* IMPORTANTE:
+        Em telas muito pequenas, permitir scroll evita cortar conteúdo
+        (isso é prática profissional, não erro)
+        */
+    }
+
+    #cadastro-box {
+        padding: 20px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    #progress-container {
+        padding: 0 15px;
+    }
+
+    #progressbar li {
+        font-size: 0.75rem;
+    }
+
+    #progressbar li::before {
+        width: 42px;
+        height: 42px;
+    }
+
+    #progressbar::before {
+        top: 21px;
+    }
+
+    .step-buttons {
+        flex-direction: column-reverse;
+    }
+
+    .step-buttons button {
+        width: 100%;
+    }
+}

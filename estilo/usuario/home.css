@@ -1,0 +1,263 @@
+/*
+Criamos um "avatar" sem imagem:
+- círculo
+- letra central
+- cor dinâmica (simulada com gradiente)
+*/
+
+#perfil-icone {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+
+    /* Gradiente moderno */
+    background: linear-gradient(135deg, #58a6ff, #a371f7);
+
+    color: #fff;
+
+    transition: 0.3s;
+}
+
+/* Letra dentro do círculo */
+#perfil-icone::before {
+    content: "J";
+    /* <-- aqui você pode trocar dinamicamente depois */
+}
+
+/* Hover */
+#perfil-icone:hover {
+    transform: scale(1.1);
+}
+
+/* ===================== MAIN ===================== */
+
+/* Layout tipo dashboard */
+main {
+    display: grid;
+
+    /* Sidebar + conteúdo */
+    grid-template-columns: 250px 1fr;
+
+    min-height: 80vh;
+}
+
+/* ===================== SIDEBAR (ÁREA USUÁRIO) ===================== */
+
+#usuario {
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+
+    padding: 30px 20px;
+
+    animation: fadeUp 1s ease;
+}
+
+/* Boas vindas */
+#boas-vindas {
+    margin-bottom: 30px;
+}
+
+#boas-vindas p {
+    color: var(--text-secondary);
+}
+
+/* Ações */
+#acoes-usuario article {
+    background-color: var(--bg-tertiary);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+
+    transition: 0.3s;
+}
+
+#acoes-usuario article:hover {
+    border: 1px solid var(--accent);
+    transform: translateY(-3px);
+}
+
+#acoes-usuario a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+
+    color: var(--accent);
+}
+
+/* ===================== PROJETOS ===================== */
+
+#meus-projetos,
+#lista-denuncias {
+    padding: 20px;
+
+    animation: fadeUp 1.2s ease;
+}
+
+/* Cabeçalho da seção */
+#meus-projetos header,
+#lista-denuncias header {
+    margin-bottom: 20px;
+}
+
+/* Grid de projetos */
+#lista-projetos,
+#lista-denuncias {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 20px;
+}
+
+/* Card de projeto */
+.projeto,
+.denuncia_usuario,
+.denuncia_projeto,
+.denuncia_comentario {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    transition: 0.3s;
+}
+
+/* Hover moderno */
+.projeto:hover,
+.denuncia_usuario:hover,
+.denuncia_projeto:hover,
+.denuncia_comentario:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+/* Texto */
+.projeto p,
+.denuncia_usuario p,
+.denuncia_projeto p,
+.denuncia_comentario p {
+    color: var(--text-secondary);
+}
+
+/* Footer do card */
+.projeto footer,
+.denuncia_usuario footer,
+.denuncia_projeto footer,
+.denuncia_comentario footer {
+    margin-top: 15px;
+}
+
+/* Botões */
+.projeto nav ul,
+.denuncia_usuario nav ul,
+.denuncia_projeto nav ul,
+.denuncia_comentario nav ul {
+    display: flex;
+    gap: 10px;
+}
+
+/* Links estilo botão */
+.projeto button,
+.denuncia_usuario button,
+.denuncia_projeto button,
+.denuncia_comentario button {
+    padding: 8px 12px;
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    border: 1px #58a6ff solid;
+    color: white;
+
+    font-size: 0.9rem;
+
+    transition: 0.3s;
+}
+
+.projeto button:hover,
+.denuncia_usuario button:hover,
+.denuncia_projeto button:hover,
+.denuncia_comentario button:hover {
+    background-color: var(--accent-hover);
+}
+
+a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent-hover);
+}
+
+/* ===================== FOOTER ===================== */
+
+#footer {
+    background-color: #010409;
+    /* cor diferente proposital */
+
+    text-align: center;
+    padding: 15px;
+
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+
+    border-top: 1px solid var(--border);
+}
+
+.btn-excluir {
+    background: none!important;
+    border: 1px solid var(--border)!important;
+    color: var(--text-secondary)!important;
+    cursor: pointer;
+}
+
+.btn-excluir:hover {
+    border-color: red!important;
+    color: red!important;
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
+
+/* Tablet */
+@media (max-width: 900px) {
+
+    main {
+        /* Remove sidebar fixa */
+        grid-template-columns: 1fr;
+    }
+
+    #usuario {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    #meus-projetos {
+        padding: 20px;
+    }
+}

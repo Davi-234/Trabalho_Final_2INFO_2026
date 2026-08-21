@@ -1,0 +1,125 @@
+/* ===================== ÍCONE DE PERFIL (CSS PURO) ===================== */
+#perfil-icone {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    font-weight: bold;
+
+    /* Gradiente moderno */
+    background: linear-gradient(135deg, #58a6ff, #a371f7);
+
+    color: #fff;
+
+    transition: 0.3s;
+
+    gap: 0.5em;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4%;
+
+    animation: fadeUp 0.8s ease;
+}
+
+/* Hover */
+#perfil-icone:hover {
+    transform: scale(1.1);
+}
+
+#perfil_icone_head {
+    background-color: whitesmoke;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+
+#perfil_icone_body {
+    background-color: whitesmoke;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    width: 60px;
+    height: 70px;
+}
+
+#adicionar_foto_perfil {
+    margin-top: 8%;
+    margin-right: auto;
+    margin-left: auto;
+    width: 20%;
+    height: 40px;
+    background-color: var(--bg-secondary);
+    color: var(--accent);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: fadeIn;
+    border-radius: 20px;
+
+    animation: fadeUp 0.8s ease;
+}
+
+#adicionar_foto_perfil:hover {
+    transform: scale(1.1);
+    border-bottom-color: var(--accent-hover);
+    transition: 0.2;
+}
+
+/* ===================== FORMULÁRIO ===================== */
+
+#form-projeto {
+    animation: fadeUp 1s ease;
+}
+
+input {
+    border: 1px solid var(--border);
+}
+
+
+/* ============================ PROJETOS ======================================================= */
+#dados_totais_projetos {
+    margin-bottom: 10px;
+}
+
+.projeto {
+    border: 1px solid var(--border-color) !important;
+}
+
+/* ============================================== */
+
+.btn:hover {
+    background-color: var(--accent-hover);
+}
+
+#btns_alterar {
+    display: flex;
+    justify-content: center;
+}
+
+fieldset {
+    animation: fadeUp 0.8s ease;
+}
+
+/*========================================== RESPONSIVIDADE /*==========================================*/
+@media (max-width: 800px) {
+
+    dl,
+    dt {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    dt {
+        gap: 8px;
+        justify-content: center;
+    }
+}

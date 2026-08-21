@@ -1,0 +1,147 @@
+/* ===================== FORM ===================== */
+
+form,
+.col-12 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+/* ===================== INPUTS ===================== */
+/* Inputs */
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 10px;
+    margin-bottom: 10px;
+
+    border-radius: 6px;
+    border: 1px solid var(--border);
+
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+
+    transition: 0.3s;
+}
+
+/* Foco */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 5px var(--accent);
+}
+
+/* Labels */
+label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* RADIO */
+input[type="radio"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/*========================================== LISTAS ==========================================*/
+dl,
+dt {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+dt {
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn {
+    width: auto;
+    height: auto;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--accent);
+    color: white;
+    cursor: pointer;
+}
+
+/* Fieldset moderno */
+fieldset {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0 2% 20px 2%;
+}
+
+/* Legend estilizado */
+legend {
+    padding: 0 10px;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+label {
+    font-size: 0.85rem !important;
+    margin-bottom: 5px !important;
+    color: var(--text-secondary);
+}
+
+input {
+    padding: 8px !important;
+
+    border-radius: 6px !important;
+
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+
+    transition: 0.3s !important;
+    width: 100% !important;
+    height: min-content;
+}
+
+/* Foco */
+input:focus {
+    outline: none !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 5px var(--accent) !important;
+    transition: fadeUP 0.3s !important;
+}
+
+/* ===================== BOTÃO ===================== */
+button {
+    margin-top: 10px !important;
+
+    padding: 12px !important;
+
+    border: none !important;
+    border-radius: 6px !important;
+
+    background-color: var(--accent) !important;
+    color: #fff !important;
+
+    font-weight: bold !important;
+    cursor: pointer !important;
+
+    transition: 0.3s !important;
+}
+
+button:hover:not(.btn-excluir) {
+    background-color: var(--accent-hover) !important;
+    transform: translateY(-2px) !important;
+}

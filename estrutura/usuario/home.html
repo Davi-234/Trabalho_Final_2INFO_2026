@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link rel="stylesheet" href="../../estilo/estilo_principal.css">
+  <link rel="stylesheet" href="../../estilo/header.css">
+  <link rel="stylesheet" href="../../estilo/footer.css">
+  <link rel="stylesheet" href="../../estilo/utilidades/formularios.css">
+  <link rel="stylesheet" href="../../estilo/usuario/home.css" />
+  <link rel="stylesheet" href="../../estilo/utilidades/tela_modal.css">
+  <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+  <style>
+    .tela_excluir {
+      width: auto;
+      height: auto;
+      align-items: stretch;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ================= HEADER ================= -->
+  <header>
+    <!-- Logo + Nome do Projeto -->
+    <div id="logo-container">
+      <h1>
+        <span>
+          <img src="../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
+        </span>
+        DevShare
+      </h1>
+      <p>Compartilhe, avalie e evolua projetos com a comunidade</p>
+    </div>
+
+    <!-- Navegação principal -->
+    <nav>
+      <ul>
+        <li><a href="../global/explorar.html">Explorar Projetos</a></li>
+        <li>
+          <!-- Foto de perfil (placeholder para CSS) -->
+          <a>
+            <div id="perfil-icone"></div>
+          </a>
+        </li>
+        <li><a href="../entrada/index.html">Sair</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+    <!-- Área do usuário -->
+    <section id="usuario">
+      <article id="boas-vindas">
+        <h2>Bem-vindo ao seu painel</h2>
+        <p>
+          Gerencie seus projetos, acompanhe avaliações e evolua como
+          desenvolvedor.
+        </p>
+      </article>
+
+      <!-- Ações do usuário -->
+      <section id="acoes-usuario">
+        <article>
+          <h3>Adicionar novo projeto</h3>
+          <a href="projeto.html">Criar Projeto</a>
+        </article>
+
+        <article>
+          <h3>Editar perfil</h3>
+          <a href="perfil_usuario_editar.html">Configurações do Perfil</a>
+        </article>
+      </section>
+    </section>
+
+    <!-- Projetos do usuário -->
+    <section id="meus-projetos">
+      <header>
+        <h2>Meus Projetos</h2>
+        <p>Projetos que você publicou na plataforma</p>
+      </header>
+
+      <!-- Lista de projetos -->
+      <section id="lista-projetos">
+        <!-- Projeto exemplo -->
+        <article class="projeto">
+          <header>
+            <h3><a href="..\global\projeto.html">Nome do Projeto</a></h3>
+            <p>Visibilidade: Público</p>
+          </header>
+
+          <section>
+            <p>
+              Descrição do projeto. Aqui ficará um resumo do que foi
+              desenvolvido e quais tecnologias foram utilizadas.
+            </p>
+          </section>
+
+          <!-- Ações do projeto -->
+          <footer>
+            <nav>
+              <ul>
+                <li><button>Editar</button></li>
+                <li><button class="btn-excluir">Excluir</button></li>
+              </ul>
+            </nav>
+          </footer>
+        </article>
+
+        <!-- Outro projeto exemplo -->
+        <article class="projeto">
+          <header>
+            <h3><a href="..\global\projeto.html">Nome do Projeto</a></h3>
+            <p>Visibilidade: Privado</p>
+          </header>
+
+          <section>
+            <p>Outro exemplo de projeto com descrição breve e objetiva.</p>
+          </section>
+
+          <footer>
+            <nav>
+              <ul>
+                <li><button><a href="..\global\projeto.html">Editar</a></button></li>
+                <li><button class="btn-excluir">Excluir</button></li>
+              </ul>
+            </nav>
+          </footer>
+        </article>
+      </section>
+    </section>
+  </main>
+  <!-- FOOTER -->
+  <footer id="footer">
+    DevShare - Sempre abertos à comunidade
+  </footer>
+</body>
+<script src="../../JS/jquerry.js"></script>
+<script>
+  const btns_delete = Array.from(document.querySelectorAll('.btn-excluir'));
+  btns_delete.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const modal_window = $(`
+      <div id="tela_modal" class="tela_excluir">
+        <h1>Deseja Excluir o Projeto?</h1>
+        <div>
+          <button class="btn btn-excluir" onclick="$('#tela_modal').remove(); $('body').removeClass('esconder');">Sim</button>
+          <button class="btn" onclick="$('#tela_modal').remove(); $('body').removeClass('esconder');">Não</button>
+        </div>
+      </div>`
+      );
+      document.getElementsByTagName('body')[0].classList.add('esconder');
+      document.getElementsByTagName('body')[0].append(modal_window[0]);
+    });
+  });
+</script>
+
+</html>

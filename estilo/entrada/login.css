@@ -1,0 +1,106 @@
+/* ===================== MAIN ===================== */
+/*
+Flex para centralizar o login
+*/
+main {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+/* ===================== CAIXA DE LOGIN ===================== */
+/*
+Card principal
+*/
+#login-box {
+    background-color: var(--bg-card);
+
+    padding: 30px;
+    border-radius: 12px;
+
+    border: 1px solid var(--border);
+
+    /* Sombra moderna */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+
+    /* Animação suave */
+    animation: fadeUp 0.8s ease;
+}
+
+/* ===================== ANIMAÇÃO ===================== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================== TEXTOS ===================== */
+
+.section-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.info-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+
+    margin-bottom: 20px;
+}
+
+
+/* ===================== LINKS ===================== */
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ===================== FOOTER ===================== */
+
+/*
+Separado visualmente do resto
+*/
+#footer {
+    background-color: #010409; /* cor diferente proposital */
+
+    text-align: center;
+    padding: 15px;
+
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+
+    border-top: 1px solid var(--border);
+}
+
+/* Remove a linha <hr> visualmente */
+hr {
+    display: none;
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
+
+/* Mobile */
+@media (max-width: 500px) {
+
+    #login-box {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
