@@ -64,6 +64,6 @@
 .esconder>*:not(#tela_modal) {
     filter: blur(5px) brightness(.6);
     pointer-events: none;
-    overflow: none;
+    overflow-y: hidden;
     user-select: none;
 }
