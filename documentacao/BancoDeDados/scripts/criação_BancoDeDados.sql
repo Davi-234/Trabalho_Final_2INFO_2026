@@ -67,7 +67,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dev_share`.`avaliacao` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nota` INT UNSIGNED NOT NULL CHECK (nota <= 10),
+  'nota' INT UNSIGNED NOT NULL CHECK (nota <= 10),
   `data_criacao` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP,
   `projeto_id` INT NOT NULL,
   `usuario_id` INT NOT NULL,
