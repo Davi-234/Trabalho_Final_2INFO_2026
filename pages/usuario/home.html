@@ -6,12 +6,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home</title>
-  <link rel="stylesheet" href="../../estilo/estilo_principal.css">
-  <link rel="stylesheet" href="../../estilo/header.css">
-  <link rel="stylesheet" href="../../estilo/footer.css">
-  <link rel="stylesheet" href="../../estilo/utilidades/formularios.css">
-  <link rel="stylesheet" href="../../estilo/usuario/home.css" />
-  <link rel="stylesheet" href="../../estilo/utilidades/tela_modal.css">
+  <link rel="stylesheet" href="../../css/utilidades/estilo_principal.css">
+  <link rel="stylesheet" href="../../css/utilidades/header.css">
+  <link rel="stylesheet" href="../../css/utilidades/footer.css">
+  <link rel="stylesheet" href="../../css/utilidades/formularios.css">
+  <link rel="stylesheet" href="../../css/usuario/home.css" />
+  <link rel="stylesheet" href="../../css/utilidades/tela_modal.css">
   <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
   <style>
     .tela_excluir {
@@ -46,7 +46,7 @@
             <div id="perfil-icone"></div>
           </a>
         </li>
-        <li><a href="../entrada/index.html">Sair</a></li>
+        <li><a href="../../index.html">Sair</a></li>
       </ul>
     </nav>
   </header>
@@ -137,7 +137,7 @@
     DevShare - Sempre abertos à comunidade
   </footer>
 </body>
-<script src="../../JS/jquerry.js"></script>
+<script src="../../js/jquerry.js"></script>
 <script>
   const btns_delete = Array.from(document.querySelectorAll('.btn-excluir'));
   btns_delete.forEach(btn => {
@@ -157,7 +157,7 @@
   });
 </script>
 
-<script src="../../JS/usuario/card.js"></script>
+<script src="../../js/usuario/card.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         carregarProjetos();
