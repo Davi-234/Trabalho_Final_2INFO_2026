@@ -141,7 +141,7 @@ button {
     transition: 0.3s !important;
 }
 
-button:hover {
+button:hover:not(.btn-excluir) {
     background-color: var(--accent-hover) !important;
     transform: translateY(-2px) !important;
 }

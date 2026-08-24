@@ -8,8 +8,18 @@
   <title>Home</title>
   <link rel="stylesheet" href="../../css/utilidades/estilo_principal.css">
   <link rel="stylesheet" href="../../css/utilidades/header.css">
+  <link rel="stylesheet" href="../../css/utilidades/footer.css">
+  <link rel="stylesheet" href="../../css/utilidades/formularios.css">
   <link rel="stylesheet" href="../../css/usuario/home.css" />
+  <link rel="stylesheet" href="../../css/utilidades/tela_modal.css">
   <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+  <style>
+    .tela_excluir {
+      width: auto;
+      height: auto;
+      align-items: stretch;
+    }
+  </style>
 </head>
 
 <body>
@@ -128,6 +138,25 @@
   </footer>
 </body>
 <script src="../../js/jquerry.js"></script>
+<script>
+  const btns_delete = Array.from(document.querySelectorAll('.btn-excluir'));
+  btns_delete.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const modal_window = $(`
+      <div id="tela_modal" class="tela_excluir">
+        <h1>Deseja Excluir o Projeto?</h1>
+        <div>
+          <button class="btn btn-excluir" onclick="$('#tela_modal').remove(); $('body').removeClass('esconder');">Sim</button>
+          <button class="btn" onclick="$('#tela_modal').remove(); $('body').removeClass('esconder');">Não</button>
+        </div>
+      </div>`
+      );
+      document.getElementsByTagName('body')[0].classList.add('esconder');
+      document.getElementsByTagName('body')[0].append(modal_window[0]);
+    });
+  });
+</script>
+
 <script src="../../js/usuario/card.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
