@@ -1,69 +1,133 @@
-/* ===================== VARIÁVEIS (PADRÃO PROFISSIONAL) ===================== */
-/* Facilita manutenção e padroniza cores */
+/* ===================== VARIÁVEIS ===================== */
+
 :root {
     --bg-primary: #0d1117;
-    /* Fundo principal (estilo GitHub dark) */
     --bg-secondary: #161b22;
-    /* Fundo secundário */
     --bg-tertiary: #1f2630;
+
     --border-color: #30363d;
-    /* Bordas sutis */
+
     --text-primary: #e6edf3;
-    /* Texto principal */
     --text-secondary: #8b949e;
-    /* Texto secundário */
+
     --accent: #58a6ff;
-    /* Cor destaque (azul tech) */
     --accent-hover: #1f6feb;
-    /* Hover */
+
+    --modal-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    --modal-radius: 20px;
 }
+
+
+/* ===================== MODAL ===================== */
 
 #tela_modal {
-    background-color: var(--bg-primary);
-    border: 1px solid var(--border-color);
     position: fixed;
+
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -50%);
 
-    padding: 5px;
+    z-index: 99999;
 
-    min-width: 50%;
-    min-height: 60%;
+    width: 90%;
+    max-width: 800px;
 
-    max-width: auto;
-    max-height: auto;
+    max-height: 90vh;
+
+    padding: 30px;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    z-index: 99999;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
-    border-radius: 20px;
+
+    background-color: var(--bg-primary);
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--modal-radius);
+
+    box-shadow: var(--modal-shadow);
+
+    overflow-y: auto;
 }
+
+
+/* ===================== CONTEÚDO DO MODAL ===================== */
 
 #tela_modal fieldset {
     border: 1px solid var(--border-color);
+    border-radius: 10px;
+
+    padding: 20px;
 }
 
-#tela_modal fieldset h1 {
-    margin-top: 10px;
+
+#tela_modal h1 {
+    margin: 0 0 20px;
+
+    color: var(--text-primary);
 }
+
+
+/* ===================== BOTÕES ===================== */
 
 .btn {
     margin-bottom: 10px;
 }
 
-#tela_edicao_dados div {
+
+/* ===================== EDIÇÃO DE DADOS ===================== */
+
+#tela_edicao_dados {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+
     gap: 20px;
 }
 
-.esconder>*:not(#tela_modal) {
-    filter: blur(5px) brightness(.6);
+
+#tela_edicao_dados .linha {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+/* ===================== FUNDO BLOQUEADO ===================== */
+
+.esconder > *:not(#tela_modal) {
+    filter: blur(5px) brightness(0.6);
+
     pointer-events: none;
-    overflow-y: hidden;
     user-select: none;
+}
+
+
+/* ===================== RESPONSIVIDADE ===================== */
+
+@media (max-width: 768px) {
+
+    #tela_modal {
+        width: calc(100% - 30px);
+
+        max-width: none;
+        max-height: 90vh;
+
+        padding: 20px;
+
+        border-radius: 15px;
+    }
+
+
+    #tela_modal h1 {
+        font-size: 1.1rem;
+    }
+
+
+    #tela_edicao_dados .linha {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
