@@ -58,13 +58,14 @@ body {
 
 a {
     text-decoration: none;
-    color: var(--text-primary);
+    color: var(--accent);
     font-weight: bold;
     transition: 0.3s;
 }
 
 a:hover {
-    color: var(--accent);
+    color: var(--accent-hover);
+    text-decoration: underline;
 }
 
 /* ===================== ANIMAÇÕES ===================== */
