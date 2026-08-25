@@ -1,239 +1,521 @@
-/*
-Criamos um "avatar" sem imagem:
-- círculo
-- letra central
-- cor dinâmica (simulada com gradiente)
-*/
+/* =========================================================
+   PERFIL
+   ========================================================= */
 
 #perfil-icone {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-weight: bold;
+    border-radius: 50%;
 
-    /* Gradiente moderno */
     background: linear-gradient(135deg, #58a6ff, #a371f7);
-
     color: #fff;
 
-    transition: 0.3s;
+    font-weight: bold;
+
+    transition: transform 0.3s ease;
 }
 
-/* Letra dentro do círculo */
 #perfil-icone::before {
     content: "J";
-    /* <-- aqui você pode trocar dinamicamente depois */
 }
 
-/* Hover */
 #perfil-icone:hover {
     transform: scale(1.1);
 }
 
-/* ===================== MAIN ===================== */
 
-/* Layout tipo dashboard */
+/* =========================================================
+   MAIN
+   ========================================================= */
+
 main {
     display: grid;
-
-    /* Sidebar + conteúdo */
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 250px minmax(0, 1fr);
 
     min-height: 80vh;
 }
 
-/* ===================== SIDEBAR (ÁREA USUÁRIO) ===================== */
+
+/* =========================================================
+   SIDEBAR - USUÁRIO
+   ========================================================= */
 
 #usuario {
+    padding: 30px 20px;
+
     background-color: var(--bg-secondary);
     border-right: 1px solid var(--border);
-
-    padding: 30px 20px;
 
     animation: fadeUp 1s ease;
 }
 
-/* Boas vindas */
+
+/* =========================================================
+   BOAS-VINDAS
+   ========================================================= */
+
 #boas-vindas {
     margin-bottom: 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
 }
 
 #boas-vindas p {
     color: var(--text-secondary);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
 }
 
-/* Ações */
+
+/* =========================================================
+   AÇÕES DO USUÁRIO
+   ========================================================= */
+
+#acoes-usuario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 #acoes-usuario article {
-    background-color: var(--bg-tertiary);
     padding: 15px;
-    margin-bottom: 15px;
+
+    background-color: var(--bg-tertiary);
+
+    border: 1px solid transparent;
     border-radius: 8px;
 
-    transition: 0.3s;
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background-color 0.3s ease;
 }
 
 #acoes-usuario article:hover {
-    border: 1px solid var(--accent);
     transform: translateY(-3px);
+
+    border-color: var(--accent);
 }
 
 #acoes-usuario a {
     display: inline-block;
+
     margin-top: 10px;
-    text-decoration: none;
 
     color: var(--accent);
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
 }
 
-/* ===================== PROJETOS ===================== */
+#acoes-usuario a:hover {
+    color: var(--accent-hover);
+}
 
-#meus-projetos,
-#lista-denuncias {
-    padding: 20px;
+
+/* =========================================================
+   ÁREA DOS PROJETOS
+   ========================================================= */
+
+#meus-projetos {
+    padding: 30px;
 
     animation: fadeUp 1.2s ease;
 }
 
-/* Cabeçalho da seção */
-#meus-projetos header,
-#lista-denuncias header {
+#meus-projetos>header {
+    margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   GRID DOS PROJETOS
+   ========================================================= */
+
+#lista-projetos {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit,
+            minmax(320px, 1fr));
+
+    gap: 20px;
+
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   CARD DO PROJETO
+   ========================================================= */
+
+.projeto {
+    min-width: 0;
+
+    padding: 22px;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--bg-secondary);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.projeto:hover {
+    transform: translateY(-5px);
+
+    border-color: var(--accent);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   HEADER DO CARD
+   ========================================================= */
+
+.projeto>header {
+    margin-bottom: 18px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.projeto>header h3 {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 1.2rem;
+    line-height: 1.3;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   VISIBILIDADE
+   ========================================================= */
+
+.visibilidade {
+    flex-shrink: 0;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    border: 1px solid var(--border);
+}
+
+
+/* Público */
+
+.visibilidade.public {
+    color: #3fb950;
+
+    background-color: rgba(63, 185, 80, 0.1);
+
+    border-color: rgba(63, 185, 80, 0.35);
+}
+
+
+/* Privado */
+
+.visibilidade.privado {
+    color: #f0883e;
+
+    background-color: rgba(240, 136, 62, 0.1);
+
+    border-color: rgba(240, 136, 62, 0.35);
+}
+
+
+/* =========================================================
+   CONTEÚDO DO CARD
+   ========================================================= */
+
+.projeto>section {
+    flex: 1;
+
     margin-bottom: 20px;
 }
 
-/* Grid de projetos */
-#lista-projetos,
+.projeto>section p {
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   FOOTER DO CARD
+   ========================================================= */
+
+.projeto>footer {
+    margin-top: auto;
+
+    padding-top: 18px;
+
+    border-top: 1px solid var(--border);
+}
+
+.projeto>footer nav ul {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    list-style: none;
+}
+
+.projeto>footer a {
+    padding: 10px;
+    background-color: aqua;
+    border-radius: 10px;
+    color: black;
+}
+
+
+/* =========================================================
+   EXCLUIR - ESQUERDA
+   ========================================================= */
+
+.acao-excluir {
+    display: flex;
+    align-items: center;
+}
+
+.btn-excluir {
+    height: 36px;
+
+    padding: 0 13px;
+
+    background: transparent !important;
+
+    border: 1px solid var(--border) !important;
+    border-radius: 6px;
+
+    color: var(--text-secondary) !important;
+
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.btn-excluir:hover {
+    background-color: rgba(248, 81, 73, 0.08) !important;
+
+    border-color: #f85149 !important;
+
+    color: #f85149 !important;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   VER + EDITAR - DIREITA
+   ========================================================= */
+
+.acoes-projeto {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* Links */
+
+.acoes-projeto a {
+    height: 36px;
+
+    padding: 0 13px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    border-radius: 6px;
+
+    background-color: var(--accent);
+    border: 1px solid var(--accent);
+
+    color: #fff;
+
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.acoes-projeto a:hover {
+    background-color: var(--accent-hover);
+
+    color: #fff;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DENÚNCIAS
+   ========================================================= */
+
+#lista-denuncias {
+    padding: 30px;
+
+    animation: fadeUp 1.2s ease;
+}
+
+#lista-denuncias>header {
+    margin-bottom: 25px;
+}
+
 #lista-denuncias {
     display: grid;
 
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit,
+            minmax(320px, 1fr));
 
-    gap: 10px;
+    gap: 20px;
 }
 
-/* Card de projeto */
-.projeto,
 .denuncia_usuario,
 .denuncia_projeto,
 .denuncia_comentario {
+    padding: 20px;
+
     background-color: var(--bg-secondary);
+
     border: 1px solid var(--border);
     border-radius: 10px;
-
-    padding: 20px;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    transition: 0.3s;
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease;
 }
 
-/* Hover moderno */
-.projeto:hover,
 .denuncia_usuario:hover,
 .denuncia_projeto:hover,
 .denuncia_comentario:hover {
     transform: translateY(-5px);
+
     border-color: var(--accent);
 }
 
-/* Texto */
-.projeto p,
 .denuncia_usuario p,
 .denuncia_projeto p,
 .denuncia_comentario p {
     color: var(--text-secondary);
 }
 
-/* Footer do card */
-.projeto footer,
-.denuncia_usuario footer,
-.denuncia_projeto footer,
-.denuncia_comentario footer {
-    margin-top: 15px;
-}
 
-/* Botões */
-.projeto nav ul,
-.denuncia_usuario nav ul,
-.denuncia_projeto nav ul,
-.denuncia_comentario nav ul {
-    display: flex;
-    gap: 10px;
-}
-
-/* Links estilo botão */
-.projeto button,
-.denuncia_usuario button,
-.denuncia_projeto button,
-.denuncia_comentario button {
-    padding: 8px 12px;
-    border-radius: 6px;
-
-    background-color: var(--accent);
-    border: 1px #58a6ff solid;
-    color: white;
-
-    font-size: 0.9rem;
-
-    transition: 0.3s;
-}
-
-.projeto button:hover,
-.denuncia_usuario button:hover,
-.denuncia_projeto button:hover,
-.denuncia_comentario button:hover {
-    background-color: var(--accent-hover);
-}
+/* =========================================================
+   LINKS GERAIS
+   ========================================================= */
 
 a {
     color: #58a6ff;
+
     text-decoration: none;
+
+    transition: color 0.2s ease;
 }
 
 a:hover {
     color: var(--accent-hover);
 }
 
-/* ===================== FOOTER ===================== */
+
+/* =========================================================
+   FOOTER DA PÁGINA
+   ========================================================= */
 
 #footer {
-    background-color: #010409;
-    /* cor diferente proposital */
-
-    text-align: center;
     padding: 15px;
 
-    font-size: 0.8rem;
-    color: var(--text-secondary);
+    background-color: #010409;
 
     border-top: 1px solid var(--border);
+
+    color: var(--text-secondary);
+
+    font-size: 0.8rem;
+
+    text-align: center;
 }
 
-.btn-excluir {
-    background: none!important;
-    border: 1px solid var(--border)!important;
-    color: var(--text-secondary)!important;
-    cursor: pointer;
-}
 
-.btn-excluir:hover {
-    border-color: red!important;
-    color: red!important;
-}
+/* =========================================================
+   RESPONSIVIDADE - TABLET
+   ========================================================= */
 
-/* ===================== RESPONSIVIDADE ===================== */
-
-/* Tablet */
 @media (max-width: 900px) {
 
     main {
-        /* Remove sidebar fixa */
         grid-template-columns: 1fr;
     }
 
@@ -241,23 +523,76 @@ a:hover {
         border-right: none;
         border-bottom: 1px solid var(--border);
     }
+
+    #acoes-usuario {
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit,
+                minmax(200px, 1fr));
+    }
 }
 
-/* Mobile */
-@media (max-width: 500px) {
 
-    header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
+/* =========================================================
+   RESPONSIVIDADE - MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    #meus-projetos,
+    #lista-denuncias {
+        padding: 20px;
     }
 
-    nav ul {
-        justify-content: center;
+    #lista-projetos {
+        grid-template-columns: 1fr;
+    }
+
+    .projeto {
+        padding: 18px;
+    }
+
+    .projeto>header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .projeto>footer nav ul {
+        gap: 10px;
+    }
+
+    .acoes-projeto {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* =========================================================
+   MOBILE PEQUENO
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    #meus-projetos,
+    #lista-denuncias {
+        padding: 15px;
+    }
+
+    .projeto {
+        padding: 15px;
+    }
+
+    .projeto>footer nav ul {
+        align-items: stretch;
+    }
+
+    .acao-excluir,
+    .acoes-projeto {
         flex-wrap: wrap;
     }
 
-    #meus-projetos {
-        padding: 20px;
+    .acoes-projeto a,
+    .btn-excluir {
+        height: 36px;
     }
 }

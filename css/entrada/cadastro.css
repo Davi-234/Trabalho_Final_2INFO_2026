@@ -6,6 +6,7 @@ main {
     flex: 1;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 
@@ -361,10 +362,6 @@ hr {
 
     #progressbar::before {
         top: 21px;
-    }
-
-    .step-buttons {
-        flex-direction: column-reverse;
     }
 
     .step-buttons button {
