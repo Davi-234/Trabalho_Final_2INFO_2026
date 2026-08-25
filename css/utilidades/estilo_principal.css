@@ -29,17 +29,22 @@ body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     overflow-x: hidden;
+
+    min-height: 100vh;
+
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
 
 
 /* ===================== FOOTER ===================== */
 #footer {
-    background-color: #010409;
-    /* cor diferente proposital */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 
+    background-color: #010409;
     text-align: center;
     padding: 15px;
 
@@ -72,19 +77,6 @@ a:hover {
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-/* Slide lateral */
-@keyframes slideRight {
-    from {
-        opacity: 0;
-        transform: translateX(60px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
     }
 }
 

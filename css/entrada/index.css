@@ -1,6 +1,6 @@
 /* ===================== HERO ===================== */
 #hero {
-    padding: 80px 40px;
+    padding: 60px 40px;
     text-align: center;
 
     /* Animação vindo da esquerda */
@@ -62,42 +62,6 @@
     color: var(--text-secondary);
 }
 
-/* ===================== CTA ===================== */
-#cta {
-    text-align: center;
-    padding: 80px 40px;
-
-    background-color: var(--bg-secondary);
-
-    animation: fadeIn 1.5s ease;
-}
-
-#cta h2 {
-    margin-bottom: 15px;
-}
-
-/* Botões */
-#cta nav ul {
-    margin-top: 20px;
-    justify-content: center;
-}
-
-/* Estilo de botão */
-#cta a {
-    padding: 12px 20px;
-    border-radius: 6px;
-
-    background-color: var(--accent);
-    color: #fff;
-
-    transition: 0.3s;
-}
-
-/* Hover botão */
-#cta a:hover {
-    background-color: var(--accent-hover);
-}
-
 /* ===================== FOOTER ===================== */
 #footer {
     text-align: center;
@@ -109,23 +73,11 @@
     border-top: 1px solid var(--border-color);
 }
 
-/* ===================== RESPONSIVIDADE ===================== */
-
+/*=======================RESPONSIVIDADE=============================*/
 /* Tablet */
 @media (max-width: 768px) {
-
-    header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-
-    nav ul {
-        justify-content: center;
-    }
-
     #hero h2 {
-        font-size: 2rem;
+        font-size: 30px;
     }
 }
 
@@ -133,18 +85,14 @@
 @media (max-width: 480px) {
 
     #hero {
-        padding: 60px 20px;
+        padding: 40px 20px;
     }
 
     #funcionalidades {
-        padding: 40px 20px;
+        padding: 10px 20px 60px 20px;
     }
 
     #cta {
         padding: 60px 20px;
-    }
-
-    header {
-        padding: 20px;
     }
 }
