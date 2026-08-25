@@ -27,6 +27,10 @@
     animation: fadeUp 0.8s ease;
 }
 
+main{
+    padding-bottom: 60px;
+}
+
 /* Hover */
 #perfil-icone:hover {
     transform: scale(1.1);
@@ -109,6 +113,10 @@ fieldset {
 
 /*========================================== RESPONSIVIDADE /*==========================================*/
 @media (max-width: 800px) {
+
+    #adicionar_foto_perfil {
+        width: 60%;
+    }
 
     dl,
     dt {
