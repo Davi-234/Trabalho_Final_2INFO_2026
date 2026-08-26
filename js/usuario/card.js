@@ -56,15 +56,11 @@ function carregarProjetos() {
                 <nav>
                     <ul>
                         <li>
-                            <a href="../global/projeto.html?id=${projeto.id}">
-                                Ver
-                            </a>
+                            <button type="button" class="btn" onclick="window.location.href='../global/projeto.html?id=${projeto.id}'">Editar</button>
                         </li>
 
                         <li>
-                            <a href="projeto.html?id=${projeto.id}">
-                                Editar
-                            </a>
+                            <button type="button" class="btn" onclick="window.location.href='../usuario/projeto.html?id=${projeto.id}'">Editar</button>
                         </li>
 
                         <li>
