@@ -81,13 +81,20 @@
     </footer>
 </body>
 <script>
-    const crypto = require('crypto');
-
-function getGravatarUrl(email) {
+ async function getGravatarUrl(email) {
     const cleanEmail = email.trim().toLowerCase();
-    const hash = crypto.createHash('sha256').update(cleanEmail).digest('hex');
-    return `https://gravatar.com{hash}?d=identicon`; 
-    // O "?d=identicon" gera uma imagem padrão caso o usuário não tenha Gravatar
+
+    const data = new TextEncoder().encode(cleanEmail);
+
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+    const hash = hashArray
+        .map(byte => byte.toString(16).padStart(2, "0"))
+        .join("");
+
+    return `https://gravatar.com/avatar/${hash}?d=identicon`;
 }
 document.getElementById("logo").setAttribute("src",getGravatarUrl("davileandrocos@gmail.com"))
 </script>
