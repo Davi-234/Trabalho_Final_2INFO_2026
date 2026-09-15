@@ -40,8 +40,9 @@
         <section id="foto_perfil">
             <label id="adicionar_Foto_Perfil">
                 <div id="perfil-icone">
-                    <div id="perfil_icone_head"></div>
-                    <div id="perfil_icone_body"></div>
+                    <!-- <div id="perfil_icone_head"></div>
+                    <div id="perfil_icone_body"></div> -->
+                    <img src="" id="foto-perfil"></img>
                 </div>
             </label>
 
@@ -96,7 +97,7 @@
 
     return `https://gravatar.com/avatar/${hash}?d=identicon`;
 }
-document.getElementById("logo").setAttribute("src",getGravatarUrl("davileandrocos@gmail.com"))
+document.getElementById("foto-perfil").setAttribute("src",getGravatarUrl("davileandrocos@gmail.com"))
 </script>
 <script src="../../js/jquerry.js"></script>
 <script src="../../js/entrada/perfil_usuario/criar_janelaModal.js"></script>
