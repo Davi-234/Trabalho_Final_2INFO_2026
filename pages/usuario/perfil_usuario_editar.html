@@ -80,6 +80,17 @@
         DevShare - Sempre abertos à comunidade
     </footer>
 </body>
+<script>
+    const crypto = require('crypto');
+
+function getGravatarUrl(email) {
+    const cleanEmail = email.trim().toLowerCase();
+    const hash = crypto.createHash('sha256').update(cleanEmail).digest('hex');
+    return `https://gravatar.com{hash}?d=identicon`; 
+    // O "?d=identicon" gera uma imagem padrão caso o usuário não tenha Gravatar
+}
+document.getElementById("logo").setAttribute("src",getGravatarUrl("davileandrocos@gmail.com"))
+</script>
 <script src="../../js/jquerry.js"></script>
 <script src="../../js/entrada/perfil_usuario/criar_janelaModal.js"></script>
 <script src="../../js/entrada/perfil_usuario/janela_modal_backend.js"></script>
