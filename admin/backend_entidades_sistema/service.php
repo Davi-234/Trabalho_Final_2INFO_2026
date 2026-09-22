@@ -1,5 +1,6 @@
 <?php
 include "dao.php";
+include "model.php";
 class UsuarioService
 {
     private UsuarioDAO $usuarioDAO;
@@ -7,11 +8,6 @@ class UsuarioService
     public function __construct(UsuarioDAO $usuarioDAO)
     {
         return;
-    }
-
-    public function getAll(): array
-    {
-        return [];
     }
 
     public function add(Usuario $usuario): void

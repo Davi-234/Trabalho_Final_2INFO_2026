@@ -131,7 +131,7 @@ class Usuario extends Denunciado
 
     public function toString(): string
     {
-        return "Usuário: " . $this->nome .
+        return "Usuário " . $this->nome .
                ", email: " . $this->email;
     }
 }
@@ -160,7 +160,9 @@ class Projeto extends Denunciado
         Usuario $dono,
         DateTime $data_criacao,
         StatusProjeto $status,
-        NivelProjeto $nivel
+        NivelProjeto $nivel,
+        string $tecnologias = "",
+        string $tags = ""
     ) {
         $this->titulo = $titulo;
         $this->descricao = $descricao;
@@ -174,8 +176,8 @@ class Projeto extends Denunciado
 
         $this->views = 0;
         $this->curtidas = 0;
-        $this->tecnologias = "";
-        $this->tags = "";
+        $this->tecnologias = $tecnologias;
+        $this->tags = $tags;
     }
 
     public function setDono(Usuario $dono): void
