@@ -27,83 +27,101 @@ enum StatusProjeto
     case CONCLUIDO;
 }
 
-abstract class Denunciado {}
+abstract class Denunciado
+{
+    public abstract function toString(): string;
+}
 
 class Usuario extends Denunciado
 {
     private string $nome;
     private string $email;
     private string $senha;
-    private ?string $perfil_github;
-    private ?string $perfil_lattes;
-    private ?string $perfil_linkedin;
+    private string $perfil_github;
+    private string $perfil_lattes;
+    private string $perfil_linkedin;
     private NivelUsuario $tipo;
-    private array $projetos;
 
     public function __construct(
         string $nome,
         string $email,
-        string $senha
+        string $senha,
+        string $perfil_github = "",
+        string $perfil_lattes = "",
+        string $perfil_linkedin = ""
     ) {
-        return;
+        $this->nome = $nome;
+        $this->email = $email;
+        $this->senha = $senha;
+        $this->perfil_github = $perfil_github;
+        $this->perfil_lattes = $perfil_lattes;
+        $this->perfil_linkedin = $perfil_linkedin;
+        $this->tipo = NivelUsuario::COMUM;
     }
 
     public function setNome(string $nome): void
     {
+        $this->nome = $nome;
     }
 
     public function getNome(): string
     {
-        return "";
+        return $this->nome;
     }
 
     public function setEmail(string $email): void
     {
+        $this->email = $email;
     }
 
     public function getEmail(): string
     {
-        return "";
+        return $this->email;
     }
 
     public function setSenha(string $senha): void
     {
+        $this->senha = $senha;
     }
 
     public function getSenha(): string
     {
-        return "";
+        return $this->senha;
     }
 
-    public function setPerfilGithub(?string $perfil_github): void
+    public function setPerfilGithub(string $perfil_github): void
     {
+        $this->perfil_github = $perfil_github;
     }
 
-    public function getPerfilGithub(): ?string
+    public function getPerfilGithub(): string
     {
-        return "";
+        return $this->perfil_github;
     }
 
-    public function setPerfilLattes(?string $perfil_lattes): void
+    public function setPerfilLattes(string $perfil_lattes): void
     {
+        $this->perfil_lattes = $perfil_lattes;
     }
 
-    public function getPerfilLattes(): ?string
+    public function getPerfilLattes(): string
     {
-        return "";
+        return $this->perfil_lattes;
     }
 
-    public function setPerfilLinkedin(?string $perfil_linkedin): void
+    public function setPerfilLinkedin(string $perfil_linkedin): void
     {
+        $this->perfil_linkedin = $perfil_linkedin;
     }
 
-    public function getPerfilLinkedin(): ?string
+    public function getPerfilLinkedin(): string
     {
-        return "";
+        return $this->perfil_linkedin;
     }
 
     public function setTipo(NivelUsuario $tipo): void
     {
+        $this->tipo = $tipo;
     }
 
     public function getTipo(): NivelUsuario
@@ -111,18 +129,10 @@ class Usuario extends Denunciado
         return $this->tipo;
     }
 
-    public function setProjetos(array $projetos): void
+    public function toString(): string
     {
-    }
-
-    public function getProjetos(): array
-    {
-        return [];
-    }
-
-    public function toString(): ?string
-    {
-        return "";
+        return "Usuário: " . $this->nome .
+               ", email: " . $this->email;
     }
 }
 
@@ -145,13 +155,32 @@ class Projeto extends Denunciado
     public function __construct(
         string $titulo,
         string $descricao,
-        Usuario $dono
+        string $link_repositorio,
+        bool $visibilidade,
+        Usuario $dono,
+        DateTime $data_criacao,
+        StatusProjeto $status,
+        NivelProjeto $nivel
     ) {
-        return;
+        $this->titulo = $titulo;
+        $this->descricao = $descricao;
+        $this->link_repositorio = $link_repositorio;
+        $this->visibilidade = $visibilidade;
+        $this->dono = $dono;
+        $this->data_criacao = $data_criacao;
+        $this->data_update = $data_criacao;
+        $this->status = $status;
+        $this->nivel = $nivel;
+
+        $this->views = 0;
+        $this->curtidas = 0;
+        $this->tecnologias = "";
+        $this->tags = "";
     }
 
     public function setDono(Usuario $dono): void
     {
+        $this->dono = $dono;
     }
 
     public function getDono(): Usuario
@@ -161,96 +190,117 @@ class Projeto extends Denunciado
 
     public function setTitulo(string $titulo): void
     {
+        $this->titulo = $titulo;
     }
 
     public function getTitulo(): string
     {
-        return "";
+        return $this->titulo;
     }
 
     public function setDescricao(string $descricao): void
     {
+        $this->descricao = $descricao;
     }
 
     public function getDescricao(): string
     {
-        return "";
+        return $this->descricao;
     }
 
-    public function setViews(int $views): void
+    public function aumentarViews(): void
     {
+        $this->views++;
+    }
+
+    public function decrementarViews(): void
+    {
+        $this->views--;
     }
 
     public function getViews(): int
     {
-        return 0;
+        return $this->views;
     }
 
-    public function setCurtidas(int $curtidas): void
+    public function aumentarCurtidas(): void
     {
+        $this->curtidas++;
+    }
+
+    public function decrementarCurtidas(): void
+    {
+        $this->curtidas--;
     }
 
     public function getCurtidas(): int
     {
-        return 0;
+        return $this->curtidas;
     }
 
     public function setTecnologias(string $tecnologias): void
     {
+        $this->tecnologias = $tecnologias;
     }
 
     public function getTecnologias(): string
     {
-        return "";
+        return $this->tecnologias;
     }
 
     public function setTags(string $tags): void
     {
+        $this->tags = $tags;
     }
 
     public function getTags(): string
     {
-        return "";
+        return $this->tags;
     }
 
-    public function setVisibilidade(bool $visibilidade): void
+    public function tornarPublico(): void
     {
+        $this->visibilidade = true;
     }
 
-    public function getVisibilidade(): bool
+    public function tornarPrivado(): void
     {
-        return false;
+        $this->visibilidade = false;
     }
 
     public function setDataCriacao(DateTime $data_criacao): void
     {
+        $this->data_criacao = $data_criacao;
     }
 
     public function getDataCriacao(): DateTime
     {
-        return new DateTime();
+        return $this->data_criacao;
     }
 
-    public function setDataUpdate(DateTime $data_update): void
+    public function atualizar_DataUpdate(): void
     {
+        $this->data_update = new DateTime();
     }
 
     public function getDataUpdate(): DateTime
     {
-        return new DateTime();
+        return $this->data_update;
     }
 
     public function setLinkRepositorio(string $link_repositorio): void
     {
+        $this->link_repositorio = $link_repositorio;
     }
 
     public function getLinkRepositorio(): string
     {
-        return "";
+        return $this->link_repositorio;
     }
 
     public function setStatus(StatusProjeto $status): void
     {
+        $this->status = $status;
     }
 
     public function getStatus(): StatusProjeto
@@ -260,6 +310,7 @@ class Projeto extends Denunciado
 
     public function setNivel(NivelProjeto $nivel): void
     {
+        $this->nivel = $nivel;
     }
 
     public function getNivel(): NivelProjeto
@@ -267,66 +318,105 @@ class Projeto extends Denunciado
         return $this->nivel;
     }
 
-    public function toString(): ?string
+    public function isPublico(): bool
     {
-        return "";
+        return $this->visibilidade;
+    }
+
+    public function toString(): string
+    {
+        return "Projeto: " . $this->titulo .
+               ", dono: " . $this->dono->getNome() .
+               ", descrição: " . $this->descricao .
+               ", status: " . $this->status->name .
+               ", nível: " . $this->nivel->name;
     }
 }
 
-class Comentario extends Denunciado {
-        private Usuario $dono;
-        private string $conteudo;
-        private DateTime $data_postagem;
-        private array $filhos;
+class Comentario extends Denunciado
+{
+    private Usuario $dono;
+    private string $conteudo;
+    private DateTime $data_postagem;
+    private array $filhos;
+    private Projeto $projeto;
 
-        public function __construct(Usuario $dono, string $conteudo)
-        {
-            
-        }
+    public function __construct(
+        Usuario $dono,
+        string $conteudo,
+        Projeto $projeto
+    ) {
+        $this->dono = $dono;
+        $this->conteudo = $conteudo;
+        $this->projeto = $projeto;
+        $this->data_postagem = new DateTime();
+        $this->filhos = [];
+    }
 
-        public function setDono(Usuario $dono): void 
-        {
+    public function setDono(Usuario $dono): void
+    {
+        $this->dono = $dono;
+    }
 
-        }
+    public function getDono(): Usuario
+    {
+        return $this->dono;
+    }
 
-        public function getDono(): Usuario
-        {
-            return new Usuario("","","");
-        }
+    public function setConteudo(string $conteudo): void
+    {
+        $this->conteudo = $conteudo;
+    }
 
-        public function setConteudo(string $conteudo): void
-        {
+    public function getConteudo(): string
+    {
+        return $this->conteudo;
+    }
 
-        }
+    public function setDataPostagem(DateTime $data_postagem): void
+    {
+        $this->data_postagem = $data_postagem;
+    }
 
-        public function getConteudo(): string
-        {
-            return "";
-        }
+    public function getDataPostagem(): DateTime
+    {
+        return $this->data_postagem;
+    }
 
-        public function setDataPostagem(DateTime $data_postagem): void
-        {
+    public function setFilhos(array $filhos): void
+    {
+        $this->filhos = $filhos;
+    }
 
-        }
+    public function getFilhos(): array
+    {
+        return $this->filhos;
+    }
 
-        public function getDataPostagem(): DateTime
-        {
-            return new DateTime('2026-12-25 20:00:00');
-        }
+    public function setProjeto(Projeto $projeto): void
+    {
+        $this->projeto = $projeto;
+    }
 
-        public function setFilhos(array $filhos): void
-        {
+    public function getProjeto(): Projeto
+    {
+        return $this->projeto;
+    }
 
-        }
+    public function adicionarFilho(Comentario $comentario): void
+    {
+        $this->filhos[] = $comentario;
+    }
 
-        public function getFilhos(): array
-        {
-            return [];
-        }
-
-        public function toString(): string {
-            return "";
-        }
+    public function toString(): string
+    {
+        return "Comentário de " .
+               $this->dono->getNome() .
+               ": " .
+               $this->conteudo .
+               ", publicado em " .
+               $this->data_postagem->format("d/m/Y H:i:s");
+    }
 }
 
 class Denuncia
@@ -342,29 +432,36 @@ class Denuncia
         Usuario $denunciante,
         Denunciado $denunciado
     ) {
-        return;
+        $this->motivo = $motivo;
+        $this->denunciante = $denunciante;
+        $this->denunciado = $denunciado;
+        $this->data = new DateTime();
+        $this->status = StatusDenuncia::EM_ANALISE;
     }
 
     public function setMotivo(string $motivo): void
     {
+        $this->motivo = $motivo;
     }
 
     public function getMotivo(): string
     {
-        return "";
+        return $this->motivo;
     }
 
     public function setData(DateTime $data): void
     {
+        $this->data = $data;
     }
 
     public function getData(): DateTime
     {
-        return new DateTime();
+        return $this->data;
     }
 
     public function setStatus(StatusDenuncia $status): void
     {
+        $this->status = $status;
     }
 
     public function getStatus(): StatusDenuncia
@@ -374,6 +471,7 @@ class Denuncia
 
     public function setDenunciante(Usuario $denunciante): void
     {
+        $this->denunciante = $denunciante;
     }
 
     public function getDenunciante(): Usuario
@@ -383,6 +481,7 @@ class Denuncia
 
     public function setDenunciado(Denunciado $denunciado): void
     {
+        $this->denunciado = $denunciado;
     }
 
     public function getDenunciado(): Denunciado
@@ -390,8 +489,16 @@ class Denuncia
         return $this->denunciado;
     }
 
-    public function toString(): ?string
+    public function toString(): string
     {
-        return "";
+        return "A denúncia foi feita pelo " .
+            $this->denunciante->toString() .
+            ", direcionada ao " .
+            $this->denunciado->toString() .
+            ", em " .
+            $this->data->format("d/m/Y H:i:s") .
+            "; em decorrência do motivo: " .
+            $this->motivo;
     }
 }
+?>
