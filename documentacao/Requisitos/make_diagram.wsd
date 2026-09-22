@@ -1,0 +1,409 @@
+@startuml DevShare_ClassDiagram
+
+scale 5
+
+skinparam classAttributeIconSize 0
+
+' =========================================================
+' MODEL
+' =========================================================
+
+package "model" {
+
+    package "enum" {
+
+        enum NivelUsuario {
+            ADM
+            COMUM
+        }
+
+        enum StatusProjeto {
+            ANDAMENTO
+            PAUSADO
+            CONCLUIDO
+        }
+
+        enum NivelProjeto {
+            INICIANTE
+            INTERMEDIARIO
+            AVANCADO
+        }
+
+        enum StatusDenuncia {
+            EM_ANALISE
+            REJEITADA
+            ACEITA
+        }
+    }
+
+
+    ' =====================================================
+    ' CLASSE ABSTRATA
+    ' =====================================================
+
+    abstract class Denunciado
+
+    ' =====================================================
+    ' USUARIO
+    ' =====================================================
+
+    class Usuario {
+
+        - nome: string
+        - email: string
+        - senha: string
+        - perfil_github: ?string
+        - perfil_lattes: ?string
+        - perfil_linkedin: ?string
+        - tipo: NivelUsuario
+        - projetos: array
+
+        + __construct(nome: string, email: string, senha: string): void
+
+        + setNome(nome: string): void
+        + getNome(): string
+
+        + setEmail(email: string): void
+        + getEmail(): string
+
+        + setSenha(senha: string): void
+        + getSenha(): string
+
+        + setPerfilGithub(perfil_github: ?string): void
+        + getPerfilGithub(): ?string
+
+        + setPerfilLattes(perfil_lattes: ?string): void
+        + getPerfilLattes(): ?string
+
+        + setPerfilLinkedin(perfil_linkedin: ?string): void
+        + getPerfilLinkedin(): ?string
+
+        + setTipo(tipo: NivelUsuario): void
+        + getTipo(): NivelUsuario
+
+        + setProjetos(projetos: array): void
+        + getProjetos(): array
+
+        + toString(): ?string
+    }
+
+
+    ' =====================================================
+    ' PROJETO
+    ' =====================================================
+
+    class Projeto {
+
+        - dono: Usuario
+        - titulo: string
+        - descricao: string
+        - views: int
+        - curtidas: int
+        - tecnologias: string
+        - tags: string
+        - visibilidade: bool
+        - data_criacao: DateTime
+        - data_update: DateTime
+        - link_repositorio: string
+        - status: StatusProjeto
+        - nivel: NivelProjeto
+
+        + __construct(titulo: string, descricao: string, dono: Usuario): void
+
+        + setDono(dono: Usuario): void
+        + getDono(): Usuario
+
+        + setTitulo(titulo: string): void
+        + getTitulo(): string
+
+        + setDescricao(descricao: string): void
+        + getDescricao(): string
+
+        + setViews(views: int): void
+        + getViews(): int
+
+        + setCurtidas(curtidas: int): void
+        + getCurtidas(): int
+
+        + setTecnologias(tecnologias: string): void
+        + getTecnologias(): string
+
+        + setTags(tags: string): void
+        + getTags(): string
+
+        + setVisibilidade(visibilidade: bool): void
+        + getVisibilidade(): bool
+
+        + setDataCriacao(data_criacao: DateTime): void
+        + getDataCriacao(): DateTime
+
+        + setDataUpdate(data_update: DateTime): void
+        + getDataUpdate(): DateTime
+
+        + setLinkRepositorio(link_repositorio: string): void
+        + getLinkRepositorio(): string
+
+        + setStatus(status: StatusProjeto): void
+        + getStatus(): StatusProjeto
+
+        + setNivel(nivel: NivelProjeto): void
+        + getNivel(): NivelProjeto
+
+        + toString(): ?string
+    }
+
+
+    ' =====================================================
+    ' COMENTARIO
+    ' =====================================================
+
+    class Comentario {
+
+        - dono: Usuario
+        - conteudo: string
+        - data_postagem: DateTime
+        - filhos: array
+
+        + __construct(dono: Usuario, conteudo: string): void
+
+        + setDono(dono: Usuario): void
+        + getDono(): Usuario
+
+        + setConteudo(conteudo: string): void
+        + getConteudo(): string
+
+        + setDataPostagem(data_postagem: DateTime): void
+        + getDataPostagem(): DateTime
+
+        + setFilhos(filhos: array): void
+        + getFilhos(): array
+
+        + toString(): ?string
+    }
+
+
+    ' =====================================================
+    ' DENUNCIA
+    ' =====================================================
+
+    class Denuncia {
+
+        - motivo: string
+        - data: DateTime
+        - status: StatusDenuncia
+        - denunciante: UsuarioB
+        - denunciado: Denunciado
+
+        + __construct(
+            motivo: string,
+            denunciante: Usuario,
+            denunciado: Denunciado
+        ): void
+
+        + setMotivo(motivo: string): void
+        + getMotivo(): string
+
+        + setData(data: DateTime): void
+        + getData(): DateTime
+
+        + setStatus(status: StatusDenuncia): void
+        + getStatus(): StatusDenuncia
+
+        + setDenunciante(denunciante: Usuario): void
+        + getDenunciante(): Usuario
+
+        + setDenunciado(denunciado: Denunciado): void
+        + getDenunciado(): Denunciado
+
+        + toString(): ?string
+    }
+}
+
+
+' =========================================================
+' DAO
+' =========================================================
+
+package "dao" {
+
+    class UsuarioDAO {
+
+        + add(usuario: Usuario): void
+        + get(email: string): ?Usuario
+        + get(id: int): ?Usuario
+        + getAll(): array
+        + update(email: string, usuario: Usuario): void
+        + update(id: int, usuario: Usuario): void
+        + remove(usuario: Usuario): void
+    }
+
+
+    class ProjetoDAO {
+
+        + add(projeto: Projeto): void
+        + get(link_repositorio: string): ?Projeto
+        + get(id: int): ?Projeto
+        + getAll(): array
+        + update(link_repositorio: string, projeto: Projeto): void
+        + update(id: int, projeto: Projeto): void
+        + remove(projeto: Projeto): void
+    }
+
+
+    class ComentarioDAO {
+
+        + add(comentario: Comentario): void
+        + get(id: int): ?Comentario
+        + getAll(): array
+        + update(id: int, comentario: Comentario): void
+        + remove(comentario: Comentario): void
+    }
+
+
+    class DenunciaDAO {
+
+        + add(denuncia: Denuncia): void
+        + get(id: int): ?Denuncia
+        + getAll(): array
+        + update(id: int, denuncia: Denuncia): void
+        + remove(denuncia: Denuncia): void
+    }
+}
+
+
+' =========================================================
+' SERVICE
+' =========================================================
+
+package "service" {
+
+    class UsuarioService {
+
+        - usuarioDAO: UsuarioDAO
+
+        + __construct(usuarioDAO: UsuarioDAO): void
+
+        + getAll(): array
+        + add(usuario: Usuario): void
+        + get(email: string): ?Usuario
+        + update(email: string, usuario: Usuario): void
+        + remove(usuario: Usuario): void
+    }
+
+
+    class ProjetoService {
+
+        - projetoDAO: ProjetoDAO
+
+        + __construct(projetoDAO: ProjetoDAO): void
+
+        + getAll(): array
+        + add(projeto: Projeto): void
+        + get(link_repositorio: string): ?Projeto
+        + update(link_repositorio: string, projeto: Projeto): void
+        + remove(projeto: Projeto): void
+    }
+
+
+    class ComentarioService {
+
+        - comentarioDAO: ComentarioDAO
+
+        + __construct(comentarioDAO: ComentarioDAO): void
+
+        + getAll(): array
+        + add(comentario: Comentario): void
+        + get(id: int): ?Comentario
+        + update(id: int, comentario: Comentario): void
+        + remove(comentario: Comentario): void
+    }
+
+
+    class DenunciaService {
+
+        - denunciaDAO: DenunciaDAO
+
+        + __construct(denunciaDAO: DenunciaDAO): void
+
+        + getAll(): array
+        + add(denuncia: Denuncia): void
+        + get(id: int): ?Denuncia
+        + update(id: int, denuncia: Denuncia): void
+        + remove(denuncia: Denuncia): void
+    }
+}
+
+
+' =========================================================
+' UTIL
+' =========================================================
+
+package "util" {
+    class CriptografarDados {
+        + {static} criptografar(dado: string): string
+        + {static} descriptografar(dado: string): string
+    }
+}
+
+' =========================================================
+' HERANÇA
+' =========================================================
+
+Denunciado <|-- Usuario
+Denunciado <|-- Comentario
+Denunciado <|-- Projeto
+
+
+' =========================================================
+' RELACIONAMENTOS DO MODEL
+' =========================================================
+
+Usuario "1" --> "0..*" Projeto : possui
+
+Usuario "1" --> "0..*" Comentario : escreve
+
+Projeto "1" --> "0..*" Comentario : possui
+
+Comentario "0..1" --> "0..*" Comentario : respostas
+
+
+' =========================================================
+' RELACIONAMENTOS DE DENUNCIA
+' =========================================================
+
+Usuario "1" --> "0..*" Denuncia : realiza
+
+Denuncia "1" --> "1" Denunciado : denuncia
+
+
+' =========================================================
+' RELACIONAMENTOS DAO
+' =========================================================
+
+"dao" ..> "model" : gerencia
+
+' =========================================================
+' RELACIONAMENTOS SERVICE
+' =========================================================
+
+"service" ..> "dao" : gerencia
+
+' =========================================================
+' SERVICE -> UTIL
+' =========================================================
+
+service ..> util : utiliza
+
+
+' =========================================================
+' ENUMS
+' =========================================================
+
+Usuario --> NivelUsuario : tipo
+
+Projeto --> StatusProjeto : status
+Projeto --> NivelProjeto : nivel
+
+Denuncia --> StatusDenuncia : status
+
+@enduml
