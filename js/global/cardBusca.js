@@ -453,16 +453,6 @@ function carregarProjetos(lista) {
 
                 </ul>
 
-
-                <div class="status">
-
-                    Status:
-                    <span>
-                        Em Andamento
-                    </span>
-
-                </div>
-
             </footer>
 
         `;

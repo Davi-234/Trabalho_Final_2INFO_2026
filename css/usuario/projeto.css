@@ -10,7 +10,7 @@ main {
     grid-template-columns: 2fr 1fr;
     gap: 30px;
 
-    padding: 30px;
+    padding: 30px 30px 60px 30px;
 }
 
 /* ===================== INTRO ===================== */
@@ -228,7 +228,7 @@ Lateral direita estilo dashboard
     }
 
     main {
-        padding: 15px;
+        padding: 15px 15px 60px 15px;
     }
 }
 
