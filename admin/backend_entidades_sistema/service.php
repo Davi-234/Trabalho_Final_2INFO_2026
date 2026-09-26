@@ -84,7 +84,7 @@ class ComentarioService
 
     public function get(int $id): Comentario
     {
-        
+        return $this->comentarioDAO->get($id);
     }
 
     public function update(

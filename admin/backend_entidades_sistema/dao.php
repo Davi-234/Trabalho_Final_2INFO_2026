@@ -1,13 +1,20 @@
 <?php
 
 include "model.php";
-include "conexao.php";
+require_once "conexao.php";
 
 class UsuarioDAO
 {
+    private PDO $pdo;
+    
+    public function __construct(PDO $pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
     public function add(Usuario $usuario): void
     {
-        $stmt = $pdo->prepare(
+        $stmt = $this->pdo->prepare(
             'INSERT INTO usuario 
             (nome, email, senha_hash, link_github, link_linkedin, perfil_lattes, tipo) 
             VALUES (:nome, :email, SHA2(:senha_hash, 256), :link_github, :link_linkedin, :perfil_lattes, :tipo)'
@@ -23,14 +30,14 @@ class UsuarioDAO
             'tipo' => 'COMUM'
         ]);
 
-        $usuario->setId((int) $pdo->lastInsertId());
+        $usuario->setId((int) $this->pdo->lastInsertId());
     }
 
     public function get(string|int $identificador): ?Usuario
     {
         $stmt = (gettype($identificador) === "string")
-            ? $pdo->prepare('SELECT * FROM usuario WHERE email = ?')
-            : $pdo->prepare('SELECT * FROM usuario WHERE id = ?');
+            ? $this->pdo->prepare('SELECT * FROM usuario WHERE email = ?')
+            : $this->pdo->prepare('SELECT * FROM usuario WHERE id = ?');
 
         $stmt->execute([$identificador]);
 
@@ -59,7 +66,7 @@ class UsuarioDAO
         string|int $identificador,
         Usuario $usuario
     ): void {
-        $stmt = $pdo->prepare(
+        $stmt = $this->pdo->prepare(
             'UPDATE usuario SET 
                 nome = :nome,
                 email = :email,
@@ -86,8 +93,8 @@ class UsuarioDAO
     public function remove(string|int $identificador): void
     {
         $stmt = (gettype($identificador) === "string")
-            ? $pdo->prepare('DELETE FROM usuario WHERE email = ?')
-            : $pdo->prepare('DELETE FROM usuario WHERE id = ?');
+            ? $this->pdo->prepare('DELETE FROM usuario WHERE email = ?')
+            : $this->pdo->prepare('DELETE FROM usuario WHERE id = ?');
 
         $stmt->execute([$identificador]);
     }
