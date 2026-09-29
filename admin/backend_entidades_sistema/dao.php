@@ -1,40 +1,30 @@
 <?php
 
 include "model.php";
-include "conexao.php";
+require_once 'conexao.php';
 
 class UsuarioDAO
 {
-    public function add(Usuario $usuario): void
+    public function add(Usuario $usuario): bool
     {
-        $stmt = $pdo->prepare(
-            'INSERT INTO usuario 
-            (nome, email, senha_hash, link_github, link_linkedin, perfil_lattes, tipo) 
-            VALUES (:nome, :email, SHA2(:senha_hash, 256), :link_github, :link_linkedin, :perfil_lattes, :tipo)'
-        );
-
-        $stmt->execute([
-            'nome' => $usuario->getNome(),
-            'email' => $usuario->getEmail(),
-            'senha_hash' => $usuario->getSenha(),
-            'link_github' => $usuario->getPerfilGithub(),
-            'link_linkedin' => $usuario->getPerfilLinkedin(),
-            'perfil_lattes' => $usuario->getPerfilLattes(),
-            'tipo' => 'COMUM'
-        ]);
-
-        $usuario->setId((int) $pdo->lastInsertId());
+         if ($stmt = $conn->prepare('INSERT INTO usuario (nome, email, senha_hash, link_github, link_linkedin, perfil_lattes, tipo)  VALUES (?, ?, SHA2(?, 256), ?, ?, ?, ?);')) {
+            $stmt->bind_param("sssssss",$usuario->getNome(),$usuario->getEmail(),$usuario->getSenha(),$usuario->getPerfilGithub(),$usuario->getPerfilLinkedin(),$usuario->getPerfilLattes(),'comum');
+            $stmt->execute();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function get(string|int $identificador): ?Usuario
     {
         $stmt = (gettype($identificador) === "string")
-            ? $pdo->prepare('SELECT * FROM usuario WHERE email = ?')
-            : $pdo->prepare('SELECT * FROM usuario WHERE id = ?');
+            ? $conn->prepare('SELECT * FROM usuario WHERE email = ?')
+            : $conn->prepare('SELECT * FROM usuario WHERE id = ?');
 
-        $stmt->execute([$identificador]);
-
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->bind_param(["i", $identificador]);
+        $stmt->execute();
+        $user = $stmt->get_result();
 
         if ($user === false) {
             return null;
@@ -52,14 +42,18 @@ class UsuarioDAO
 
         $usuario_buscado->setTipo($user['tipo']);
 
+        $stmt->close();
+        $conn->close();
+
         return $usuario_buscado;
     }
 
     public function update(
         string|int $identificador,
-        Usuario $usuario
-    ): void {
-        $stmt = $pdo->prepare(
+        array $atributo_valor
+    ): bool {
+        // $atributo_valor é vetor, cuja chave é o nome do atributo, que recebe nessa posição o valor do atributo; podendo ser enviado mais de um atributo da tabela para ser atualizado.
+        $stmt = $conn->prepare(
             'UPDATE usuario SET 
                 nome = :nome,
                 email = :email,
@@ -81,13 +75,15 @@ class UsuarioDAO
             'tipo' => $usuario->getTipo(),
             'id' => $identificador
         ]);
+
+        return true;
     }
 
     public function remove(string|int $identificador): void
     {
         $stmt = (gettype($identificador) === "string")
-            ? $pdo->prepare('DELETE FROM usuario WHERE email = ?')
-            : $pdo->prepare('DELETE FROM usuario WHERE id = ?');
+            ? $conn->prepare('DELETE FROM usuario WHERE email = ?')
+            : $conn->prepare('DELETE FROM usuario WHERE id = ?');
 
         $stmt->execute([$identificador]);
     }
