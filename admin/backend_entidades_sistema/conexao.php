@@ -1,12 +1,15 @@
 <?php
-try {
-    $pdo = new PDO(
-        'mysql:host=localhost;dbname=mydb;charset=utf8mb4',
-        'root',
-        'root',
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-} catch (PDOException $e) {
-    die("Erro ao conectar: " . $e->getMessage());
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "dev_share";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
 }
+echo "Connected successfully";
 ?>
