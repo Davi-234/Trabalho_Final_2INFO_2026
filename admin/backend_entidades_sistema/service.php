@@ -7,11 +7,12 @@ class UsuarioService
 
     public function __construct(UsuarioDAO $usuarioDAO)
     {
-        return;
+        $this->usuarioDAO = $usuarioDAO;
     }
 
     public function add(Usuario $usuario): void
     {
+        $this->usuarioDAO -> add($usuario);
     }
 
     public function get(string $email): ?Usuario
@@ -36,7 +37,7 @@ class ProjetoService
 
     public function __construct(ProjetoDAO $projetoDAO)
     {
-        return;
+        $this->projetoDAO = $projetoDAO;
     }
 
     public function getAll(): array
@@ -70,7 +71,7 @@ class ComentarioService
 
     public function __construct(ComentarioDAO $comentarioDAO)
     {
-        return;
+        $this->comentarioDAO = $comentarioDAO;
     }
 
     public function getAll(): array
@@ -104,7 +105,7 @@ class DenunciaService
 
     public function __construct(DenunciaDAO $denunciaDAO)
     {
-        return;
+        $this->denunciaDAO = $denunciaDAO;
     }
 
     public function getAll(): array
