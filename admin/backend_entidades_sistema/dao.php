@@ -108,13 +108,13 @@ class ProjetoDAO
             $project['descricao'],
             $project['link_repositorio'],
             $project['visibilidade'],
-            UsuarioDAO.get($project["usuario_id"]),
+            UsuarioDAO.get(intval($project["usuario_id"])),
             $project['data_criacao'],
             $project['status'],
             $project['nivel'],
             $project['imagem_projeto'],
-            ,
-            ,
+            $project['tecnologias'],
+            $project['tags'],
             (int) $project['id']
         );
 
