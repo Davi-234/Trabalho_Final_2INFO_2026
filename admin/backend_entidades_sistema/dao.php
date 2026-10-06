@@ -7,8 +7,8 @@ class UsuarioDAO
 {
     public function add(Usuario $usuario): bool
     {
-         if ($stmt = $conn->prepare('INSERT INTO usuario (nome, email, senha_hash, link_github, link_linkedin, perfil_lattes, tipo)  VALUES (?, ?, SHA2(?, 256), ?, ?, ?, ?);')) {
-            $stmt->bind_param("sssssss",$usuario->getNome(),$usuario->getEmail(),$usuario->getSenha(),$usuario->getPerfilGithub(),$usuario->getPerfilLinkedin(),$usuario->getPerfilLattes(),'comum');
+        if ($stmt = $conn->prepare('INSERT INTO usuario (nome, email, senha_hash, link_github, link_linkedin, perfil_lattes, tipo)  VALUES (?, ?, SHA2(?, 256), ?, ?, ?, ?);')) {
+            $stmt->bind_param("sssssss", $usuario->getNome(), $usuario->getEmail(), $usuario->getSenha(), $usuario->getPerfilGithub(), $usuario->getPerfilLinkedin(), $usuario->getPerfilLattes(), 'comum');
             $stmt->execute();
             return true;
         } else {
@@ -53,28 +53,15 @@ class UsuarioDAO
         array $atributo_valor
     ): bool {
         // $atributo_valor é vetor, cuja chave é o nome do atributo, que recebe nessa posição o valor do atributo; podendo ser enviado mais de um atributo da tabela para ser atualizado.
-        $stmt = $conn->prepare(
-            'UPDATE usuario SET 
-                nome = :nome,
-                email = :email,
-                senha_hash = SHA2(:senha_hash, 256),
-                link_github = :link_github,
-                link_linkedin = :link_linkedin,
-                perfil_lattes = :perfil_lattes,
-                tipo = :tipo
-            WHERE id = :id'
-        );
+        $sql = "UPDATE usuario SET ";
 
-        $stmt->execute([
-            'nome' => $usuario->getNome(),
-            'email' => $usuario->getEmail(),
-            'senha_hash' => $usuario->getSenha(),
-            'link_github' => $usuario->getPerfilGithub(),
-            'link_linkedin' => $usuario->getPerfilLinkedin(),
-            'perfil_lattes' => $usuario->getPerfilLattes(),
-            'tipo' => $usuario->getTipo(),
-            'id' => $identificador
-        ]);
+        foreach ($atributo_valor as [$attr, $valor]) {
+            $sql .= "$attr = $valor";
+        }
+
+        $sql .= (gettype($identificador) === "string") ? "WHERE email = :email" : "WHERE id = :id";
+
+        $conn->execute($sql);
 
         return true;
     }
@@ -92,78 +79,92 @@ class UsuarioDAO
 
 class ProjetoDAO
 {
-    public function add(Projeto $projeto): void
+    public function add(Projeto $projeto): bool
     {
-        
+        if ($stmt = $conn->prepare('INSERT INTO usuario (visibilidade, data_criacao, descricao, nome, status, nivel, imagem_projeto, views, link_repositorio, usuario_id)  VALUES (?, ?, SHA2(?, 256), ?, ?, ?, ?);')) {
+            $stmt->bind_param("bsssssssisi", $projeto->getVisibilidade(), $projeto->getDataCriacao(), $projeto->getDescricao(), $projeto->getTitulo(), $projeto->getStatus(), $projeto->getNivel(), $projeto->getImagemProjeto(), $projeto->getViews(), $projeto->getLinkRepositorio(), $projeto->getDono()->getId());
+            $stmt->execute();
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function get(string|int $identificador): ?Projeto
+    public function get(int $identificador): ?Projeto
     {
         
-        return null;
+        $stmt = $conn->prepare('SELECT * FROM projeto WHERE id = ?');
+
+        $stmt->bind_param(["i", $identificador]);
+        $stmt->execute();
+        $project = $stmt->get_result();
+
+        if ($project === false) {
+            return null;
+        }
+
+        $projeto_buscado = new Projeto(
+            $project['nome'],
+            $project['descricao'],
+            $project['link_repositorio'],
+            $project['visibilidade'],
+            UsuarioDAO.get($project["usuario_id"]),
+            $project['data_criacao'],
+            $project['status'],
+            $project['nivel'],
+            $project['imagem_projeto'],
+            ,
+            ,
+            (int) $project['id']
+        );
+
+        $projeto_buscado->setTipo($project['tipo']);
+
+        $stmt->close();
+        $conn->close();
+
+        return $projeto_buscado;
     }
 
-    public function update(string|int $identificador, Projeto $projeto): void {
-        
-    }
+    public function update(string|int $identificador, Projeto $projeto): void {}
 
-    public function remove(Projeto $projeto): void
-    {
-        
-    }
+    public function remove(Projeto $projeto): void {}
 }
 
 
 class ComentarioDAO
 {
-    public function add(Comentario $comentario): void
-    {
-        
-    }
+    public function add(Comentario $comentario): void {}
 
     public function get(int $id): ?Comentario
     {
-        
+
         return null;
     }
 
     public function update(
         int $id,
         Comentario $comentario
-    ): void {
-        
-    }
+    ): void {}
 
-    public function remove(Comentario $comentario): void
-    {
-        
-    }
+    public function remove(Comentario $comentario): void {}
 }
 
 
 class DenunciaDAO
 {
-    public function add(Denuncia $denuncia): void
-    {
-        
-    }
+    public function add(Denuncia $denuncia): void {}
 
     public function get(int $id): ?Denuncia
     {
-        
+
         return null;
     }
 
     public function update(
         int $id,
         Denuncia $denuncia
-    ): void {
-        
-    }
+    ): void {}
 
-    public function remove(Denuncia $denuncia): void
-    {
-        
-    }
+    public function remove(Denuncia $denuncia): void {}
 }
-?>

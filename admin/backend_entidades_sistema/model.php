@@ -399,6 +399,14 @@ class Projeto extends Denunciado
     }
 
 
+    public function setVisibilidade(bool $visibilidade) {
+        $this->visibilidade = $visibilidade;
+    }
+
+    public function getVisibilidade() {
+        return $this->visibilidade;
+    }
+
     public function tornarPublico(): void
     {
         $this->visibilidade = true;
