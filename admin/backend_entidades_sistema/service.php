@@ -12,22 +12,28 @@ class UsuarioService
 
     public function add(Usuario $usuario): void
     {
-        $this->usuarioDAO -> add($usuario);
+        $this->usuarioDAO->add($usuario);
     }
 
     public function get(string $email): ?Usuario
     {
-        return null;
+        return $this->usuarioDAO->get($email);
     }
 
     public function update(
         string $email,
         Usuario $usuario
     ): void {
+        $this->usuarioDAO->update($email, [
+            'nome' => $usuario->getNome(),
+            'email' => $usuario->getEmail(),
+            'senha' => $usuario->getSenha(),
+        ]);
     }
 
     public function remove(Usuario $usuario): void
     {
+        $this->usuarioDAO->remove($usuario->getEmail());
     }
 }
 
@@ -47,21 +53,24 @@ class ProjetoService
 
     public function add(Projeto $projeto): void
     {
+        $this->projetoDAO->add($projeto);
     }
 
     public function get(string $link_repositorio): ?Projeto
     {
-        return null;
+        return $this->projetoDAO->get($link_repositorio);
     }
 
     public function update(
         string $link_repositorio,
         Projeto $projeto
     ): void {
+        $this->projetoDAO->update($link_repositorio, $projeto);
     }
 
     public function remove(Projeto $projeto): void
     {
+        $this->projetoDAO->remove($projeto);
     }
 }
 
@@ -81,6 +90,7 @@ class ComentarioService
 
     public function add(Comentario $comentario): void
     {
+        $this->comentarioDAO->add($comentario);
     }
 
     public function get(int $id): Comentario
@@ -92,10 +102,12 @@ class ComentarioService
         int $id,
         Comentario $comentario
     ): void {
+        $this->comentarioDAO->update($id, $comentario);
     }
 
     public function remove(Comentario $comentario): void
     {
+        $this->comentarioDAO->remove($comentario);
     }
 }
 
@@ -115,6 +127,7 @@ class DenunciaService
 
     public function add(Denuncia $denuncia): void
     {
+        $this->denunciaDAO->add($denuncia);
     }
 
     public function get(int $id): ?Denuncia
@@ -126,10 +139,12 @@ class DenunciaService
         int $id,
         Denuncia $denuncia
     ): void {
+        $this->denunciaDAO->update($id, $denuncia);
     }
 
     public function remove(Denuncia $denuncia): void
     {
+        $this->denunciaDAO->remove($denuncia);
     }
 }
 
