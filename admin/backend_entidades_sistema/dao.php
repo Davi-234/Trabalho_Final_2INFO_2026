@@ -85,50 +85,12 @@ class UsuarioDAO
         $sql = "UPDATE usuario SET ";
 
         foreach ($atributo_valor as [$attr, $valor]) {
-            $sql .= "$attr = $valor";
+            $sql .= "$attr = $valor,";
         }
 
-        $sql .= (gettype($identificador) === "string") ? "WHERE email = :email" : "WHERE id = :id";
+        $sql .= (gettype($identificador) === "string") ? "WHERE email = $identificador" : "WHERE id = $identificador;";
 
         $conn->execute($sql);
-        $stmt = $conn->prepare(
-            'UPDATE usuario SET 
-                nome = ?,
-                email = ?,
-                senha_hash = SHA2(?, 256),
-                link_github = ?,
-                link_linkedin = ?,
-                perfil_lattes = ?,
-                tipo = ?
-            WHERE id = ?'
-        );
-
-        if ($stmt === false) {
-            return false;
-        }
-
-        $nome = $atributo_valor['nome'] ?? null;
-        $email = $atributo_valor['email'] ?? null;
-        $senha = $atributo_valor['senha_hash'] ?? null;
-        $linkGithub = $atributo_valor['link_github'] ?? null;
-        $linkLinkedin = $atributo_valor['link_linkedin'] ?? null;
-        $perfilLattes = $atributo_valor['perfil_lattes'] ?? null;
-        $tipo = $atributo_valor['tipo'] ?? null;
-
-        $stmt->bind_param(
-            'sssssssi',
-            $nome,
-            $email,
-            $senha,
-            $linkGithub,
-            $linkLinkedin,
-            $perfilLattes,
-            $tipo,
-            $identificador
-        );
-
-        $stmt->execute();
-        $stmt->close();
 
         return true;
     }
@@ -154,8 +116,11 @@ class UsuarioDAO
 
 class ProjetoDAO
 {
+    
     public function add(Projeto $projeto): bool
     {
+        global $conn;
+
         if ($stmt = $conn->prepare('INSERT INTO usuario (visibilidade, data_criacao, descricao, nome, status, nivel, imagem_projeto, views, link_repositorio, usuario_id)  VALUES (?, ?, SHA2(?, 256), ?, ?, ?, ?);')) {
             $stmt->bind_param("bsssssssisi", $projeto->getVisibilidade(), $projeto->getDataCriacao(), $projeto->getDescricao(), $projeto->getTitulo(), $projeto->getStatus(), $projeto->getNivel(), $projeto->getImagemProjeto(), $projeto->getViews(), $projeto->getLinkRepositorio(), $projeto->getDono()->getId());
             $stmt->execute();
@@ -167,12 +132,24 @@ class ProjetoDAO
 
     public function get(int $identificador): ?Projeto
     {
-        
+        global $conn;
         $stmt = $conn->prepare('SELECT * FROM projeto WHERE id = ?');
 
         $stmt->bind_param(["i", $identificador]);
         $stmt->execute();
         $project = $stmt->get_result();
+
+        $stmt = $conn->prepare('select distinct GROUP_CONCAT(tag.nome separator ', ') as tecnologias from tag inner join projeto_tag on tag_id = tag.id where projeto_id = ?;');
+        $stmt->bind_param(["i", $identificador]);
+        $stmt->execute();
+
+        $tags = $stmt->get_result();
+
+        $stmt = $conn->prepare('select distinct GROUP_CONCAT(tecnologia.nome separator ', ') as tecnologias from tecnologia inner join projeto_tecnologia on tecnologias_id = tecnologia.id where ? = projeto_id;');
+        $stmt->bind_param(["i", $identificador]);
+        $stmt->execute();
+
+        $tecnologias = $stmt->get_result();
 
         if ($project === false) {
             return null;
@@ -183,17 +160,15 @@ class ProjetoDAO
             $project['descricao'],
             $project['link_repositorio'],
             $project['visibilidade'],
-            UsuarioDAO.get(intval($project["usuario_id"])),
+            new UsuarioDAO()->get(intval($project["usuario_id"])),
             $project['data_criacao'],
             $project['status'],
             $project['nivel'],
             $project['imagem_projeto'],
-            $project['tecnologias'],
-            $project['tags'],
+            $tecnologias,
+            $tags,
             (int) $project['id']
         );
-
-        $projeto_buscado->setTipo($project['tipo']);
 
         $stmt->close();
         $conn->close();
@@ -201,9 +176,25 @@ class ProjetoDAO
         return $projeto_buscado;
     }
 
-    public function update(string|int $identificador, Projeto $projeto): void {}
+    public function update(string|int $identificador, Projeto $projeto): void {
 
-    public function remove(Projeto $projeto): void {}
+    }
+
+    public function remove(int|string $identificador): void {
+        global $conn;
+
+        $stmt = (gettype($identificador) === 'string')
+            ? $conn->prepare('DELETE FROM projeto WHERE email = ?')
+            : $conn->prepare('DELETE FROM projeto WHERE id = ?');
+
+        if ($stmt === false) {
+            return;
+        }
+
+        $stmt->bind_param('s', $identificador);
+        $stmt->execute();
+        $stmt->close();
+    }
 }
 
 
@@ -213,7 +204,7 @@ class ComentarioDAO
 
     public function get(int $id): ?Comentario
     {
-
+        
         return null;
     }
 

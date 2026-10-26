@@ -164,84 +164,6 @@ class Usuario extends Denunciado
     }
 }
 
-
-
-class Tag
-{
-    private ?int $id;
-    private string $nome;
-
-
-    public function __construct(
-        string $nome,
-        ?int $id = null
-    ) {
-        $this->id = $id;
-        $this->nome = $nome;
-    }
-
-
-    
-
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-
-    public function setNome(string $nome): void
-    {
-        $this->nome = $nome;
-    }
-
-
-    public function getNome(): string
-    {
-        return $this->nome;
-    }
-}
-
-
-
-class Tecnologia
-{
-    private ?int $id;
-    private string $nome;
-
-
-    public function __construct(
-        string $nome,
-        ?int $id = null
-    ) {
-        $this->id = $id;
-        $this->nome = $nome;
-    }
-
-
-    
-
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-
-    public function setNome(string $nome): void
-    {
-        $this->nome = $nome;
-    }
-
-
-    public function getNome(): string
-    {
-        return $this->nome;
-    }
-}
-
-
-
 class Projeto extends Denunciado
 {
     private ?int $id;
@@ -249,8 +171,8 @@ class Projeto extends Denunciado
     private string $titulo;
     private string $descricao;
     private int $views;
-    private array $tecnologias;
-    private array $tags;
+    private string $tecnologias;
+    private string $tags;
     private bool $visibilidade;
     private DateTime $data_criacao;
     private DateTime $data_atualizacao;
@@ -270,8 +192,8 @@ class Projeto extends Denunciado
         StatusProjeto $status,
         NivelProjeto $nivel,
         ?string $imagem_projeto = null,
-        array $tecnologias = [],
-        array $tags = [],
+        string $tecnologias,
+        string $tags,
         ?int $id = null
     ) {
         $this->id = $id;
@@ -290,10 +212,6 @@ class Projeto extends Denunciado
         $this->tecnologias = $tecnologias;
         $this->tags = $tags;
     }
-
-
-    
-
 
     public function getId(): int
     {
@@ -363,39 +281,39 @@ class Projeto extends Denunciado
     }
 
 
-    public function setTecnologias(array $tecnologias): void
+    public function setTecnologias(string $tecnologias): void
     {
         $this->tecnologias = $tecnologias;
     }
 
 
-    public function getTecnologias(): array
+    public function getTecnologias(): string
     {
         return $this->tecnologias;
     }
 
 
-    public function adicionarTecnologia(Tecnologia $tecnologia): void
+    public function adicionarTecnologia(string $tecnologia): void
     {
-        $this->tecnologias[] = $tecnologia;
+        $this->tecnologias += ", $tecnologia";
     }
 
 
-    public function setTags(array $tags): void
+    public function setTags(string $tags): void
     {
         $this->tags = $tags;
     }
 
 
-    public function getTags(): array
+    public function getTags(): string
     {
         return $this->tags;
     }
 
 
-    public function adicionarTag(Tag $tag): void
+    public function adicionarTag(string $tag): void
     {
-        $this->tags[] = $tag;
+        $this->tags += ", $tag";
     }
 
 
