@@ -1,6 +1,7 @@
 <?php
 include "dao.php";
 include "model.php";
+
 class UsuarioService
 {
     private UsuarioDAO $usuarioDAO;
@@ -12,7 +13,33 @@ class UsuarioService
 
     public function add(Usuario $usuario): void
     {
-        $this->usuarioDAO->add($usuario);
+        try {
+            $this->validarUsuario($usuario);
+            $this->usuarioDAO->add($usuario);
+            
+        } catch (\Throwable $th) {
+            throw new \Exception($th->getMessage());
+        }
+    }
+
+    private function validarUsuario(Usuario $usuario): void
+    {
+        if (empty($usuario->getNome()) || empty($usuario->getEmail()) || empty($usuario->getSenha())) {
+            throw new \Exception("Campos obrigatórios não preenchidos.");
+        }
+
+        if (!filter_var($usuario->getEmail(), FILTER_VALIDATE_EMAIL)) {
+            throw new \Exception("O e-mail informado é inválido.");
+        }
+
+        $senha = $usuario->getSenha();
+        if (strlen($senha) < 8 || !preg_match('/[A-Z]/', $senha) || !preg_match('/[a-z]/', $senha) || !preg_match('/[0-9]/', $senha) || !preg_match('/[\W_]/', $senha)) {
+            throw new \Exception("A senha não atende aos requisitos mínimos de segurança.");
+        }
+
+        if ($this->get($usuario->getEmail()) !== null) {
+            throw new \Exception("Este endereço de e-mail já está cadastrado.");
+        }
     }
 
     public function get(string $email): ?Usuario
@@ -20,10 +47,8 @@ class UsuarioService
         return $this->usuarioDAO->get($email);
     }
 
-    public function update(
-        string $email,
-        Usuario $usuario
-    ): void {
+    public function update(string $email, Usuario $usuario): void 
+    {
         $this->usuarioDAO->update($email, [
             'nome' => $usuario->getNome(),
             'email' => $usuario->getEmail(),

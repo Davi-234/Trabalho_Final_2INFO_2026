@@ -20,7 +20,7 @@ USE `dev_share` ;
 CREATE TABLE IF NOT EXISTS `dev_share`.`usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL UNIQUE,
   `senha_hash` VARCHAR(255) NOT NULL,
   `link_github` VARCHAR(255) NULL,
   `link_linkedin` VARCHAR(255) NULL,
