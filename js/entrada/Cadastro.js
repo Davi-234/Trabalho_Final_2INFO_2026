@@ -331,6 +331,15 @@ document
 form.addEventListener("submit", event => {
 
     event.preventDefault();
+
+    if (etapaAtual < sections.length - 1) {
+        if (validarEtapa(etapaAtual)) {
+            mostrarEtapa(etapaAtual + 1);
+        }
+
+        return;
+    }
+
     if (!validarEtapa(etapaAtual)) {
         return;
     }
@@ -344,23 +353,19 @@ form.addEventListener("submit", event => {
 
     const formData = new FormData(form);
 
-    fetch('roteador.php', {
+    fetch('../../admin/backend_entidades_sistema/roteador.php', {
         method: 'POST',
         body: formData
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro de comunicação com o servidor.');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            if (data.sucesso) {
-                alert(data.mensagem);
-                window.location.href = "../usuario/home.html";
-            } else {
+            if (!data.sucesso) {
                 alert('Erro no cadastro: ' + data.mensagem);
+                return;
             }
+
+            alert(data.mensagem);
+            window.location.href = "login.html";
         })
         .catch(error => {
             console.error('Erro na requisição:', error);

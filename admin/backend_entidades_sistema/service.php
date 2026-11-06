@@ -1,6 +1,6 @@
 <?php
-include "dao.php";
-include "model.php";
+require_once __DIR__ . "/dao.php";
+require_once __DIR__ . "/model.php";
 
 class UsuarioService
 {
@@ -13,32 +13,30 @@ class UsuarioService
 
     public function add(Usuario $usuario): void
     {
-        try {
-            $this->validarUsuario($usuario);
-            $this->usuarioDAO->add($usuario);
-            
-        } catch (\Throwable $th) {
-            throw new \Exception($th->getMessage());
+        $this->validarUsuario($usuario);
+
+        if (!$this->usuarioDAO->add($usuario)) {
+            throw new \RuntimeException("Não foi possível realizar o cadastro.");
         }
     }
 
     private function validarUsuario(Usuario $usuario): void
     {
-        if (empty($usuario->getNome()) || empty($usuario->getEmail()) || empty($usuario->getSenha())) {
-            throw new \Exception("Campos obrigatórios não preenchidos.");
+        if (trim($usuario->getNome()) === '' || empty($usuario->getEmail()) || empty($usuario->getSenha())) {
+            throw new \InvalidArgumentException("Campos obrigatórios não preenchidos.");
         }
 
         if (!filter_var($usuario->getEmail(), FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception("O e-mail informado é inválido.");
+            throw new \InvalidArgumentException("O e-mail informado é inválido.");
         }
 
         $senha = $usuario->getSenha();
         if (strlen($senha) < 8 || !preg_match('/[A-Z]/', $senha) || !preg_match('/[a-z]/', $senha) || !preg_match('/[0-9]/', $senha) || !preg_match('/[\W_]/', $senha)) {
-            throw new \Exception("A senha não atende aos requisitos mínimos de segurança.");
+            throw new \InvalidArgumentException("A senha não atende aos requisitos mínimos de segurança.");
         }
 
         if ($this->get($usuario->getEmail()) !== null) {
-            throw new \Exception("Este endereço de e-mail já está cadastrado.");
+            throw new \InvalidArgumentException("Este endereço de e-mail já está cadastrado.");
         }
     }
 
@@ -47,7 +45,7 @@ class UsuarioService
         return $this->usuarioDAO->get($email);
     }
 
-    public function update(string $email, Usuario $usuario): void 
+    public function update(string $email, Usuario $usuario): void
     {
         $this->usuarioDAO->update($email, [
             'nome' => $usuario->getNome(),

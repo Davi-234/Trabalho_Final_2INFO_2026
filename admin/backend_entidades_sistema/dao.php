@@ -1,7 +1,7 @@
 <?php
 
-include "model.php";
-require_once 'conexao.php';
+require_once __DIR__ . "/model.php";
+require_once __DIR__ . "/conexao.php";
 
 class UsuarioDAO
 {
@@ -28,8 +28,9 @@ class UsuarioDAO
                 $perfilLattes,
                 $tipo
             );
-            $stmt->execute();
-            return true;
+            $executado = $stmt->execute();
+            $stmt->close();
+            return $executado;
         }
 
         return false;
@@ -68,7 +69,7 @@ class UsuarioDAO
             (int) $dados['id']
         );
 
-        $usuario_buscado->setTipo($dados['tipo']);
+        $usuario_buscado->setTipo(NivelUsuario::from($dados['tipo']));
 
         $stmt->close();
 
