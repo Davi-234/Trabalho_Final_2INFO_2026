@@ -20,6 +20,41 @@ class UsuarioService
         }
     }
 
+    public function login(string $email, string $senha): ?Usuario
+    {
+        $email = trim($email);
+        if ($email === '' || $senha === '') {
+            return null;
+        }
+
+        $usuario = $this->usuarioDAO->get($email);
+
+        if ($usuario === null) {
+            return null;
+        }
+
+        $hashArmazenado = $usuario->getSenha();
+        if (password_verify($senha, $hashArmazenado)) {
+            return $usuario;
+        }
+
+        $hashLegado = hash('sha256', $senha);
+        if (
+            !preg_match('/\A[a-f0-9]{64}\z/i', $hashArmazenado) ||
+            !hash_equals(strtolower($hashArmazenado), $hashLegado)
+        ) {
+            return null;
+        }
+
+        $novoHash = password_hash($senha, PASSWORD_DEFAULT);
+        if (!$this->usuarioDAO->updatePasswordHash($usuario->getId(), $novoHash)) {
+            throw new \RuntimeException("Não foi possível atualizar a senha da conta.");
+        }
+
+        $usuario->setSenha($novoHash);
+        return $usuario;
+    }
+
     private function validarUsuario(Usuario $usuario): void
     {
         if (trim($usuario->getNome()) === '' || empty($usuario->getEmail()) || empty($usuario->getSenha())) {

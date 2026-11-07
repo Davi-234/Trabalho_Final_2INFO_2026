@@ -9,10 +9,10 @@ class UsuarioDAO
     {
         global $conn;
 
-        if ($stmt = $conn->prepare('INSERT INTO usuario (nome, email, senha_hash, link_github, link_linkedin, perfil_lattes, tipo) VALUES (?, ?, SHA2(?, 256), ?, ?, ?, ?);')) {
+        if ($stmt = $conn->prepare('INSERT INTO usuario (nome, email, senha_hash, link_github, link_linkedin, perfil_lattes, tipo) VALUES (?, ?, ?, ?, ?, ?, ?);')) {
             $nome = $usuario->getNome();
             $email = $usuario->getEmail();
-            $senha = $usuario->getSenha();
+            $senha = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
             $perfilGithub = $usuario->getPerfilGithub();
             $perfilLinkedin = $usuario->getPerfilLinkedin();
             $perfilLattes = $usuario->getPerfilLattes();
@@ -74,6 +74,22 @@ class UsuarioDAO
         $stmt->close();
 
         return $usuario_buscado;
+    }
+
+    public function updatePasswordHash(int $id, string $passwordHash): bool
+    {
+        global $conn;
+
+        $stmt = $conn->prepare('UPDATE usuario SET senha_hash = ? WHERE id = ?');
+        if ($stmt === false) {
+            return false;
+        }
+
+        $stmt->bind_param('si', $passwordHash, $id);
+        $executado = $stmt->execute();
+        $stmt->close();
+
+        return $executado;
     }
 
     public function update(

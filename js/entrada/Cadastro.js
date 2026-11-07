@@ -353,7 +353,7 @@ form.addEventListener("submit", event => {
 
     const formData = new FormData(form);
 
-    fetch('../../admin/backend_entidades_sistema/roteador.php', {
+    fetch('../../admin/backend_entidades_sistema/cadastro.php', {
         method: 'POST',
         body: formData
     })

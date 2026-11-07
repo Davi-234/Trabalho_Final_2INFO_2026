@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-function responderJson(int $status, bool $sucesso, string $mensagem): void
+function Cadastro(int $status, bool $sucesso, string $mensagem): void
 {
 	http_response_code($status);
 	echo json_encode(
@@ -12,7 +12,7 @@ function responderJson(int $status, bool $sucesso, string $mensagem): void
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-	responderJson(405, false, 'Método não permitido.');
+	Cadastro(405, false, 'Método não permitido.');
 }
 
 $nome = $_POST['nome'] ?? null;
@@ -22,14 +22,14 @@ $linkGithub = $_POST['link_github'] ?? null;
 $linkLinkedin = $_POST['link_linkedin'] ?? null;
 
 if (!is_string($nome) || !is_string($email) || !is_string($senha)) {
-	responderJson(400, false, 'Dados obrigatórios do cadastro não foram enviados.');
+	Cadastro(400, false, 'Dados obrigatórios do cadastro não foram enviados.');
 }
 
 if (
 	($linkGithub !== null && !is_string($linkGithub)) ||
 	($linkLinkedin !== null && !is_string($linkLinkedin))
 ) {
-	responderJson(400, false, 'Os links informados são inválidos.');
+	Cadastro(400, false, 'Os links informados são inválidos.');
 }
 
 try {
@@ -46,10 +46,10 @@ try {
 	$usuarioService = new UsuarioService(new UsuarioDAO());
 	$usuarioService->add($usuario);
 
-	responderJson(201, true, 'Cadastro realizado com sucesso.');
+	Cadastro(201, true, 'Cadastro realizado com sucesso.');
 } catch (InvalidArgumentException $erro) {
-	responderJson(422, false, $erro->getMessage());
+	Cadastro(422, false, $erro->getMessage());
 } catch (Throwable $erro) {
 	error_log($erro->getMessage());
-	responderJson(500, false, 'Não foi possível concluir o cadastro. Tente novamente.');
+	Cadastro(500, false, 'Não foi possível concluir o cadastro. Tente novamente.');
 }
