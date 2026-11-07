@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once __DIR__ . '/sessao.php';
+iniciarSessaoSegura();
 header('Content-Type: application/json; charset=utf-8');
 
 function responderLogin(int $status, bool $sucesso, string $mensagem): void

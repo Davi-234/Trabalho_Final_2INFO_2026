@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../../admin/backend_entidades_sistema/sessao.php';
+exigirUsuarioAutenticado();
+$csrfToken = obterTokenCsrf();
+?>
 <!doctype html>
 <html lang="en">
 
@@ -18,6 +23,15 @@
       width: auto;
       height: auto;
       align-items: stretch;
+    }
+
+    #logout-form button {
+      padding: 0;
+      border: 0;
+      background: none;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -40,7 +54,12 @@
     <nav>
       <ul>
         <li><a href="../global/explorar.html">Explorar Projetos</a></li>
-        <li><a href="../../index.html">Sair</a></li>
+        <li>
+          <form id="logout-form" action="../../admin/backend_entidades_sistema/logout.php" method="post">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+            <button type="submit">Sair</button>
+          </form>
+        </li>
         <li>
           <!-- Foto de perfil (placeholder para CSS) -->
           <a href="#">
@@ -67,12 +86,12 @@
       <section id="acoes-usuario">
         <article>
           <h3>Adicionar novo projeto</h3>
-          <a href="projeto.html">Criar Projeto</a>
+          <a href="projeto.php">Criar Projeto</a>
         </article>
 
         <article>
           <h3>Editar perfil</h3>
-          <a href="perfil_usuario_editar.html">Configurações do Perfil</a>
+          <a href="perfil_usuario_editar.php">Configurações do Perfil</a>
         </article>
       </section>
     </section>

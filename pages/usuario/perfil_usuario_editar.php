@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/../../admin/backend_entidades_sistema/sessao.php';
+exigirUsuarioAutenticado();
+?>
 <!-- Essa página aparece para o usuário dono do perfil -->
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +34,7 @@
         </div>
         <nav>
             <ul>
-                <li><a href="home.html">Home</a></li>
+                <li><a href="home.php">Home</a></li>
                 <li><a href="../global/explorar.html">Explorar</a></li>
             </ul>
         </nav>

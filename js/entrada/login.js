@@ -20,7 +20,7 @@ form.addEventListener("submit", async event => {
         }
 
         alert(data.mensagem);
-        window.location.href = "../usuario/home.html";
+        window.location.href = "../usuario/home.php";
     } catch (error) {
         console.error('Erro na requisição:', error);
         alert('Ocorreu um problema ao tentar conectar com o servidor. Tente novamente mais tarde.');
