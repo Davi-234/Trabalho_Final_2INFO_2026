@@ -24,21 +24,16 @@
         <p class="info-text">
           Acesse sua conta para comentar, avaliar e publicar projetos.
         </p>
-        <form class="row g-3 needs-validation" novalidate>
+        <form id="form-login" class="row g-3 needs-validation" novalidate>
           <div>
-            <label for="validationCustom01" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="validationCustom01" placeholder="Digite o seu nome" required>
-            <div class="valid-feedback">
-              Looks good!
-            </div>
+            <label for="validationCustom01" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="validationCustom01" name="email"
+              placeholder="Digite o seu e-mail" autocomplete="email" required>
           </div>
           <div>
             <label for="validationCustom02" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="validationCustom02" placeholder="Digite a sua senha"
-              required>
-            <div class="valid-feedback">
-              Looks good!
-            </div>
+            <input type="password" class="form-control" id="validationCustom02" name="senha"
+              placeholder="Digite a sua senha" autocomplete="current-password" required>
           </div>
           <div class="col-12">
             <button class="" id="btn" type="submit">Entrar</button>
@@ -67,27 +62,6 @@
 <script src="../../js/jquerry.js"></script>
 <script src="../../js/util/apagar_elemento.js"></script>
 <script src="../../js/util/criar_tela_erro.js"></script>
-<script src="../../js/entrada/perfil_usuario/login.js"></script>
-<script>
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (() => {
-    'use strict'
-
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    const forms = document.querySelectorAll('.needs-validation')
-
-    // Loop over them and prevent submission
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-
-        form.classList.add('was-validated')
-      }, false)
-    })
-  })()
-</script>
+<script src="../../js/entrada/login.js"></script>
 
 </html>

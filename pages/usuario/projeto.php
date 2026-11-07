@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/../../admin/backend_entidades_sistema/sessao.php';
+exigirUsuarioAutenticado();
+?>
 <!doctype html>
 <html lang="en">
 
@@ -29,7 +33,7 @@
 
     <nav>
       <ul>
-        <li><a href="home.html">Home</a></li>
+        <li><a href="home.php">Home</a></li>
       </ul>
     </nav>
   </header>
