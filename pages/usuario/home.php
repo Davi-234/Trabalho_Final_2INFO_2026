@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../admin/backend_entidades_sistema/sessao.php';
+require_once __DIR__ . '/../../backend/seguranca/sessao.php';
 exigirUsuarioAutenticado();
 $csrfToken = obterTokenCsrf();
 ?>
@@ -11,13 +11,13 @@ $csrfToken = obterTokenCsrf();
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home</title>
-  <link rel="stylesheet" href="../../css/utilidades/estilo_principal.css">
-  <link rel="stylesheet" href="../../css/utilidades/header.css">
-  <link rel="stylesheet" href="../../css/utilidades/footer.css">
-  <link rel="stylesheet" href="../../css/utilidades/formularios.css">
-  <link rel="stylesheet" href="../../css/usuario/home.css" />
-  <link rel="stylesheet" href="../../css/utilidades/tela_modal.css">
-  <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+  <link rel="stylesheet" href="../../assets/css/utilidades/estilo_principal.css">
+  <link rel="stylesheet" href="../../assets/css/utilidades/header.css">
+  <link rel="stylesheet" href="../../assets/css/utilidades/footer.css">
+  <link rel="stylesheet" href="../../assets/css/utilidades/formularios.css">
+  <link rel="stylesheet" href="../../assets/css/usuario/home.css" />
+  <link rel="stylesheet" href="../../assets/css/utilidades/tela_modal.css">
+  <link rel="icon" type="image/png" href="../../assets/images/logo.png">
   <style>
     .tela_excluir {
       width: auto;
@@ -43,7 +43,7 @@ $csrfToken = obterTokenCsrf();
     <div id="logo-container">
       <h1>
         <span>
-          <img src="../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
+          <img src="../../assets/images/logo.png" alt="Project community logo" id="logo" />
         </span>
         DevShare
       </h1>
@@ -55,7 +55,7 @@ $csrfToken = obterTokenCsrf();
       <ul>
         <li><a href="../global/explorar.html">Explorar Projetos</a></li>
         <li>
-          <form id="logout-form" action="../../admin/backend_entidades_sistema/logout.php" method="post">
+          <form id="logout-form" action="../../backend/controladores/logout.php" method="post">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
             <button type="submit">Sair</button>
           </form>
@@ -110,7 +110,7 @@ $csrfToken = obterTokenCsrf();
     DevShare - Sempre abertos à comunidade
   </footer>
 </body>
-<script src="../../js/jquerry.js"></script>
+<script src="../../assets/js/jquery.js"></script>
 <script>
   const btns_delete = Array.from(document.querySelectorAll('.btn-excluir'));
   btns_delete.forEach(btn => {
@@ -130,7 +130,7 @@ $csrfToken = obterTokenCsrf();
   });
 </script>
 
-<script src="../../js/usuario/card.js"></script>
+<script src="../../assets/js/usuario/card.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         carregarProjetos();

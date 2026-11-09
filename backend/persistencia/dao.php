@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . "/model.php";
-require_once __DIR__ . "/conexao.php";
+require_once __DIR__ . "/../modelos/model.php";
+require_once __DIR__ . "/../configuracao/conexao.php";
 
 class UsuarioDAO
 {

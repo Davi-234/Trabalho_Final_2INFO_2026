@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../admin/backend_entidades_sistema/sessao.php';
+require_once __DIR__ . '/../../backend/seguranca/sessao.php';
 exigirUsuarioAutenticado();
 ?>
 <!doctype html>
@@ -9,12 +9,12 @@ exigirUsuarioAutenticado();
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projeto</title>
-  <link rel="stylesheet" href="../../css/utilidades/mensagem_erro.css">
-  <link rel="stylesheet" href="../../css/usuario/projeto.css" />
-  <link rel="stylesheet" href="../../css/utilidades/projetos.css">
-  <link rel="stylesheet" href="../../css/utilidades/estilo_principal.css">
-  <link rel="stylesheet" href="../../css/utilidades/header.css">
-  <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+  <link rel="stylesheet" href="../../assets/css/utilidades/mensagem_erro.css">
+  <link rel="stylesheet" href="../../assets/css/usuario/projeto.css" />
+  <link rel="stylesheet" href="../../assets/css/utilidades/projetos.css">
+  <link rel="stylesheet" href="../../assets/css/utilidades/estilo_principal.css">
+  <link rel="stylesheet" href="../../assets/css/utilidades/header.css">
+  <link rel="icon" type="image/png" href="../../assets/images/logo.png">
 </head>
 
 <body id="body">
@@ -24,7 +24,7 @@ exigirUsuarioAutenticado();
     <div id="logo-container">
       <h1>
         <span>
-          <img src="../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
+          <img src="../../assets/images/logo.png" alt="Project community logo" id="logo" />
         </span>
         DevShare
       </h1>
@@ -183,10 +183,10 @@ exigirUsuarioAutenticado();
   </footer>
 </body>
 
-<script src="../../js/util/apagar_elemento.js"></script>
-<script src="../../js/jquerry.js"></script>
-<script src="../../js/util/criar_tela_erro.js"></script>
-<script src="../../js/util/mostrar_erro_campos_vazios.js"></script>
+<script src="../../assets/js/util/apagar_elemento.js"></script>
+<script src="../../assets/js/jquery.js"></script>
+<script src="../../assets/js/util/criar_tela_erro.js"></script>
+<script src="../../assets/js/util/mostrar_erro_campos_vazios.js"></script>
 <script>
   // confotro para o usuário.
   // Avisa quantos inputs estão vazios
@@ -208,7 +208,7 @@ exigirUsuarioAutenticado();
     }
   }
 </script>
-<script src="../../js/usuario/pre_visualizacao.js"></script>
+<script src="../../assets/js/usuario/pre_visualizacao.js"></script>
 <script>
   // Eventos de formulário
   document.getElementById("form").addEventListener("reset", function () {

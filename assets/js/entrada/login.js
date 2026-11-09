@@ -8,7 +8,7 @@ form.addEventListener("submit", async event => {
     }
 
     try {
-        const response = await fetch('../../admin/backend_entidades_sistema/login.php', {
+        const response = await fetch('../../backend/controladores/login.php', {
             method: 'POST',
             body: new FormData(form)
         });
