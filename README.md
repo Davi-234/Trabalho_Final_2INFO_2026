@@ -9,3 +9,11 @@ A proposta consiste na construção de uma aplicação web que integra, de forma
 Como solução, foi idealizada uma plataforma com características de rede social, na qual usuários podem se cadastrar e compartilhar links de repositórios, sites e outros materiais digitais. Além disso, o sistema permite a interação entre os usuários por meio de comentários e avaliações, promovendo não apenas a divulgação, mas também a curadoria colaborativa dos conteúdos publicados.
 
 Dessa forma, o projeto busca centralizar informações úteis em um único ambiente, reduzindo o tempo de busca e incentivando a troca de conhecimento, ao mesmo tempo em que aplica, em um contexto prático, conceitos fundamentais da formação técnica dos desenvolvedores envolvidos.
+
+## Organização
+
+- `assets/`: arquivos estáticos, separados em CSS, JavaScript e imagens.
+- `pages/`: telas da aplicação, organizadas por área: administração, entrada, páginas globais e usuário.
+- `backend/`: código PHP separado em `controladores/`, `servicos/`, `persistencia/`, `configuracao/`, `modelos/`, `seguranca/` e `utilidades/`.
+- `documentacao/`: requisitos, casos de uso e arquivos do banco de dados.
+- `index.html` e `404.html`: páginas servidas a partir da raiz do projeto.

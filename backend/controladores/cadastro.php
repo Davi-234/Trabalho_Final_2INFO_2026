@@ -33,7 +33,7 @@ if (
 }
 
 try {
-	require_once __DIR__ . '/service.php';
+	require_once __DIR__ . '/../servicos/service.php';
 
 	$usuario = new Usuario(
 		trim($nome),

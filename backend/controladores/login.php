@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/sessao.php';
+require_once __DIR__ . '/../seguranca/sessao.php';
 iniciarSessaoSegura();
 header('Content-Type: application/json; charset=utf-8');
 
@@ -24,7 +24,7 @@ if (!is_string($email) || !is_string($senha) || trim($email) === '' || $senha ==
 }
 
 try {
-    require_once __DIR__ . '/service.php';
+    require_once __DIR__ . '/../servicos/service.php';
 
     $usuarioService = new UsuarioService(new UsuarioDAO());
     $usuario = $usuarioService->login($email, $senha);

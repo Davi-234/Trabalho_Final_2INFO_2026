@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../admin/backend_entidades_sistema/sessao.php';
+require_once __DIR__ . '/../../backend/seguranca/sessao.php';
 exigirUsuarioAutenticado();
 ?>
 <!-- Essa página aparece para o usuário dono do perfil -->
@@ -10,14 +10,14 @@ exigirUsuarioAutenticado();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
-    <link rel="stylesheet" href="../../css/utilidades/tela_modal.css">
-    <link rel="stylesheet" href="../../css/usuario/perfil_estilos/perfil_usuario.css">
-    <link rel="stylesheet" href="../../css/utilidades/estrela.css">
-    <link rel="stylesheet" href="../../css/utilidades/projetos.css">
-    <link rel="stylesheet" href="../../css/utilidades/estilo_principal.css">
-    <link rel="stylesheet" href="../../css/utilidades/header.css">
-    <link rel="stylesheet" href="../../css/utilidades/formularios.css">
-    <link rel="icon" type="image/png" href="../../img_para_projeto/logo.png">
+    <link rel="stylesheet" href="../../assets/css/utilidades/tela_modal.css">
+    <link rel="stylesheet" href="../../assets/css/usuario/perfil_estilos/perfil_usuario.css">
+    <link rel="stylesheet" href="../../assets/css/utilidades/estrela.css">
+    <link rel="stylesheet" href="../../assets/css/utilidades/projetos.css">
+    <link rel="stylesheet" href="../../assets/css/utilidades/estilo_principal.css">
+    <link rel="stylesheet" href="../../assets/css/utilidades/header.css">
+    <link rel="stylesheet" href="../../assets/css/utilidades/formularios.css">
+    <link rel="icon" type="image/png" href="../../assets/images/logo.png">
 </head>
 
 <body>
@@ -26,7 +26,7 @@ exigirUsuarioAutenticado();
         <div id="logo-container">
             <h1>
                 <span>
-                    <img src="../../img_para_projeto/logo.png" alt="Project community logo" id="logo" />
+                    <img src="../../assets/images/logo.png" alt="Project community logo" id="logo" />
                 </span>
                 DevShare
             </h1>
@@ -103,8 +103,8 @@ exigirUsuarioAutenticado();
 }
 document.getElementById("foto-perfil").setAttribute("src",getGravatarUrl("davileandrocos@gmail.com"))
 </script>
-<script src="../../js/jquerry.js"></script>
-<script src="../../js/entrada/perfil_usuario/criar_janelaModal.js"></script>
-<script src="../../js/entrada/perfil_usuario/janela_modal_backend.js"></script>
+<script src="../../assets/js/jquery.js"></script>
+<script src="../../assets/js/entrada/perfil_usuario/criar_janelaModal.js"></script>
+<script src="../../assets/js/entrada/perfil_usuario/janela_modal_backend.js"></script>
 
 </html>

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/sessao.php';
+require_once __DIR__ . '/../seguranca/sessao.php';
 iniciarSessaoSegura();
 
 if (

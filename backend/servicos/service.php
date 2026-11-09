@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . "/dao.php";
-require_once __DIR__ . "/model.php";
+require_once __DIR__ . "/../persistencia/dao.php";
+require_once __DIR__ . "/../modelos/model.php";
 
 class UsuarioService
 {
