@@ -116,7 +116,7 @@ class UsuarioDAO
 
 class ProjetoDAO
 {
-    
+
     public function add(Projeto $projeto): bool
     {
         global $conn;
@@ -176,11 +176,25 @@ class ProjetoDAO
         return $projeto_buscado;
     }
 
-    public function update(string|int $identificador, Projeto $projeto): void {
+    public function update(string|int $identificador, array $atributo_valor): bool
+    {
+        global $conn;
 
+        // $atributo_valor é vetor, cuja chave é o nome do atributo, que recebe nessa posição o valor do atributo; podendo ser enviado mais de um atributo da tabela para ser atualizado.
+        $sql = "UPDATE projeto SET ";
+
+        foreach ($atributo_valor as [$attr, $valor]) {
+            $sql .= "$attr = $valor,";
+        }
+
+        $sql .= (gettype($identificador) === "string") ? "WHERE email = $identificador" : "WHERE id = $identificador;";
+
+        $conn->execute($sql);
+        return true;
     }
 
-    public function remove(int|string $identificador): void {
+    public function remove(int|string $identificador): void
+    {
         global $conn;
 
         $stmt = (gettype($identificador) === 'string')
@@ -204,7 +218,7 @@ class ComentarioDAO
 
     public function get(int $id): ?Comentario
     {
-        
+
         return null;
     }
 
@@ -213,7 +227,21 @@ class ComentarioDAO
         Comentario $comentario
     ): void {}
 
-    public function remove(Comentario $comentario): void {}
+    public function remove(string|int $identificador): void {
+        global $conn;
+
+        $stmt = (gettype($identificador) === 'string')
+            ? $conn->prepare('DELETE FROM projeto WHERE email = ?')
+            : $conn->prepare('DELETE FROM projeto WHERE id = ?');
+
+        if ($stmt === false) {
+            return;
+        }
+
+        $stmt->bind_param('s', $identificador);
+        $stmt->execute();
+        $stmt->close();
+    }
 }
 
 

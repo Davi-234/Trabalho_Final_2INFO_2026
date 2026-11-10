@@ -555,10 +555,6 @@ class Comentario extends Denunciado
         $this->filhos = [];
     }
 
-
-    
-
-
     public function getId(): int
     {
         return $this->id;
@@ -681,9 +677,6 @@ class Denuncia
         $this->data = $data ?? new DateTime();
         $this->status = $status ?? StatusDenuncia::ANALISANDO;
     }
-
-
-    
 
 
     public function getId(): int
