@@ -40,7 +40,7 @@ class UsuarioDAO
     {
         global $conn;
 
-        $stmt = (gettype($identificador) === 'string')
+        $stmt = (is_string($identificador))
             ? $conn->prepare('SELECT * FROM usuario WHERE email = ?')
             : $conn->prepare('SELECT * FROM usuario WHERE id = ?');
 
@@ -48,8 +48,12 @@ class UsuarioDAO
             return null;
         }
 
-        $stmt->bind_param('s', $identificador);
-        $stmt->execute();
+        $tipoIdentificador = is_string($identificador) ? 's' : 'i';
+        $stmt->bind_param($tipoIdentificador, $identificador);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return null;
+        }
         $user = $stmt->get_result();
 
         if ($user === false || $user->num_rows === 0) {
@@ -98,54 +102,62 @@ class UsuarioDAO
     ): bool {
         global $conn;
 
-        // $atributo_valor é vetor, cuja chave é o nome do atributo, que recebe nessa posição o valor do atributo; podendo ser enviado mais de um atributo da tabela para ser atualizado.
-        $stmt = $conn->prepare(
-            'UPDATE usuario SET 
-                nome = ?,
-                email = ?,
-                senha_hash = SHA2(?, 256),
-                link_github = ?,
-                link_linkedin = ?,
-                perfil_lattes = ?,
-                tipo = ?
-            WHERE id = ?'
-        );
+        $colunasPermitidas = [
+            'nome' => 'nome',
+            'email' => 'email',
+            'senha' => 'senha_hash',
+            'senha_hash' => 'senha_hash',
+            'link_github' => 'link_github',
+            'link_linkedin' => 'link_linkedin',
+            'perfil_lattes' => 'perfil_lattes',
+            'tipo' => 'tipo',
+        ];
+        $atualizacoes = [];
+        $valores = [];
 
+        foreach ($atributo_valor as $atributo => $valor) {
+            if (!isset($colunasPermitidas[$atributo])) {
+                continue;
+            }
+
+            if ($atributo === 'senha') {
+                $valor = password_hash((string) $valor, PASSWORD_DEFAULT);
+            }
+
+            $atualizacoes[] = $colunasPermitidas[$atributo] . ' = ?';
+            $valores[] = $valor;
+        }
+
+        if ($atualizacoes === []) {
+            return false;
+        }
+
+        $colunaIdentificador = is_string($identificador) ? 'email' : 'id';
+        $sql = 'UPDATE usuario SET ' . implode(', ', $atualizacoes) . " WHERE $colunaIdentificador = ?";
+        $valores[] = $identificador;
+        $tipos = str_repeat('s', count($atualizacoes)) . (is_string($identificador) ? 's' : 'i');
+        $stmt = $conn->prepare($sql);
         if ($stmt === false) {
             return false;
         }
 
-        $nome = $atributo_valor['nome'] ?? null;
-        $email = $atributo_valor['email'] ?? null;
-        $senha = $atributo_valor['senha_hash'] ?? null;
-        $linkGithub = $atributo_valor['link_github'] ?? null;
-        $linkLinkedin = $atributo_valor['link_linkedin'] ?? null;
-        $perfilLattes = $atributo_valor['perfil_lattes'] ?? null;
-        $tipo = $atributo_valor['tipo'] ?? null;
+        $parametros = [$tipos];
+        foreach ($valores as $indice => $_) {
+            $parametros[] = &$valores[$indice];
+        }
 
-        $stmt->bind_param(
-            'sssssssi',
-            $nome,
-            $email,
-            $senha,
-            $linkGithub,
-            $linkLinkedin,
-            $perfilLattes,
-            $tipo,
-            $identificador
-        );
-
-        $stmt->execute();
+        $vinculado = call_user_func_array([$stmt, 'bind_param'], $parametros);
+        $executado = $vinculado && $stmt->execute();
         $stmt->close();
 
-        return true;
+        return $executado;
     }
 
     public function remove(string|int $identificador): void
     {
         global $conn;
 
-        $stmt = (gettype($identificador) === 'string')
+        $stmt = (is_string($identificador))
             ? $conn->prepare('DELETE FROM usuario WHERE email = ?')
             : $conn->prepare('DELETE FROM usuario WHERE id = ?');
 
@@ -153,7 +165,8 @@ class UsuarioDAO
             return;
         }
 
-        $stmt->bind_param('s', $identificador);
+        $tipoIdentificador = is_string($identificador) ? 's' : 'i';
+        $stmt->bind_param($tipoIdentificador, $identificador);
         $stmt->execute();
         $stmt->close();
     }
@@ -162,78 +175,222 @@ class UsuarioDAO
 
 class ProjetoDAO
 {
-    public function add(Projeto $projeto): void
+
+    public function add(Projeto $projeto): bool
     {
-        
+        global $conn;
+
+        $stmt = $conn->prepare(
+            'INSERT INTO projeto (visibilidade, data_criacao, descricao, nome, status, nivel, imagem_projeto, views, link_repositorio, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        );
+        if ($stmt === false) {
+            return false;
+        }
+
+        $visibilidade = $projeto->isPublico() ? 1 : 0;
+        $dataCriacao = $projeto->getDataCriacao()->format('Y-m-d H:i:s');
+        $descricao = $projeto->getDescricao();
+        $nome = $projeto->getTitulo();
+        $status = $projeto->getStatus()->value;
+        $nivel = $projeto->getNivel()->value;
+        $imagem = $projeto->getImagemProjeto();
+        $views = $projeto->getViews();
+        $linkRepositorio = $projeto->getLinkRepositorio();
+        $usuarioId = $projeto->getDono()->getId();
+        $stmt->bind_param(
+            'issssssisi',
+            $visibilidade,
+            $dataCriacao,
+            $descricao,
+            $nome,
+            $status,
+            $nivel,
+            $imagem,
+            $views,
+            $linkRepositorio,
+            $usuarioId
+        );
+        $executado = $stmt->execute();
+        $stmt->close();
+
+        return $executado;
     }
 
     public function get(string|int $identificador): ?Projeto
     {
-        
-        return null;
+        global $conn;
+        $stmt = is_string($identificador)
+            ? $conn->prepare('SELECT * FROM projeto WHERE link_repositorio = ?')
+            : $conn->prepare('SELECT * FROM projeto WHERE id = ?');
+        if ($stmt === false) {
+            return null;
+        }
+
+        $tipoIdentificador = is_string($identificador) ? 's' : 'i';
+        $stmt->bind_param($tipoIdentificador, $identificador);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return null;
+        }
+        $resultado = $stmt->get_result();
+        $dados = $resultado === false ? null : $resultado->fetch_assoc();
+        $stmt->close();
+
+        if ($dados === null) {
+            return null;
+        }
+
+        $dono = (new UsuarioDAO())->get((int) $dados['usuario_id']);
+        if ($dono === null) {
+            return null;
+        }
+
+        $idProjeto = (int) $dados['id'];
+        $tags = [];
+        $stmt = $conn->prepare(
+            'SELECT tag.id, tag.nome FROM tag INNER JOIN projeto_tag ON projeto_tag.tag_id = tag.id WHERE projeto_tag.projeto_id = ?'
+        );
+        if ($stmt === false) {
+            return null;
+        }
+        $stmt->bind_param('i', $idProjeto);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return null;
+        }
+        $resultadoTags = $stmt->get_result();
+        while ($tag = $resultadoTags->fetch_assoc()) {
+            $tags[] = new Tag($tag['nome'], (int) $tag['id']);
+        }
+        $stmt->close();
+
+        $tecnologias = [];
+        $stmt = $conn->prepare(
+            'SELECT tecnologia.id, tecnologia.nome FROM tecnologia INNER JOIN projeto_tecnologia ON projeto_tecnologia.tecnologias_id = tecnologia.id WHERE projeto_tecnologia.projeto_id = ?'
+        );
+        if ($stmt === false) {
+            return null;
+        }
+        $stmt->bind_param('i', $idProjeto);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return null;
+        }
+        $resultadoTecnologias = $stmt->get_result();
+        while ($tecnologia = $resultadoTecnologias->fetch_assoc()) {
+            $tecnologias[] = new Tecnologia($tecnologia['nome'], (int) $tecnologia['id']);
+        }
+        $stmt->close();
+
+        $projeto = new Projeto(
+            $dados['nome'],
+            $dados['descricao'],
+            $dados['link_repositorio'],
+            (bool) $dados['visibilidade'],
+            $dono,
+            new DateTime($dados['data_criacao']),
+            StatusProjeto::from($dados['status']),
+            NivelProjeto::from($dados['nivel']),
+            $dados['imagem_projeto'],
+            $tecnologias,
+            $tags,
+            $idProjeto
+        );
+        $projeto->setViews((int) $dados['views']);
+
+        return $projeto;
     }
 
-    public function update(string|int $identificador, Projeto $projeto): void {
-        
+    public function update(string|int $identificador, Projeto $projeto): void
+    {
+        global $conn;
+
+        $colunaIdentificador = is_string($identificador) ? 'link_repositorio' : 'id';
+        $tipoIdentificador = is_string($identificador) ? 's' : 'i';
+        $stmt = $conn->prepare(
+            "UPDATE projeto SET visibilidade = ?, descricao = ?, nome = ?, status = ?, nivel = ?, imagem_projeto = ?, views = ?, link_repositorio = ?, usuario_id = ? WHERE $colunaIdentificador = ?"
+        );
+        if ($stmt === false) {
+            return;
+        }
+
+        $visibilidade = $projeto->isPublico() ? 1 : 0;
+        $descricao = $projeto->getDescricao();
+        $nome = $projeto->getTitulo();
+        $status = $projeto->getStatus()->value;
+        $nivel = $projeto->getNivel()->value;
+        $imagem = $projeto->getImagemProjeto();
+        $views = $projeto->getViews();
+        $linkRepositorio = $projeto->getLinkRepositorio();
+        $usuarioId = $projeto->getDono()->getId();
+        $tipos = 'isssssisi' . $tipoIdentificador;
+        $stmt->bind_param(
+            $tipos,
+            $visibilidade,
+            $descricao,
+            $nome,
+            $status,
+            $nivel,
+            $imagem,
+            $views,
+            $linkRepositorio,
+            $usuarioId,
+            $identificador
+        );
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function remove(Projeto $projeto): void
     {
-        
+        global $conn;
+
+        $stmt = $conn->prepare('DELETE FROM projeto WHERE link_repositorio = ?');
+        if ($stmt === false) {
+            return;
+        }
+
+        $linkRepositorio = $projeto->getLinkRepositorio();
+        $stmt->bind_param('s', $linkRepositorio);
+        $stmt->execute();
+        $stmt->close();
     }
 }
 
 
 class ComentarioDAO
 {
-    public function add(Comentario $comentario): void
-    {
-        
-    }
+    public function add(Comentario $comentario): void {}
 
     public function get(int $id): ?Comentario
     {
-        
+
         return null;
     }
 
     public function update(
         int $id,
         Comentario $comentario
-    ): void {
-        
-    }
+    ): void {}
 
-    public function remove(Comentario $comentario): void
-    {
-        
-    }
+    public function remove(Comentario $comentario): void {}
 }
 
 
 class DenunciaDAO
 {
-    public function add(Denuncia $denuncia): void
-    {
-        
-    }
+    public function add(Denuncia $denuncia): void {}
 
     public function get(int $id): ?Denuncia
     {
-        
+
         return null;
     }
 
     public function update(
         int $id,
         Denuncia $denuncia
-    ): void {
-        
-    }
+    ): void {}
 
-    public function remove(Denuncia $denuncia): void
-    {
-        
-    }
+    public function remove(Denuncia $denuncia): void {}
 }
-?>
