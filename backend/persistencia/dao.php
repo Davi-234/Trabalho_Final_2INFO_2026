@@ -153,7 +153,7 @@ class UsuarioDAO
         return $executado;
     }
 
-    public function remove(string|int $identificador): void
+    public function remove(string|int $identificador): bool
     {
         global $conn;
 
@@ -162,13 +162,15 @@ class UsuarioDAO
             : $conn->prepare('DELETE FROM usuario WHERE id = ?');
 
         if ($stmt === false) {
-            return;
+            return false;
         }
 
         $tipoIdentificador = is_string($identificador) ? 's' : 'i';
         $stmt->bind_param($tipoIdentificador, $identificador);
-        $stmt->execute();
+        $executado = $stmt->execute();
+        $removido = $executado && $stmt->affected_rows === 1;
         $stmt->close();
+        return $removido;
     }
 }
 
@@ -210,10 +212,19 @@ class ProjetoDAO
             $linkRepositorio,
             $usuarioId
         );
+        $conn->begin_transaction();
         $executado = $stmt->execute();
+        $projetoId = (int) $conn->insert_id;
         $stmt->close();
 
-        return $executado;
+        if (!$executado || !$this->salvarRelacoes($projetoId, $projeto)) {
+            $conn->rollback();
+            return false;
+        }
+
+        $conn->commit();
+
+        return true;
     }
 
     public function get(string|int $identificador): ?Projeto
@@ -301,7 +312,7 @@ class ProjetoDAO
         return $projeto;
     }
 
-    public function update(string|int $identificador, Projeto $projeto): void
+    public function update(string|int $identificador, Projeto $projeto): bool
     {
         global $conn;
 
@@ -311,7 +322,7 @@ class ProjetoDAO
             "UPDATE projeto SET visibilidade = ?, descricao = ?, nome = ?, status = ?, nivel = ?, imagem_projeto = ?, views = ?, link_repositorio = ?, usuario_id = ? WHERE $colunaIdentificador = ?"
         );
         if ($stmt === false) {
-            return;
+            return false;
         }
 
         $visibilidade = $projeto->isPublico() ? 1 : 0;
@@ -337,8 +348,37 @@ class ProjetoDAO
             $usuarioId,
             $identificador
         );
-        $stmt->execute();
+        $conn->begin_transaction();
+        $executado = $stmt->execute();
         $stmt->close();
+
+        if (!$executado) {
+            $conn->rollback();
+            return false;
+        }
+
+        $resultado = is_string($identificador)
+            ? $conn->prepare('SELECT id FROM projeto WHERE link_repositorio = ?')
+            : $conn->prepare('SELECT id FROM projeto WHERE id = ?');
+        if ($resultado === false) {
+            $conn->rollback();
+            return false;
+        }
+        $resultado->bind_param($tipoIdentificador, $identificador);
+        if (!$resultado->execute()) {
+            $resultado->close();
+            $conn->rollback();
+            return false;
+        }
+        $dados = $resultado->get_result()->fetch_assoc();
+        $resultado->close();
+        if ($dados === null || !$this->salvarRelacoes((int) $dados['id'], $projeto)) {
+            $conn->rollback();
+            return false;
+        }
+
+        $conn->commit();
+        return true;
     }
 
     public function remove(Projeto $projeto): void
@@ -355,6 +395,245 @@ class ProjetoDAO
         $stmt->execute();
         $stmt->close();
     }
+
+    public function listarDoUsuario(int $usuarioId): array
+    {
+        global $conn;
+
+        $stmt = $conn->prepare(
+            'SELECT id, nome, descricao, visibilidade, status, nivel FROM projeto WHERE usuario_id = ? ORDER BY data_criacao DESC, id DESC'
+        );
+        if ($stmt === false) {
+            throw new RuntimeException('Não foi possível preparar a lista de projetos.');
+        }
+
+        $stmt->bind_param('i', $usuarioId);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível consultar os projetos.');
+        }
+
+        $projetos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $projetos;
+    }
+
+    public function getDoUsuario(int $projetoId, int $usuarioId): ?Projeto
+    {
+        global $conn;
+
+        $stmt = $conn->prepare('SELECT id FROM projeto WHERE id = ? AND usuario_id = ?');
+        if ($stmt === false) {
+            return null;
+        }
+        $stmt->bind_param('ii', $projetoId, $usuarioId);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return null;
+        }
+        $existe = $stmt->get_result()->num_rows > 0;
+        $stmt->close();
+
+        return $existe ? $this->get($projetoId) : null;
+    }
+
+    public function removeDoUsuario(int $projetoId, int $usuarioId): bool
+    {
+        global $conn;
+
+        $stmt = $conn->prepare('DELETE FROM projeto WHERE id = ? AND usuario_id = ?');
+        if ($stmt === false) {
+            return false;
+        }
+        $stmt->bind_param('ii', $projetoId, $usuarioId);
+        $executado = $stmt->execute();
+        $removido = $executado && $stmt->affected_rows === 1;
+        $stmt->close();
+        return $removido;
+    }
+
+    private function salvarRelacoes(int $projetoId, Projeto $projeto): bool
+    {
+        global $conn;
+
+        foreach ([
+            ['itens' => $projeto->getTags(), 'tabela' => 'tag', 'ligacao' => 'projeto_tag', 'coluna' => 'tag_id'],
+            ['itens' => $projeto->getTecnologias(), 'tabela' => 'tecnologia', 'ligacao' => 'projeto_tecnologia', 'coluna' => 'tecnologias_id'],
+        ] as $relacao) {
+            $stmtExcluir = $conn->prepare("DELETE FROM {$relacao['ligacao']} WHERE projeto_id = ?");
+            if ($stmtExcluir === false) {
+                return false;
+            }
+            $stmtExcluir->bind_param('i', $projetoId);
+            $executado = $stmtExcluir->execute();
+            $stmtExcluir->close();
+            if (!$executado) {
+                return false;
+            }
+
+            foreach ($relacao['itens'] as $item) {
+                $nome = trim($item->getNome());
+                if ($nome === '') {
+                    continue;
+                }
+
+                $stmtItem = $conn->prepare(
+                    "INSERT INTO {$relacao['tabela']} (nome) VALUES (?) ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)"
+                );
+                if ($stmtItem === false) {
+                    return false;
+                }
+                $stmtItem->bind_param('s', $nome);
+                $executado = $stmtItem->execute();
+                $itemId = (int) $conn->insert_id;
+                $stmtItem->close();
+                if (!$executado || $itemId < 1) {
+                    return false;
+                }
+
+                $stmtLigacao = $conn->prepare(
+                    "INSERT INTO {$relacao['ligacao']} (projeto_id, {$relacao['coluna']}) VALUES (?, ?)"
+                );
+                if ($stmtLigacao === false) {
+                    return false;
+                }
+                $stmtLigacao->bind_param('ii', $projetoId, $itemId);
+                $executado = $stmtLigacao->execute();
+                $stmtLigacao->close();
+                if (!$executado) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function listarPublicos(
+        string $busca,
+        string $nivel,
+        string $tecnologias,
+        int $pagina,
+        string $ordenar,
+        bool $inverter
+    ): array
+    {
+        global $conn;
+
+        $termos = preg_split('/\s+/', trim($busca), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+        $termos = array_slice($termos, 0, 8);
+        $condicoes = ['p.visibilidade = 1'];
+        $valoresBusca = [];
+
+        if (in_array($nivel, ['iniciante', 'intermediario', 'avancado'], true)) {
+            $condicoes[] = 'p.nivel = ?';
+            $valoresBusca[] = $nivel;
+        }
+
+        foreach ($termos as $termo) {
+            $condicoes[] = '(p.nome LIKE ? OR p.descricao LIKE ?)';
+            $padrao = '%' . $termo . '%';
+            $valoresBusca[] = $padrao;
+            $valoresBusca[] = $padrao;
+        }
+
+        $termosTecnologia = preg_split('/[,;]+/', trim($tecnologias), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+        $termosTecnologia = array_slice($termosTecnologia, 0, 5);
+        foreach ($termosTecnologia as $termoTecnologia) {
+            $condicoes[] = 'EXISTS (
+                SELECT 1
+                FROM projeto_tecnologia AS pt
+                INNER JOIN tecnologia AS t ON t.id = pt.tecnologias_id
+                WHERE pt.projeto_id = p.id AND t.nome LIKE ?
+            )';
+            $valoresBusca[] = '%' . trim(substr($termoTecnologia, 0, 50)) . '%';
+        }
+
+        $where = implode(' AND ', $condicoes);
+        $stmtTotal = $conn->prepare("SELECT COUNT(*) AS total FROM projeto AS p WHERE $where");
+        if ($stmtTotal === false) {
+            throw new RuntimeException('Não foi possível preparar a busca de projetos.');
+        }
+
+        if (!$this->bindParametros($stmtTotal, str_repeat('s', count($valoresBusca)), $valoresBusca) || !$stmtTotal->execute()) {
+            $stmtTotal->close();
+            throw new RuntimeException('Não foi possível consultar os projetos.');
+        }
+
+        $total = (int) $stmtTotal->get_result()->fetch_assoc()['total'];
+        $stmtTotal->close();
+
+        $porPagina = 10;
+        $totalPaginas = max(1, (int) ceil($total / $porPagina));
+        $pagina = min(max(1, $pagina), $totalPaginas);
+        $offset = ($pagina - 1) * $porPagina;
+        $direcao = $inverter ? 'ASC' : 'DESC';
+
+        $ordenacoes = [
+            'avaliacao' => "COALESCE(a.media_nota, 0) $direcao, COALESCE(a.total_avaliacoes, 0) $direcao",
+            'recentes' => "p.data_criacao $direcao",
+            'views' => "p.views $direcao",
+            'comentarios' => "COALESCE(c.total_comentarios, 0) $direcao",
+        ];
+        $orderBy = $ordenacoes[$ordenar] ?? $ordenacoes['avaliacao'];
+
+        $sql = "SELECT
+                    p.id,
+                    p.nome,
+                    p.descricao,
+                    p.views,
+                    COALESCE(ROUND(a.media_nota / 2, 1), 0) AS avaliacao,
+                    COALESCE(c.total_comentarios, 0) AS comentarios
+                FROM projeto AS p
+                LEFT JOIN (
+                    SELECT projeto_id, AVG(nota) AS media_nota, COUNT(*) AS total_avaliacoes
+                    FROM avaliacao
+                    GROUP BY projeto_id
+                ) AS a ON a.projeto_id = p.id
+                LEFT JOIN (
+                    SELECT projeto_id, COUNT(*) AS total_comentarios
+                    FROM comentario
+                    GROUP BY projeto_id
+                ) AS c ON c.projeto_id = p.id
+                WHERE $where
+                ORDER BY $orderBy, p.id DESC
+                LIMIT ? OFFSET ?";
+        $stmt = $conn->prepare($sql);
+        if ($stmt === false) {
+            throw new RuntimeException('Não foi possível preparar a listagem de projetos.');
+        }
+
+        $valores = array_merge($valoresBusca, [$porPagina, $offset]);
+        if (!$this->bindParametros($stmt, str_repeat('s', count($valoresBusca)) . 'ii', $valores) || !$stmt->execute()) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível listar os projetos.');
+        }
+
+        $projetos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        return [
+            'projetos' => $projetos,
+            'total' => $total,
+            'pagina' => $pagina,
+            'porPagina' => $porPagina,
+            'totalPaginas' => $totalPaginas,
+        ];
+    }
+
+    private function bindParametros(mysqli_stmt $stmt, string $tipos, array &$valores): bool
+    {
+        if ($tipos === '') {
+            return true;
+        }
+
+        $parametros = [$tipos];
+        foreach ($valores as $indice => $_) {
+            $parametros[] = &$valores[$indice];
+        }
+
+        return call_user_func_array([$stmt, 'bind_param'], $parametros);
+    }
 }
 
 
@@ -364,7 +643,6 @@ class ComentarioDAO
 
     public function get(int $id): ?Comentario
     {
-
         return null;
     }
 

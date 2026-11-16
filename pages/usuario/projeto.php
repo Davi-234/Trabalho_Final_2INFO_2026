@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../backend/seguranca/sessao.php';
 exigirUsuarioAutenticado();
+$csrfToken = obterTokenCsrf();
 ?>
 <!doctype html>
 <html lang="en">
@@ -53,7 +54,10 @@ exigirUsuarioAutenticado();
 
     <!-- Formulário principal -->
     <section id="form-projeto">
-      <form id="form" action="#" method="post" enctype="multipart/form-data">
+      <p id="mensagem-projeto" role="status" aria-live="polite"></p>
+        <form id="form" action="../../backend/controladores/cadastrarProjetos.php" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>" />
+          <input type="hidden" name="id" id="projeto_id" />
         <!-- Informações básicas -->
         <fieldset>
           <legend>Informações do Projeto</legend>
@@ -84,14 +88,6 @@ exigirUsuarioAutenticado();
             <option value="iniciante">Iniciante</option>
             <option value="intermediario">Intermediário</option>
             <option value="avancado">Avançado</option>
-          </select>
-
-          <label for="tipo">Tipo de Projeto</label>
-          <select id="tipo" name="tipo">
-            <option value="web">Web</option>
-            <option value="mobile">Mobile</option>
-            <option value="desktop">Desktop</option>
-            <option value="outro">Outro</option>
           </select>
 
           <label for="tecnologias">Tecnologias Utilizadas</label>
@@ -129,8 +125,8 @@ exigirUsuarioAutenticado();
 
           <label for="status">Status do Projeto</label>
           <select id="status" name="status">
-            <option value="em-desenvolvimento">Em desenvolvimento</option>
-            <option value="concluido">Concluído</option>
+            <option value="em_desenvolvimento">Em desenvolvimento</option>
+            <option value="completo">Concluído</option>
             <option value="pausado">Pausado</option>
           </select>
         </fieldset>
@@ -153,7 +149,7 @@ exigirUsuarioAutenticado();
       <article class="projeto-preview">
         <header>
           <h3 id="preview_titulo">Nome do Projeto</h3>
-          <p>Nível: <span id="preview_nivel">Iniciante</span> | Tipo: <span id="preview_tipo">Web</span></p>
+          <p>Nível: <span id="preview_nivel">Iniciante</span></p>
         </header>
 
         <section>
@@ -209,6 +205,7 @@ exigirUsuarioAutenticado();
   }
 </script>
 <script src="../../assets/js/usuario/pre_visualizacao.js"></script>
+<script src="../../assets/js/usuario/projeto.js"></script>
 <script>
   // Eventos de formulário
   document.getElementById("form").addEventListener("reset", function () {
