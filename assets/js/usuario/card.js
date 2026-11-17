@@ -1,78 +1,91 @@
-const projetos = [
-    {
-        id: 1,
-        nome: "DevShare",
-        visibilidade: "Público",
-        descricao: "Rede social para compartilhamento de projetos."
-    },
-    {
-        id: 2,
-        nome: "MenteBoa",
-        visibilidade: "Privado",
-        descricao: "Aplicação desenvolvida em Java."
-    },
-    {
-        id: 3,
-        nome: "Gerenciamento de Acólitos",
-        visibilidade: "Público",
-        descricao: "O projeto visa uma organização dos membros do acolitato."
-    },
-    {
-        id: 4,
-        nome: "Gerenciamento de Acólitos",
-        visibilidade: "Público",
-        descricao: "O projeto visa uma organização dos membros do acolitato."
-    },
-    {
-        id: 5,
-        nome: "Gerenciamento de Acólitos",
-        visibilidade: "Público",
-        descricao: "O projeto visa uma organização dos membros do acolitato."
+const endpointProjetos = "../../backend/controladores/cadastrarProjetos.php";
+const tokenCsrf = document.querySelector('meta[name="csrf-token"]').content;
+
+async function carregarProjetos() {
+    const lista = document.getElementById("lista-projetos");
+    lista.replaceChildren();
+
+    try {
+        const resposta = await fetch(`${endpointProjetos}?acao=listar`);
+        const dados = await resposta.json();
+        if (!resposta.ok) {
+            throw new Error(dados.mensagem || "Não foi possível carregar seus projetos.");
+        }
+
+        if (dados.projetos.length === 0) {
+            const vazio = document.createElement("p");
+            vazio.textContent = "Você ainda não cadastrou projetos.";
+            lista.append(vazio);
+            return;
+        }
+
+        dados.projetos.forEach((projeto) => {
+            const artigo = document.createElement("article");
+            artigo.className = "projeto";
+
+            const cabecalho = document.createElement("header");
+            const titulo = document.createElement("h3");
+            titulo.textContent = projeto.nome;
+            const visibilidade = document.createElement("span");
+            visibilidade.className = `visibilidade ${projeto.visibilidade ? "publico" : "privado"}`;
+            visibilidade.textContent = projeto.visibilidade ? "Público" : "Privado";
+            cabecalho.append(titulo, visibilidade);
+
+            const conteudo = document.createElement("section");
+            const descricao = document.createElement("p");
+            descricao.textContent = projeto.descricao;
+            conteudo.append(descricao);
+
+            const rodape = document.createElement("footer");
+            const navegacao = document.createElement("nav");
+            const acoes = document.createElement("ul");
+            const editar = document.createElement("a");
+            editar.className = "btn";
+            editar.href = `projeto.php?id=${encodeURIComponent(projeto.id)}`;
+            editar.textContent = "Editar";
+            const excluir = document.createElement("button");
+            excluir.type = "button";
+            excluir.className = "btn btn-excluir";
+            excluir.dataset.id = projeto.id;
+            excluir.textContent = "Excluir";
+            const itemEditar = document.createElement("li");
+            const itemExcluir = document.createElement("li");
+            itemEditar.append(editar);
+            itemExcluir.append(excluir);
+            acoes.append(itemEditar, itemExcluir);
+            navegacao.append(acoes);
+            rodape.append(navegacao);
+            artigo.append(cabecalho, conteudo, rodape);
+            lista.append(artigo);
+        });
+    } catch (erro) {
+        const mensagem = document.createElement("p");
+        mensagem.textContent = erro.message;
+        lista.append(mensagem);
     }
-];
-
-function carregarProjetos() {
-    const listaProjetos = $("#lista-projetos");
-
-    projetos.forEach((projeto) => {
-        const article = document.createElement("article");
-
-        article.className = "projeto";
-
-        article.innerHTML = `
-            <header>
-                <h3>${projeto.nome}</h3>
-
-                <span class="visibilidade ${projeto.visibilidade.toLowerCase()}">
-                    ${projeto.visibilidade}
-                </span>
-            </header>
-
-            <section>
-                <p>${projeto.descricao}</p>
-            </section>
-
-            <footer>
-                <nav>
-                    <ul>
-                        <li>
-                            <button type="button" class="btn" onclick="window.location.href='../global/projeto.html?id=${projeto.id}'">Editar</button>
-                        </li>
-
-                        <li>
-                            <button type="button" class="btn" onclick="window.location.href='../usuario/projeto.html?id=${projeto.id}'">Editar</button>
-                        </li>
-
-                        <li>
-                            <button class="btn-excluir">
-                                Excluir
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
-            </footer>
-        `;
-
-        listaProjetos.append(article);
-    });
 }
+
+document.getElementById("lista-projetos").addEventListener("click", async (evento) => {
+    const botao = evento.target.closest(".btn-excluir");
+    if (!botao || !window.confirm("Deseja realmente excluir este projeto?")) {
+        return;
+    }
+
+    const dados = new FormData();
+    dados.set("acao", "excluir");
+    dados.set("id", botao.dataset.id);
+    dados.set("csrf_token", tokenCsrf);
+
+    try {
+        const resposta = await fetch(endpointProjetos, { method: "POST", body: dados });
+        const resultado = await resposta.json();
+        if (!resposta.ok) {
+            throw new Error(resultado.mensagem || "Não foi possível excluir o projeto.");
+        }
+        await carregarProjetos();
+    } catch (erro) {
+        window.alert(erro.message);
+    }
+});
+
+document.addEventListener("DOMContentLoaded", carregarProjetos);

@@ -66,18 +66,65 @@ class UsuarioService
         }
 
         $senha = $usuario->getSenha();
-        if (strlen($senha) < 8 || !preg_match('/[A-Z]/', $senha) || !preg_match('/[a-z]/', $senha) || !preg_match('/[0-9]/', $senha) || !preg_match('/[\W_]/', $senha)) {
-            throw new \InvalidArgumentException("A senha não atende aos requisitos mínimos de segurança.");
-        }
+        $this->validarSenha($senha, false);
 
         if ($this->get($usuario->getEmail()) !== null) {
             throw new \InvalidArgumentException("Este endereço de e-mail já está cadastrado.");
         }
     }
 
-    public function get(string $email): ?Usuario
+    public function get(string|int $identificador): ?Usuario
     {
-        return $this->usuarioDAO->get($email);
+        return $this->usuarioDAO->get($identificador);
+    }
+
+    public function atualizarPerfil(
+        int $id,
+        string $nome,
+        string $email,
+        ?string $linkGithub,
+        ?string $linkLinkedin,
+        ?string $novaSenha = null
+    ): void {
+        $nome = trim($nome);
+        $email = trim($email);
+        $linkGithub = $linkGithub !== null ? trim($linkGithub) : null;
+        $linkLinkedin = $linkLinkedin !== null ? trim($linkLinkedin) : null;
+
+        if ($nome === '' || strlen($nome) > 100 || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 255) {
+            throw new \InvalidArgumentException('Informe um nome e e-mail válidos.');
+        }
+
+        foreach (['GitHub' => $linkGithub, 'LinkedIn' => $linkLinkedin] as $nomeCampo => $link) {
+            if ($link !== null && $link !== '' && (strlen($link) > 255 || !filter_var($link, FILTER_VALIDATE_URL))) {
+                throw new \InvalidArgumentException("O link de {$nomeCampo} é inválido.");
+            }
+        }
+
+        $usuarioAtual = $this->usuarioDAO->get($id);
+        if ($usuarioAtual === null) {
+            throw new \RuntimeException('Conta não encontrada.');
+        }
+
+        $usuarioComEmail = $this->usuarioDAO->get($email);
+        if ($usuarioComEmail !== null && $usuarioComEmail->getId() !== $id) {
+            throw new \InvalidArgumentException('Este endereço de e-mail já está cadastrado.');
+        }
+
+        $dados = [
+            'nome' => $nome,
+            'email' => $email,
+            'link_github' => $linkGithub ?: null,
+            'link_linkedin' => $linkLinkedin ?: null,
+        ];
+        if ($novaSenha !== null && $novaSenha !== '') {
+            $this->validarSenha($novaSenha, true);
+            $dados['senha'] = $novaSenha;
+        }
+
+        if (!$this->usuarioDAO->update($id, $dados)) {
+            throw new \RuntimeException('Não foi possível atualizar o perfil.');
+        }
     }
 
     public function update(string $email, Usuario $usuario): void
@@ -91,7 +138,19 @@ class UsuarioService
 
     public function remove(Usuario $usuario): void
     {
-        $this->usuarioDAO->remove($usuario->getEmail());
+        if (!$this->usuarioDAO->remove($usuario->getId())) {
+            throw new \RuntimeException('Não foi possível excluir a conta.');
+        }
+    }
+
+    private function validarSenha(string $senha, bool $nova = true): void
+    {
+        if (strlen($senha) < 8 || !preg_match('/[A-Z]/', $senha) || !preg_match('/[a-z]/', $senha) || !preg_match('/[0-9]/', $senha) || !preg_match('/[\W_]/', $senha)) {
+            $mensagem = $nova
+                ? 'A nova senha não atende aos requisitos mínimos de segurança.'
+                : 'A senha não atende aos requisitos mínimos de segurança.';
+            throw new \InvalidArgumentException($mensagem);
+        }
     }
 }
 
@@ -104,14 +163,23 @@ class ProjetoService
         $this->projetoDAO = $projetoDAO;
     }
 
-    public function getAll(): array
+    public function listarPublicos(
+        string $busca,
+        string $nivel,
+        string $tecnologias,
+        int $pagina,
+        string $ordenar,
+        bool $inverter
+    ): array
     {
-        return [];
+        return $this->projetoDAO->listarPublicos($busca, $nivel, $tecnologias, $pagina, $ordenar, $inverter);
     }
 
     public function add(Projeto $projeto): void
     {
-        $this->projetoDAO->add($projeto);
+        if (!$this->projetoDAO->add($projeto)) {
+            throw new RuntimeException('Não foi possível salvar o projeto.');
+        }
     }
 
     public function get(string $link_repositorio): ?Projeto
@@ -119,11 +187,28 @@ class ProjetoService
         return $this->projetoDAO->get($link_repositorio);
     }
 
+    public function listarDoUsuario(int $usuarioId): array
+    {
+        return $this->projetoDAO->listarDoUsuario($usuarioId);
+    }
+
+    public function getDoUsuario(int $projetoId, int $usuarioId): ?Projeto
+    {
+        return $this->projetoDAO->getDoUsuario($projetoId, $usuarioId);
+    }
+
+    public function removeDoUsuario(int $projetoId, int $usuarioId): bool
+    {
+        return $this->projetoDAO->removeDoUsuario($projetoId, $usuarioId);
+    }
+
     public function update(
-        string $link_repositorio,
+        string|int $link_repositorio,
         Projeto $projeto
     ): void {
-        $this->projetoDAO->update($link_repositorio, $projeto);
+        if (!$this->projetoDAO->update($link_repositorio, $projeto)) {
+            throw new RuntimeException('Não foi possível atualizar o projeto.');
+        }
     }
 
     public function remove(Projeto $projeto): void
@@ -143,7 +228,7 @@ class ComentarioService
 
     public function getAll(): array
     {
-        return [];
+        return $this->comentarioDAO->getAll();
     }
 
     public function add(Comentario $comentario): void
@@ -180,7 +265,7 @@ class DenunciaService
 
     public function getAll(): array
     {
-        return [];
+        return $this->denunciaDAO->getAll();
     }
 
     public function add(Denuncia $denuncia): void
@@ -190,7 +275,7 @@ class DenunciaService
 
     public function get(int $id): ?Denuncia
     {
-        return null;
+        return $this->denunciaDAO->get($id);
     }
 
     public function update(

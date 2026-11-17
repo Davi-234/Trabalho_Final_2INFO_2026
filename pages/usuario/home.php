@@ -10,6 +10,7 @@ $csrfToken = obterTokenCsrf();
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="csrf-token" content="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
   <title>Home</title>
   <link rel="stylesheet" href="../../assets/css/utilidades/estilo_principal.css">
   <link rel="stylesheet" href="../../assets/css/utilidades/header.css">
@@ -110,30 +111,5 @@ $csrfToken = obterTokenCsrf();
     DevShare - Sempre abertos à comunidade
   </footer>
 </body>
-<script src="../../assets/js/jquery.js"></script>
-<script>
-  const btns_delete = Array.from(document.querySelectorAll('.btn-excluir'));
-  btns_delete.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const modal_window = $(`
-      <div id="tela_modal" class="tela_excluir">
-        <h1>Deseja Excluir o Projeto?</h1>
-        <div>
-          <button class="btn btn-excluir" onclick="$('#tela_modal').remove(); $('body').removeClass('esconder');">Sim</button>
-          <button class="btn" onclick="$('#tela_modal').remove(); $('body').removeClass('esconder');">Não</button>
-        </div>
-      </div>`
-      );
-      document.getElementsByTagName('body')[0].classList.add('esconder');
-      document.getElementsByTagName('body')[0].append(modal_window[0]);
-    });
-  });
-</script>
-
 <script src="../../assets/js/usuario/card.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        carregarProjetos();
-    });
-</script>
 </html>

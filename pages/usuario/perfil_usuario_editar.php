@@ -1,14 +1,16 @@
 <?php
 require_once __DIR__ . '/../../backend/seguranca/sessao.php';
 exigirUsuarioAutenticado();
+$csrfToken = obterTokenCsrf();
 ?>
 <!-- Essa página aparece para o usuário dono do perfil -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
     <title>Perfil</title>
     <link rel="stylesheet" href="../../assets/css/utilidades/tela_modal.css">
     <link rel="stylesheet" href="../../assets/css/usuario/perfil_estilos/perfil_usuario.css">
@@ -41,43 +43,47 @@ exigirUsuarioAutenticado();
     </header>
 
     <main>
-        <section id="foto_perfil">
-            <label id="adicionar_Foto_Perfil">
-                <div id="perfil-icone">
-                    <!-- <div id="perfil_icone_head"></div>
-                    <div id="perfil_icone_body"></div> -->
-                    <img src="" id="foto-perfil"></img>
-                </div>
-            </label>
+        <form id="perfil-form" action="../../backend/controladores/perfil.php" method="post">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+            <p id="mensagem-perfil" role="status" aria-live="polite"></p>
 
-            <button id="adicionar_foto_perfil" name="adicionar_Foto_Perfil">
-                Alterar foto de perfil
-            </button>
-        </section>
+            <section id="dados_pessoais_perfil">
+                <fieldset>
+                    <legend>Dados pessoais</legend>
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" maxlength="100" required>
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" maxlength="255" required>
+                </fieldset>
+            </section>
 
-        <section id="dados_pessoais_perfil">
-            <fieldset>
-                <legend>Dados Pessoais:</legend>
-                <label for="name">Nome:</label>
-                <input type="text" id="name" name="name" disabled>
-            </fieldset>
-        </section>
+            <section id="dados_contato_perfil">
+                <fieldset>
+                    <legend>Contatos</legend>
+                    <label for="link_github">GitHub:</label>
+                    <input type="url" id="link_github" name="link_github" maxlength="255">
+                    <label for="link_linkedin">LinkedIn:</label>
+                    <input type="url" id="link_linkedin" name="link_linkedin" maxlength="255">
+                </fieldset>
+            </section>
 
-        <section id="dados_contato_perfil">
-            <fieldset>
-                <legend>Contatos:</legend>
-                <label for="link_git">GitHub:</label>
-                <input type="text" id="link_git" link_git="name" disabled>
-                <label for="linkedin">Linkedin:</label>
-                <input type="text" id="linkedin" name="linkedin" disabled>
-                <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" disabled>
-            </fieldset>
-        </section>
+            <section>
+                <fieldset>
+                    <legend>Confirmação de segurança</legend>
+                    <label for="senha_atual">Senha atual:</label>
+                    <input type="password" id="senha_atual" name="senha_atual" autocomplete="current-password" required>
+                    <label for="nova_senha">Nova senha (opcional):</label>
+                    <input type="password" id="nova_senha" name="nova_senha" autocomplete="new-password">
+                    <label for="confirmar_senha">Confirmar nova senha:</label>
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" autocomplete="new-password">
+                </fieldset>
+            </section>
 
-        <section id="btns_alterar">
-            <button type="button" class="btn" id="editar_dados">Editar dados do perfil</button>
-        </section>
+            <section id="btns_alterar">
+                <button type="submit" class="btn" id="salvar_perfil">Salvar alterações</button>
+                <button type="button" class="btn" id="excluir_conta">Excluir conta</button>
+            </section>
+        </form>
     </main>
 
     <!-- FOOTER -->
@@ -85,26 +91,6 @@ exigirUsuarioAutenticado();
         DevShare - Sempre abertos à comunidade
     </footer>
 </body>
-<script>
- async function getGravatarUrl(email) {
-    const cleanEmail = email.trim().toLowerCase();
-
-    const data = new TextEncoder().encode(cleanEmail);
-
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-
-    const hash = hashArray
-        .map(byte => byte.toString(16).padStart(2, "0"))
-        .join("");
-
-    return `https://gravatar.com/avatar/${hash}?d=identicon`;
-}
-document.getElementById("foto-perfil").setAttribute("src",getGravatarUrl("davileandrocos@gmail.com"))
-</script>
-<script src="../../assets/js/jquery.js"></script>
-<script src="../../assets/js/entrada/perfil_usuario/criar_janelaModal.js"></script>
-<script src="../../assets/js/entrada/perfil_usuario/janela_modal_backend.js"></script>
+<script src="../../assets/js/usuario/perfil.js"></script>
 
 </html>
