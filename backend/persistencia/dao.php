@@ -301,57 +301,40 @@ class ProjetoDAO
         return $projeto;
     }
 
-    public function update(string|int $identificador, Projeto $projeto): void
+    public function update(string|int $identificador, array $valores): void
     {
         global $conn;
 
         $colunaIdentificador = is_string($identificador) ? 'link_repositorio' : 'id';
-        $tipoIdentificador = is_string($identificador) ? 's' : 'i';
-        $stmt = $conn->prepare(
-            "UPDATE projeto SET visibilidade = ?, descricao = ?, nome = ?, status = ?, nivel = ?, imagem_projeto = ?, views = ?, link_repositorio = ?, usuario_id = ? WHERE $colunaIdentificador = ?"
-        );
-        if ($stmt === false) {
-            return;
+        $sql = "UPDATE projeto SET";
+        
+        $index = 0;
+        for ($valores as $atr => $val) { 
+            if ($index > 0) $sql += ",";
+            $sql += " $atr = $val";
+            $index++;
         }
 
-        $visibilidade = $projeto->isPublico() ? 1 : 0;
-        $descricao = $projeto->getDescricao();
-        $nome = $projeto->getTitulo();
-        $status = $projeto->getStatus()->value;
-        $nivel = $projeto->getNivel()->value;
-        $imagem = $projeto->getImagemProjeto();
-        $views = $projeto->getViews();
-        $linkRepositorio = $projeto->getLinkRepositorio();
-        $usuarioId = $projeto->getDono()->getId();
-        $tipos = 'isssssisi' . $tipoIdentificador;
-        $stmt->bind_param(
-            $tipos,
-            $visibilidade,
-            $descricao,
-            $nome,
-            $status,
-            $nivel,
-            $imagem,
-            $views,
-            $linkRepositorio,
-            $usuarioId,
-            $identificador
-        );
-        $stmt->execute();
+        $sql += " WHERE $colunaIdentificador = $identificador";
+
+        $stmt->execute($sql);
         $stmt->close();
     }
 
-    public function remove(Projeto $projeto): void
+    public function remove(string|int $identificador): void
     {
         global $conn;
 
-        $stmt = $conn->prepare('DELETE FROM projeto WHERE link_repositorio = ?');
+        $stmt = (is_string($identificador))
+            ? $conn->prepare('DELETE FROM projeto WHERE link_repositorio = ?')
+            : $conn->prepare('DELETE FROM projeto WHERE id = ?');
+
         if ($stmt === false) {
             return;
         }
 
-        $linkRepositorio = $projeto->getLinkRepositorio();
-        $stmt->bind_param('s', $linkRepositorio);
+        $tipoIdentificador = is_string($identificador) ? 's' : 'i';
+        $stmt->bind_param($tipoIdentificador, $identificador);
         $stmt->execute();
         $stmt->close();
     }
@@ -373,7 +356,20 @@ class ComentarioDAO
         Comentario $comentario
     ): void {}
 
-    public function remove(Comentario $comentario): void {}
+    public function remove(int|string $identifucador): void {
+        global $conn;
+
+        $stmt = $conn->prepare('DELETE FROM comentario WHERE id = ?');
+
+        if ($stmt === false) {
+            return;
+        }
+
+        $tipoIdentificador = is_string($identificador) ? 's' : 'i';
+        $stmt->bind_param($tipoIdentificador, $identificador);
+        $stmt->execute();
+        $stmt->close();
+    }
 }
 
 
@@ -392,5 +388,18 @@ class DenunciaDAO
         Denuncia $denuncia
     ): void {}
 
-    public function remove(Denuncia $denuncia): void {}
+    public function remove(int|string $identifucador): void {
+        global $conn;
+
+        $stmt = $conn->prepare('DELETE FROM denuncia WHERE id = ?');
+
+        if ($stmt === false) {
+            return;
+        }
+
+        $tipoIdentificador = is_string($identificador) ? 's' : 'i';
+        $stmt->bind_param($tipoIdentificador, $identificador);
+        $stmt->execute();
+        $stmt->close();
+    }
 }
