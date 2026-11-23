@@ -11,6 +11,18 @@ function responderPerfil(int $status, array $dados): never
 	exit;
 }
 
+function limparFotoPerfilLocal(?string $foto): void
+{
+	if ($foto === null || !preg_match('/\Aassets\/images\/perfil_[a-f0-9]{32}\.(jpg|png|webp)\z/', $foto)) {
+		return;
+	}
+
+	$arquivo = dirname(__DIR__, 2) . '/' . $foto;
+	if (is_file($arquivo)) {
+		unlink($arquivo);
+	}
+}
+
 iniciarSessaoSegura();
 if (!isset($_SESSION['usuario_id']) || !is_int($_SESSION['usuario_id'])) {
 	responderPerfil(401, ['sucesso' => false, 'mensagem' => 'É necessário entrar na conta.']);
@@ -32,6 +44,7 @@ try {
 			'email' => $usuario->getEmail(),
 			'link_github' => $usuario->getPerfilGithub(),
 			'link_linkedin' => $usuario->getPerfilLinkedin(),
+			'foto_perfil' => $usuario->getFotoPerfil(),
 		]]);
 	}
 
@@ -44,6 +57,49 @@ try {
 	}
 
 	$acao = $_POST['acao'] ?? '';
+	if ($acao === 'imagem') {
+		$usuarioAtual = $usuarioService->get($usuarioId);
+		if ($usuarioAtual === null) {
+			responderPerfil(404, ['sucesso' => false, 'mensagem' => 'Conta não encontrada.']);
+		}
+
+		$arquivo = $_FILES['imagem'] ?? null;
+		if (!is_array($arquivo) || ($arquivo['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+			responderPerfil(422, ['sucesso' => false, 'mensagem' => 'Selecione uma imagem válida.']);
+		}
+		if (($arquivo['size'] ?? 0) > 5 * 1024 * 1024 || !is_uploaded_file($arquivo['tmp_name'] ?? '')) {
+			responderPerfil(422, ['sucesso' => false, 'mensagem' => 'A imagem deve ter até 5 MB.']);
+		}
+
+		$informacoesImagem = @getimagesize($arquivo['tmp_name']);
+		$extensoesPermitidas = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+		$mime = is_array($informacoesImagem) ? ($informacoesImagem['mime'] ?? '') : '';
+		if (!isset($extensoesPermitidas[$mime])) {
+			responderPerfil(422, ['sucesso' => false, 'mensagem' => 'Use uma imagem JPG, PNG ou WebP.']);
+		}
+
+		$nomeArquivo = 'perfil_' . bin2hex(random_bytes(16)) . '.' . $extensoesPermitidas[$mime];
+		$caminhoRelativo = 'assets/images/' . $nomeArquivo;
+		$caminhoAbsoluto = dirname(__DIR__, 2) . '/' . $caminhoRelativo;
+		if (!move_uploaded_file($arquivo['tmp_name'], $caminhoAbsoluto)) {
+			responderPerfil(500, ['sucesso' => false, 'mensagem' => 'Não foi possível armazenar a imagem.']);
+		}
+
+		try {
+			$usuarioService->atualizarFotoPerfil($usuarioId, $caminhoRelativo);
+		} catch (Throwable $erro) {
+			unlink($caminhoAbsoluto);
+			throw $erro;
+		}
+
+		limparFotoPerfilLocal($usuarioAtual->getFotoPerfil());
+		responderPerfil(200, [
+			'sucesso' => true,
+			'mensagem' => 'Imagem do perfil atualizada.',
+			'foto_perfil' => $caminhoRelativo,
+		]);
+	}
+
 	$senhaAtual = $_POST['senha_atual'] ?? null;
 	if (!is_string($senhaAtual) || $senhaAtual === '') {
 		responderPerfil(422, ['sucesso' => false, 'mensagem' => 'Informe sua senha atual para confirmar a alteração.']);

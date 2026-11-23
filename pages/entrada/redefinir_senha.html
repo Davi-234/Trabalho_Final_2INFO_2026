@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Definir nova senha</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../assets/css/entrada/login.css">
+    <link rel="stylesheet" href="../../assets/css/utilidades/formularios.css">
+    <link rel="stylesheet" href="../../assets/css/utilidades/estilo_principal.css">
+    <link rel="stylesheet" href="../../assets/css/utilidades/header.css">
+</head>
+
+<body>
+    <main>
+        <div id="login-container">
+            <section id="login-box">
+                <h1 class="section-title">Definir nova senha</h1>
+                <form id="redefinir-form">
+                    <input type="hidden" id="token" name="token">
+                    <label class="form-label" for="senha">Nova senha</label>
+                    <input class="form-control" id="senha" name="senha" type="password" autocomplete="new-password" minlength="8" required>
+                    <ul id="requisitos-senha" aria-live="polite">
+                        <li data-regra="tamanho_minimo">Pelo menos 8 caracteres</li>
+                        <li data-regra="tem_letras_maiusculas">Uma letra maiúscula</li>
+                        <li data-regra="tem_letras_minusculas">Uma letra minúscula</li>
+                        <li data-regra="tem_numeros">Um número</li>
+                        <li data-regra="tem_caracteres_especiais">Um caractere especial</li>
+                    </ul>
+                    <label class="form-label" for="confirmar_senha">Confirmar nova senha</label>
+                    <input class="form-control" id="confirmar_senha" name="confirmar_senha" type="password" autocomplete="new-password" minlength="8" required>
+                    <p id="erro-senhas" role="status" aria-live="polite"></p>
+                    <button class="btn" type="submit">Redefinir senha</button>
+                </form>
+                <p id="mensagem-redefinicao" role="status" aria-live="polite"></p>
+                <p><a href="login.html">Voltar ao login</a></p>
+            </section>
+        </div>
+    </main>
+    <script src="../../assets/js/global/validação_senhas/validar_senha.js"></script>
+    <script src="../../assets/js/entrada/redefinir_senha.js"></script>
+</body>
+
+</html>

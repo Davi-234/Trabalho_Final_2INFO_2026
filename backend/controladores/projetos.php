@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../persistencia/dao.php";
+require_once __DIR__ . "/../dao/dao.php";
 require_once __DIR__ . "/../servicos/service.php";
 
 header('Content-Type: application/json; charset=utf-8');

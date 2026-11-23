@@ -17,3 +17,15 @@ Dessa forma, o projeto busca centralizar informações úteis em um único ambie
 - `backend/`: código PHP separado em `controladores/`, `servicos/`, `persistencia/`, `configuracao/`, `modelos/`, `seguranca/` e `utilidades/`.
 - `documentacao/`: requisitos, casos de uso e arquivos do banco de dados.
 - `index.html` e `404.html`: páginas servidas a partir da raiz do projeto.
+
+## Recuperação de senha
+
+Para bancos já existentes, aplique `documentacao/BancoDeDados/scripts/adicionar_recuperacao_senha.sql`.
+O envio usa a API SMTP da SendPulse. Configure no ambiente do PHP:
+
+- `DEVSHARE_BASE_URL`: URL pública da aplicação, incluindo `https://` e sem barra final.
+- `DEVSHARE_MAIL_FROM`: endereço remetente autorizado pelo servidor de e-mail.
+- `DEVSHARE_MAIL_FROM_NAME`: nome exibido como remetente (opcional, padrão `DevShare`).
+- `SENDPULSE_CLIENT_ID` e `SENDPULSE_CLIENT_SECRET`: credenciais OAuth em SendPulse > Configurações > API.
+
+Sem essas configurações, nenhum e-mail será enviado. Não salve as credenciais no repositório. O endereço remetente precisa estar verificado na SendPulse; em produção, use HTTPS.

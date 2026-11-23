@@ -34,6 +34,23 @@ CREATE TABLE IF NOT EXISTS `dev_share`.`usuario` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
+CREATE TABLE IF NOT EXISTS `dev_share`.`recuperacao_senha` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `usuario_id` INT NOT NULL,
+  `token_hash` CHAR(64) NOT NULL,
+  `expira_em` DATETIME NOT NULL,
+  `criado_em` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `token_hash_unique` (`token_hash` ASC) VISIBLE,
+  INDEX `fk_recuperacao_senha_usuario_idx` (`usuario_id` ASC) VISIBLE,
+  CONSTRAINT `fk_recuperacao_senha_usuario`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `dev_share`.`usuario` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
 
 -- -----------------------------------------------------
 -- Table `dev_share`.`projeto`

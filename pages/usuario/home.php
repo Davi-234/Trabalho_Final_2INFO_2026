@@ -1,7 +1,18 @@
 <?php
 require_once __DIR__ . '/../../backend/seguranca/sessao.php';
 exigirUsuarioAutenticado();
+require_once __DIR__ . '/../../backend/dao/dao.php';
 $csrfToken = obterTokenCsrf();
+$usuarioHome = (new UsuarioDAO())->get($_SESSION['usuario_id']);
+$emailUsuario = $usuarioHome?->getEmail() ?? '';
+$inicialPerfil = $emailUsuario !== '' ? strtoupper(substr($emailUsuario, 0, 1)) : '?';
+$fotoPerfil = $usuarioHome?->getFotoPerfil();
+$avatarUrl = '';
+if (is_string($fotoPerfil) && preg_match('/\Aassets\/images\/perfil_[a-f0-9]{32}\.(jpg|png|webp)\z/', $fotoPerfil)) {
+  $avatarUrl = '../../' . $fotoPerfil;
+} elseif ($emailUsuario !== '') {
+  $avatarUrl = 'https://gravatar.com/avatar/' . hash('sha256', strtolower(trim($emailUsuario))) . '?d=404&s=96';
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -62,9 +73,13 @@ $csrfToken = obterTokenCsrf();
           </form>
         </li>
         <li>
-          <!-- Foto de perfil (placeholder para CSS) -->
-          <a href="#">
-            <div id="perfil-icone"></div>
+          <a href="perfil_usuario_editar.php" id="link-perfil" aria-label="Abrir configurações do perfil" title="Configurações do perfil">
+            <div id="perfil-icone">
+              <span id="perfil-inicial"><?= htmlspecialchars($inicialPerfil, ENT_QUOTES, 'UTF-8') ?></span>
+              <?php if ($avatarUrl !== ''): ?>
+                <img id="perfil-imagem" src="<?= htmlspecialchars($avatarUrl, ENT_QUOTES, 'UTF-8') ?>" alt="" hidden>
+              <?php endif; ?>
+            </div>
           </a>
         </li>
       </ul>
@@ -90,10 +105,6 @@ $csrfToken = obterTokenCsrf();
           <a href="projeto.php">Criar Projeto</a>
         </article>
 
-        <article>
-          <h3>Editar perfil</h3>
-          <a href="perfil_usuario_editar.php">Configurações do Perfil</a>
-        </article>
       </section>
     </section>
 
@@ -112,4 +123,5 @@ $csrfToken = obterTokenCsrf();
   </footer>
 </body>
 <script src="../../assets/js/usuario/card.js"></script>
+<script src="../../assets/js/usuario/avatar.js"></script>
 </html>
