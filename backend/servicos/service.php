@@ -182,9 +182,9 @@ class ProjetoService
         }
     }
 
-    public function get(string $link_repositorio): ?Projeto
+    public function get(string|int $identificador): ?Projeto
     {
-        return $this->projetoDAO->get($link_repositorio);
+        return $this->projetoDAO->get($identificador);
     }
 
     public function listarDoUsuario(int $usuarioId): array
@@ -192,28 +192,23 @@ class ProjetoService
         return $this->projetoDAO->listarDoUsuario($usuarioId);
     }
 
-    public function getDoUsuario(int $projetoId, int $usuarioId): ?Projeto
+    public function getDoUsuario(int|string $projetoId): ?Usuario
     {
-        return $this->projetoDAO->getDoUsuario($projetoId, $usuarioId);
-    }
-
-    public function removeDoUsuario(int $projetoId, int $usuarioId): bool
-    {
-        return $this->projetoDAO->removeDoUsuario($projetoId, $usuarioId);
+        return $this->projetoDAO->get($projetoId)->getDono();
     }
 
     public function update(
-        string|int $link_repositorio,
-        Projeto $projeto
+        string|int $identificador,
+        array $attr_val
     ): void {
-        if (!$this->projetoDAO->update($link_repositorio, $projeto)) {
+        if (!$this->projetoDAO->update($identificador, $attr_val)) {
             throw new RuntimeException('Não foi possível atualizar o projeto.');
         }
     }
 
     public function remove(Projeto $projeto): void
     {
-        $this->projetoDAO->remove($projeto);
+        $this->projetoDAO->remove($projeto->getId());
     }
 }
 
@@ -224,11 +219,6 @@ class ComentarioService
     public function __construct(ComentarioDAO $comentarioDAO)
     {
         $this->comentarioDAO = $comentarioDAO;
-    }
-
-    public function getAll(): array
-    {
-        return $this->comentarioDAO->getAll();
     }
 
     public function add(Comentario $comentario): void
@@ -250,7 +240,7 @@ class ComentarioService
 
     public function remove(Comentario $comentario): void
     {
-        $this->comentarioDAO->remove($comentario);
+        $this->comentarioDAO->remove($comentario->getId());
     }
 }
 
@@ -263,18 +253,15 @@ class DenunciaService
         $this->denunciaDAO = $denunciaDAO;
     }
 
-    public function getAll(): array
-    {
-        return $this->denunciaDAO->getAll();
-    }
-
     public function add(Denuncia $denuncia): void
     {
+        if (!$denuncia->getMotivo()) return;
         $this->denunciaDAO->add($denuncia);
     }
 
     public function get(int $id): ?Denuncia
     {
+        if ($id <= 0) return null;
         return $this->denunciaDAO->get($id);
     }
 
@@ -287,7 +274,40 @@ class DenunciaService
 
     public function remove(Denuncia $denuncia): void
     {
-        $this->denunciaDAO->remove($denuncia);
+        $this->denunciaDAO->remove($denuncia->getId());
+    }
+}
+
+class AvaliacaoService {
+    private AvaliacaoDAO $avaliacaoDAO;
+
+    public function __construct(AvaliacaoDAO $avaliacaoDAO)
+    {
+        $this->avaliacaoDAO = $avaliacaoDAO;
+    }
+
+    public function add(Avaliacao $avaliacao): void
+    {
+        if (!$avaliacao->getId()) return;
+        $this->avaliacaoDAO->add($avaliacao);
+    }
+
+    public function get(int $id): ?Avaliacao
+    {
+        if ($id <= 0) return null;
+        return $this->avaliacaoDAO->get($id);
+    }
+
+    public function update(
+        int $id,
+        Avaliacao $avaliacao
+    ): void {
+        $this->avaliacaoDAO->update($id, $avaliacao);
+    }
+
+    public function remove(Avaliacao $avaliacao): void
+    {
+        $this->avaliacaoDAO->remove($avaliacao->getId());
     }
 }
 

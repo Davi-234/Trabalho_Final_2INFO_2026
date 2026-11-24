@@ -4,8 +4,7 @@ require_once __DIR__ . '/../modelos/model.php';
 require_once __DIR__ . '/../configuracao/conexao.php';
 
 
-class UsuarioDAO
-{
+class UsuarioDAO {
     public function add(Usuario $usuario): bool
     {
         global $conn;
@@ -192,8 +191,7 @@ class UsuarioDAO
     }
 }
 
-class ProjetoDAO
-{
+class ProjetoDAO {
     /*
      * Insere cada tag/tecnologia se ainda não existir e cria a associação N:N.
      * $tabela, $tabelaRelacao e $colunaRelacao são nomes constantes definidos
@@ -616,8 +614,7 @@ class ProjetoDAO
     }
 }
 
-class ComentarioDAO
-{
+class ComentarioDAO {
     public function add(Comentario $comentario): bool
     {
         global $conn;
@@ -766,8 +763,7 @@ class ComentarioDAO
     }
 }
 
-class DenunciaDAO
-{
+class DenunciaDAO {
     public function add(Denuncia $denuncia): bool
     {
         global $conn;
@@ -928,8 +924,7 @@ class DenunciaDAO
     }
 }
 
-class AvaliacaoDAO
-{
+class AvaliacaoDAO {
     public function add(Avaliacao $avaliacao): bool
     {
         global $conn;
