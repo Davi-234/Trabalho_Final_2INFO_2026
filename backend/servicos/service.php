@@ -327,7 +327,6 @@ class ProjetoService
             throw new RuntimeException('Não foi possível salvar o projeto.');
         }
     }
-
     /**
      * Busca por link apenas projetos públicos.
      * Retorna null para link vazio, longo demais ou sem projeto público correspondente.
@@ -484,11 +483,6 @@ class ComentarioService
         $this->comentarioDAO = $comentarioDAO;
     }
 
-    public function getAll(): array
-    {
-        return $this->comentarioDAO->getAll();
-    }
-
     public function add(Comentario $comentario): void
     {
         $this->comentarioDAO->add($comentario);
@@ -508,7 +502,7 @@ class ComentarioService
 
     public function remove(Comentario $comentario): void
     {
-        $this->comentarioDAO->remove($comentario);
+        $this->comentarioDAO->remove($comentario->getId());
     }
 }
 
@@ -521,18 +515,15 @@ class DenunciaService
         $this->denunciaDAO = $denunciaDAO;
     }
 
-    public function getAll(): array
-    {
-        return $this->denunciaDAO->getAll();
-    }
-
     public function add(Denuncia $denuncia): void
     {
+        if (!$denuncia->getMotivo()) return;
         $this->denunciaDAO->add($denuncia);
     }
 
     public function get(int $id): ?Denuncia
     {
+        if ($id <= 0) return null;
         return $this->denunciaDAO->get($id);
     }
 
@@ -545,7 +536,40 @@ class DenunciaService
 
     public function remove(Denuncia $denuncia): void
     {
-        $this->denunciaDAO->remove($denuncia);
+        $this->denunciaDAO->remove($denuncia->getId());
+    }
+}
+
+class AvaliacaoService {
+    private AvaliacaoDAO $avaliacaoDAO;
+
+    public function __construct(AvaliacaoDAO $avaliacaoDAO)
+    {
+        $this->avaliacaoDAO = $avaliacaoDAO;
+    }
+
+    public function add(Avaliacao $avaliacao): void
+    {
+        if (!$avaliacao->getId()) return;
+        $this->avaliacaoDAO->add($avaliacao);
+    }
+
+    public function get(int $id): ?Avaliacao
+    {
+        if ($id <= 0) return null;
+        return $this->avaliacaoDAO->get($id);
+    }
+
+    public function update(
+        int $id,
+        Avaliacao $avaliacao
+    ): void {
+        $this->avaliacaoDAO->update($id, $avaliacao);
+    }
+
+    public function remove(Avaliacao $avaliacao): void
+    {
+        $this->avaliacaoDAO->remove($avaliacao->getId());
     }
 }
 

@@ -3,13 +3,13 @@
 require_once __DIR__ . '/../modelos/model.php';
 require_once __DIR__ . '/../configuracao/conexao.php';
 
-
 class UsuarioDAO
 {
     /**
      * Cadastra um usuário, armazenando a senha como hash.
      * Retorna false se não for possível preparar ou executar o INSERT.
      */
+class UsuarioDAO {
     public function add(Usuario $usuario): bool
     {
         global $conn;
@@ -607,15 +607,6 @@ class ProjetoDAO
         }
     }
 
-    /*
-     * Insere cada tag/tecnologia se ainda não existir e cria a associação N:N.
-     * $tabela, $tabelaRelacao e $colunaRelacao são nomes constantes definidos
-     * internamente, nunca valores recebidos diretamente do usuário.
-     */
-    /**
-     * Cria ou reutiliza tags/tecnologias e associa cada item ao projeto.
-     * Os nomes das tabelas são definidos internamente pelos métodos chamadores.
-     */
     private function salvarRelacionamentos(
         int $projetoId,
         array $itens,
@@ -1067,12 +1058,12 @@ class ProjetoDAO
     }
 }
 
-class ComentarioDAO
-{
     /**
      * Insere um comentário com autor, projeto e, se existir, comentário pai.
      * Retorna se o INSERT foi executado.
      */
+
+class ComentarioDAO {
     public function add(Comentario $comentario): bool
     {
         global $conn;
@@ -1232,13 +1223,11 @@ class ComentarioDAO
         $stmt->close();
     }
 }
-
-class DenunciaDAO
-{
     /**
      * Insere uma denúncia e identifica se o alvo é projeto, usuário ou comentário.
      * Preenche a coluna de relacionamento correspondente ao tipo do alvo.
      */
+class DenunciaDAO {
     public function add(Denuncia $denuncia): bool
     {
         global $conn;
@@ -1408,11 +1397,10 @@ class DenunciaDAO
     }
 }
 
-class AvaliacaoDAO
-{
     /**
      * Insere uma avaliação ligada a um projeto e a um usuário.
      */
+class AvaliacaoDAO {
     public function add(Avaliacao $avaliacao): bool
     {
         global $conn;
