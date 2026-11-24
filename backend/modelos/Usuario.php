@@ -12,6 +12,7 @@ class Usuario extends Denunciado
     private ?string $perfil_github;
     private ?string $perfil_linkedin;
     private ?string $perfil_lattes;
+    private ?string $foto_perfil;
     private NivelUsuario $tipo;
 
     public function __construct(
@@ -21,7 +22,8 @@ class Usuario extends Denunciado
         ?string $perfil_github = null,
         ?string $perfil_linkedin = null,
         ?string $perfil_lattes = null,
-        ?int $id = null
+        ?int $id = null,
+        ?string $foto_perfil = null
     ) {
         $this->id = $id;
         $this->nome = $nome;
@@ -30,6 +32,7 @@ class Usuario extends Denunciado
         $this->perfil_github = $perfil_github;
         $this->perfil_linkedin = $perfil_linkedin;
         $this->perfil_lattes = $perfil_lattes;
+        $this->foto_perfil = $foto_perfil;
         $this->tipo = NivelUsuario::COMUM;
     }
 
@@ -108,6 +111,16 @@ class Usuario extends Denunciado
     public function getPerfilLattes(): ?string
     {
         return $this->perfil_lattes;
+    }
+
+    public function setFotoPerfil(?string $foto_perfil): void
+    {
+        $this->foto_perfil = $foto_perfil;
+    }
+
+    public function getFotoPerfil(): ?string
+    {
+        return $this->foto_perfil;
     }
 
 

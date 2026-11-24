@@ -58,6 +58,45 @@ Card principal
     margin-bottom: 20px;
 }
 
+.link-recuperacao-container {
+    margin-top: -0.5rem;
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+.link-cadastro {
+    margin: 1.5rem 0 0;
+    text-align: center;
+}
+
+#requisitos-senha {
+    margin: 10px 0 16px;
+    padding: 0;
+    list-style: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+#requisitos-senha li::before {
+    content: "○";
+    display: inline-block;
+    width: 1.4em;
+}
+
+#requisitos-senha li.valido {
+    color: var(--success);
+}
+
+#requisitos-senha li.valido::before {
+    content: "✓";
+}
+
+#erro-senhas {
+    min-height: 1.25em;
+    color: #ff6b6b;
+    font-size: 0.9rem;
+}
+
 
 /* ===================== LINKS ===================== */
 a {
