@@ -261,7 +261,10 @@ class ComentarioService
 
     public function add(Comentario $comentario): void
     {
-        $this->comentarioDAO->add($comentario);
+        if (!$comentario->getConteudo()) return;
+        if (!($this->comentarioDAO->add($comentario))) {
+            throw new RuntimeException('Não foi possível adicionar o comentário.');
+        }
     }
 
     public function get(int $id): Comentario
@@ -273,7 +276,10 @@ class ComentarioService
         int $id,
         Comentario $comentario
     ): void {
-        $this->comentarioDAO->update($id, $comentario);
+        if (!$comentario->getConteudo()) return;
+        if (!($this->comentarioDAO->update($id, $comentario))) {
+            throw new RuntimeException('Não foi possível atualizar o comentário.');
+        }
     }
 
     public function remove(Comentario $comentario): void
@@ -294,7 +300,9 @@ class DenunciaService
     public function add(Denuncia $denuncia): void
     {
         if (!$denuncia->getMotivo()) return;
-        $this->denunciaDAO->add($denuncia);
+        if (!($this->denunciaDAO->add($denuncia))) {
+            throw new RuntimeException('Não foi possível denunciar.');
+        }
     }
 
     public function get(int $id): ?Denuncia
@@ -307,7 +315,10 @@ class DenunciaService
         int $id,
         Denuncia $denuncia
     ): void {
-        $this->denunciaDAO->update($id, $denuncia);
+        if (!$denuncia->getMotivo()) return;
+        if (!($this->denunciaDAO->update($id, $denuncia))) {
+            throw new RuntimeException('Não foi possível atualizar essa denúncia.');
+        }
     }
 
     public function remove(Denuncia $denuncia): void
@@ -326,21 +337,27 @@ class AvaliacaoService {
 
     public function add(Avaliacao $avaliacao): void
     {
-        if (!$avaliacao->getId()) return;
-        $this->avaliacaoDAO->add($avaliacao);
+        if ($avaliacao->getNota() < 0) return;
+        if (!($this->avaliacaoDAO->add($avaliacao))) {
+            throw new RuntimeException('Não foi possível avaliar esse projeto.');
+        }
     }
 
     public function get(int $id): ?Avaliacao
     {
         if ($id <= 0) return null;
-        return $this->avaliacaoDAO->get($id);
+        $saida = $this->avaliacaoDAO->get($id);
+        return $saida;
     }
 
     public function update(
         int $id,
         Avaliacao $avaliacao
     ): void {
-        $this->avaliacaoDAO->update($id, $avaliacao);
+        if ($avaliacao->getNota() < 0) return;
+        if (!($this->avaliacaoDAO->update($id, $avaliacao))) {
+            throw new RuntimeException('Não foi possível atualizar essa avaliação.');
+        }
     }
 
     public function remove(Avaliacao $avaliacao): void
