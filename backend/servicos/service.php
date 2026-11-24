@@ -267,8 +267,9 @@ class ComentarioService
         }
     }
 
-    public function get(int $id): Comentario
+    public function get(int $id): ?Comentario
     {
+        if ($id <= 0) return null;
         return $this->comentarioDAO->get($id);
     }
 
@@ -365,5 +366,4 @@ class AvaliacaoService {
         $this->avaliacaoDAO->remove($avaliacao->getId());
     }
 }
-
 ?>
