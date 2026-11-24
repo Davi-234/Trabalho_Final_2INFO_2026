@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../persistencia/dao.php";
+require_once __DIR__ . "/../dao/dao.php";
 require_once __DIR__ . "/../modelos/model.php";
 
 class UsuarioService
@@ -55,6 +55,37 @@ class UsuarioService
         return $usuario;
     }
 
+    public function gerarTokenRecuperacaoSenha(string $email): ?string
+    {
+        $usuario = $this->usuarioDAO->get(trim($email));
+        if ($usuario === null) {
+            return null;
+        }
+
+        $token = bin2hex(random_bytes(32));
+        $tokenHash = hash('sha256', $token);
+        $expiraEm = new DateTimeImmutable('+1 hour');
+        if (!$this->usuarioDAO->criarTokenRecuperacao($usuario->getId(), $tokenHash, $expiraEm)) {
+            throw new \RuntimeException('Não foi possível gerar a recuperação de senha.');
+        }
+
+        return $token;
+    }
+
+    public function redefinirSenha(string $token, string $novaSenha): void
+    {
+        $this->validarSenha($novaSenha);
+        if (!preg_match('/\A[a-f0-9]{64}\z/', $token)) {
+            throw new \InvalidArgumentException('O link de recuperação é inválido ou expirou.');
+        }
+
+        $tokenHash = hash('sha256', $token);
+        $passwordHash = password_hash($novaSenha, PASSWORD_DEFAULT);
+        if (!$this->usuarioDAO->redefinirSenha($tokenHash, $passwordHash)) {
+            throw new \InvalidArgumentException('O link de recuperação é inválido ou expirou.');
+        }
+    }
+
     private function validarUsuario(Usuario $usuario): void
     {
         if (trim($usuario->getNome()) === '' || empty($usuario->getEmail()) || empty($usuario->getSenha())) {
@@ -76,6 +107,13 @@ class UsuarioService
     public function get(string|int $identificador): ?Usuario
     {
         return $this->usuarioDAO->get($identificador);
+    }
+
+    public function atualizarFotoPerfil(int $id, string $caminho): void
+    {
+        if (!$this->usuarioDAO->atualizarFotoPerfil($id, $caminho)) {
+            throw new \RuntimeException('Não foi possível salvar a imagem do perfil.');
+        }
     }
 
     public function atualizarPerfil(

@@ -47,6 +47,16 @@ $csrfToken = obterTokenCsrf();
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
             <p id="mensagem-perfil" role="status" aria-live="polite"></p>
 
+            <section id="foto-perfil">
+                <div id="avatar-circulo">
+                    <span id="avatar-inicial" aria-hidden="true">?</span>
+                    <img id="avatar-imagem" alt="Foto de perfil" hidden>
+                </div>
+                <input id="imagem-perfil" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+                <button type="button" class="btn" id="editar-imagem">Editar imagem</button>
+                <p id="mensagem-imagem" role="status" aria-live="polite"></p>
+            </section>
+
             <section id="dados_pessoais_perfil">
                 <fieldset>
                     <legend>Dados pessoais</legend>

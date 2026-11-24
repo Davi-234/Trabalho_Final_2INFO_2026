@@ -78,12 +78,27 @@ class UsuarioDAO {
             $dados['link_github'],
             $dados['link_linkedin'],
             $dados['perfil_lattes'],
-            (int) $dados['id']
+            (int) $dados['id'],
+            $dados['foto_perfil'] ?? null
         );
 
         $usuario->setTipo(NivelUsuario::from($dados['tipo']));
 
         return $usuario;
+    }
+
+    public function atualizarFotoPerfil(int $id, string $caminho): bool
+    {
+        global $conn;
+
+        $stmt = $conn->prepare('UPDATE usuario SET foto_perfil = ? WHERE id = ?');
+        if ($stmt === false) {
+            return false;
+        }
+        $stmt->bind_param('si', $caminho, $id);
+        $executado = $stmt->execute();
+        $stmt->close();
+        return $executado;
     }
 
     public function updatePasswordHash(int $id, string $passwordHash): bool
@@ -105,8 +120,111 @@ class UsuarioDAO {
         return $ok;
     }
 
-    public function update(string|int $identificador, array $atributo_valor): bool
+    public function criarTokenRecuperacao(int $usuarioId, string $tokenHash, DateTimeImmutable $expiraEm): bool
     {
+        global $conn;
+
+        $conn->begin_transaction();
+        $stmt = $conn->prepare('DELETE FROM recuperacao_senha WHERE usuario_id = ? OR expira_em <= CURRENT_TIMESTAMP');
+        if ($stmt === false) {
+            $conn->rollback();
+            return false;
+        }
+        $stmt->bind_param('i', $usuarioId);
+        $executado = $stmt->execute();
+        $stmt->close();
+        if (!$executado) {
+            $conn->rollback();
+            return false;
+        }
+
+        $expiracao = $expiraEm->format('Y-m-d H:i:s');
+        $stmt = $conn->prepare('INSERT INTO recuperacao_senha (usuario_id, token_hash, expira_em) VALUES (?, ?, ?)');
+        if ($stmt === false) {
+            $conn->rollback();
+            return false;
+        }
+        $stmt->bind_param('iss', $usuarioId, $tokenHash, $expiracao);
+        $executado = $stmt->execute();
+        $stmt->close();
+        if (!$executado) {
+            $conn->rollback();
+            return false;
+        }
+
+        $conn->commit();
+        return true;
+    }
+
+    public function removerTokenRecuperacao(string $tokenHash): void
+    {
+        global $conn;
+
+        $stmt = $conn->prepare('DELETE FROM recuperacao_senha WHERE token_hash = ?');
+        if ($stmt === false) {
+            return;
+        }
+        $stmt->bind_param('s', $tokenHash);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function redefinirSenha(string $tokenHash, string $passwordHash): bool
+    {
+        global $conn;
+
+        $conn->begin_transaction();
+        $stmt = $conn->prepare(
+            'SELECT usuario_id FROM recuperacao_senha WHERE token_hash = ? AND expira_em > CURRENT_TIMESTAMP FOR UPDATE'
+        );
+        if ($stmt === false) {
+            $conn->rollback();
+            return false;
+        }
+        $stmt->bind_param('s', $tokenHash);
+        $executado = $stmt->execute();
+        $resultado = $executado ? $stmt->get_result()->fetch_assoc() : null;
+        $stmt->close();
+        if ($resultado === null) {
+            $conn->rollback();
+            return false;
+        }
+
+        $usuarioId = (int) $resultado['usuario_id'];
+        $stmt = $conn->prepare('UPDATE usuario SET senha_hash = ? WHERE id = ?');
+        if ($stmt === false) {
+            $conn->rollback();
+            return false;
+        }
+        $stmt->bind_param('si', $passwordHash, $usuarioId);
+        $executado = $stmt->execute();
+        $stmt->close();
+        if (!$executado) {
+            $conn->rollback();
+            return false;
+        }
+
+        $stmt = $conn->prepare('DELETE FROM recuperacao_senha WHERE usuario_id = ?');
+        if ($stmt === false) {
+            $conn->rollback();
+            return false;
+        }
+        $stmt->bind_param('i', $usuarioId);
+        $executado = $stmt->execute();
+        $stmt->close();
+        if (!$executado) {
+            $conn->rollback();
+            return false;
+        }
+
+        $conn->commit();
+        return true;
+    }
+
+    public function update(
+        string|int $identificador,
+        array $atributo_valor
+    ): bool {
         global $conn;
 
         $permitidas = [
@@ -179,13 +297,11 @@ class UsuarioDAO {
 
         $stmt = $conn->prepare("DELETE FROM usuario WHERE $coluna = ?");
         if (!$stmt) {
-            return;
-        if ($stmt === false) {
             return false;
         }
 
         $stmt->bind_param($tipo, $identificador);
-        $stmt->execute();
+        $removido = $stmt->execute();
         $stmt->close();
         return $removido;
     }
