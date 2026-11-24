@@ -194,11 +194,17 @@ try {
 		responderProjeto(201, ['sucesso' => true, 'mensagem' => 'Projeto criado.']);
 	}
 
-	$projetoService->update($id, $projeto);
+	// Passa o usuário da sessão para que service e DAO confirmem a propriedade.
+	$projetoService->updateDoUsuario($id, $usuarioId, $projeto);
 	if ($imagemAnterior !== $imagem) {
 		limparImagemProjeto($imagemAnterior);
 	}
 	responderProjeto(200, ['sucesso' => true, 'mensagem' => 'Projeto atualizado.']);
+} catch (InvalidArgumentException $erro) {
+	// Dados inválidos recebem 422 e a imagem recém-enviada não fica órfã.
+	error_log($erro->getMessage());
+	limparImagemProjeto($novoArquivoProjeto);
+	responderProjeto(422, ['sucesso' => false, 'mensagem' => $erro->getMessage()]);
 } catch (mysqli_sql_exception $erro) {
 	error_log($erro->getMessage());
 	limparImagemProjeto($novoArquivoProjeto);

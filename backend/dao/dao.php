@@ -6,6 +6,10 @@ require_once __DIR__ . '/../configuracao/conexao.php';
 
 class UsuarioDAO
 {
+    /**
+     * Cadastra um usuário, armazenando a senha como hash.
+     * Retorna false se não for possível preparar ou executar o INSERT.
+     */
     public function add(Usuario $usuario): bool
     {
         global $conn;
@@ -45,6 +49,10 @@ class UsuarioDAO
         return $ok;
     }
 
+    /**
+     * Busca um usuário pelo e-mail (string) ou pelo ID (int).
+     * Retorna null quando não encontra uma conta ou a consulta falha.
+     */
     public function get(string|int $identificador): ?Usuario
     {
         global $conn;
@@ -88,6 +96,10 @@ class UsuarioDAO
         return $usuario;
     }
 
+    /**
+     * Atualiza o caminho da foto de perfil de um usuário.
+     * Retorna se o UPDATE foi executado com sucesso.
+     */
     public function atualizarFotoPerfil(int $id, string $caminho): bool
     {
         global $conn;
@@ -102,6 +114,10 @@ class UsuarioDAO
         return $executado;
     }
 
+    /**
+     * Substitui o hash de senha de uma conta identificada pelo ID.
+     * Usado na migração de hashes antigos e na atualização de senha.
+     */
     public function updatePasswordHash(int $id, string $passwordHash): bool
     {
         global $conn;
@@ -121,6 +137,10 @@ class UsuarioDAO
         return $ok;
     }
 
+    /**
+     * Remove tokens antigos e registra um novo token de recuperação.
+     * Usa transação para não deixar a tabela parcialmente alterada.
+     */
     public function criarTokenRecuperacao(int $usuarioId, string $tokenHash, DateTimeImmutable $expiraEm): bool
     {
         global $conn;
@@ -157,6 +177,9 @@ class UsuarioDAO
         return true;
     }
 
+    /**
+     * Apaga o token de recuperação que corresponda ao hash informado.
+     */
     public function removerTokenRecuperacao(string $tokenHash): void
     {
         global $conn;
@@ -170,6 +193,10 @@ class UsuarioDAO
         $stmt->close();
     }
 
+    /**
+     * Valida e consome um token, atualiza a senha e remove tokens da conta.
+     * As operações são confirmadas juntas ou desfeitas pela transação.
+     */
     public function redefinirSenha(string $tokenHash, string $passwordHash): bool
     {
         global $conn;
@@ -222,6 +249,10 @@ class UsuarioDAO
         return true;
     }
 
+    /**
+     * Atualiza apenas os campos de usuário incluídos na lista permitida.
+     * O identificador pode ser o e-mail (string) ou o ID (int).
+     */
     public function update(
         string|int $identificador,
         array $atributo_valor
@@ -289,6 +320,10 @@ class UsuarioDAO
         return $ok;
     }
 
+    /**
+     * Exclui um usuário pelo e-mail (string) ou pelo ID (int).
+     * Retorna se o comando DELETE foi executado.
+     */
     public function remove(string|int $identificador): bool
     {
         global $conn;
@@ -310,10 +345,276 @@ class UsuarioDAO
 
 class ProjetoDAO
 {
+    /**
+     * Lista projetos públicos filtrados, ordenados e paginados.
+     * Retorna projetos e metadados de paginação no formato usado pelo controller.
+     */
+    public function listarPublicos(
+        string $busca,
+        string $nivel,
+        string $tecnologias,
+        int $pagina,
+        string $ordenar,
+        bool $inverter
+    ): array {
+        global $conn;
+
+        $condicoes = ['p.visibilidade = 1'];
+        $valores = [];
+        $tipos = '';
+
+        if ($busca !== '') {
+            $condicoes[] = '(p.nome LIKE ? OR p.descricao LIKE ?)';
+            $termoBusca = '%' . $busca . '%';
+            $valores[] = $termoBusca;
+            $valores[] = $termoBusca;
+            $tipos .= 'ss';
+        }
+        if ($nivel !== '') {
+            $condicoes[] = 'p.nivel = ?';
+            $valores[] = $nivel;
+            $tipos .= 's';
+        }
+        if ($tecnologias !== '') {
+            $condicoes[] = 'EXISTS (
+                SELECT 1
+                FROM projeto_tecnologia pt
+                INNER JOIN tecnologia t ON t.id = pt.tecnologias_id
+                WHERE pt.projeto_id = p.id AND t.nome LIKE ?
+            )';
+            $valores[] = '%' . $tecnologias . '%';
+            $tipos .= 's';
+        }
+
+        $where = implode(' AND ', $condicoes);
+        $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM projeto p WHERE $where");
+        if (!$stmt) {
+            throw new RuntimeException('Não foi possível preparar a busca de projetos.');
+        }
+        $this->bindValores($stmt, $tipos, $valores);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível contar os projetos.');
+        }
+        $total = (int) $stmt->get_result()->fetch_assoc()['total'];
+        $stmt->close();
+
+        $porPagina = 10;
+        $totalPaginas = max(1, (int) ceil($total / $porPagina));
+        $pagina = min($pagina, $totalPaginas);
+        $offset = ($pagina - 1) * $porPagina;
+
+        $colunasOrdenacao = [
+            'recentes' => 'p.data_criacao',
+            'views' => 'p.views',
+            'avaliacao' => 'COALESCE(a.avaliacao, 0)',
+            'comentarios' => 'COALESCE(c.comentarios, 0)',
+        ];
+        if (!isset($colunasOrdenacao[$ordenar])) {
+            throw new InvalidArgumentException('Critério de ordenação inválido.');
+        }
+        $direcao = $inverter ? 'ASC' : 'DESC';
+        $valoresPagina = [...$valores, $porPagina, $offset];
+        $tiposPagina = $tipos . 'ii';
+
+        $sql = "SELECT
+                    p.id,
+                    p.nome,
+                    p.descricao,
+                    p.views,
+                    COALESCE(c.comentarios, 0) AS comentarios,
+                    COALESCE(a.avaliacao, 0) AS avaliacao
+                FROM projeto p
+                LEFT JOIN (
+                    SELECT projeto_id, COUNT(*) AS comentarios
+                    FROM comentario
+                    GROUP BY projeto_id
+                ) c ON c.projeto_id = p.id
+                LEFT JOIN (
+                    SELECT projeto_id, AVG(nota) / 2 AS avaliacao
+                    FROM avaliacao
+                    GROUP BY projeto_id
+                ) a ON a.projeto_id = p.id
+                WHERE $where
+                ORDER BY {$colunasOrdenacao[$ordenar]} $direcao, p.id DESC
+                LIMIT ? OFFSET ?";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            throw new RuntimeException('Não foi possível preparar a listagem de projetos.');
+        }
+        $this->bindValores($stmt, $tiposPagina, $valoresPagina);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível carregar os projetos.');
+        }
+
+        $projetos = [];
+        $resultado = $stmt->get_result();
+        while ($linha = $resultado->fetch_assoc()) {
+            $projetos[] = [
+                'id' => (int) $linha['id'],
+                'nome' => $linha['nome'],
+                'descricao' => $linha['descricao'],
+                'views' => (int) $linha['views'],
+                'comentarios' => (int) $linha['comentarios'],
+                'avaliacao' => round((float) $linha['avaliacao'], 1),
+            ];
+        }
+        $stmt->close();
+
+        return [
+            'projetos' => $projetos,
+            'pagina' => $pagina,
+            'totalPaginas' => $totalPaginas,
+        ];
+    }
+
+    /**
+     * Lista os dados resumidos dos projetos pertencentes ao usuário informado.
+     */
+    public function listarDoUsuario(int $usuarioId): array
+    {
+        global $conn;
+
+        $stmt = $conn->prepare(
+            'SELECT id, nome, descricao, visibilidade, views
+             FROM projeto
+             WHERE usuario_id = ?
+             ORDER BY data_criacao DESC, id DESC'
+        );
+        if (!$stmt) {
+            throw new RuntimeException('Não foi possível preparar a listagem dos projetos.');
+        }
+        $stmt->bind_param('i', $usuarioId);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível carregar os projetos da conta.');
+        }
+
+        $projetos = [];
+        $resultado = $stmt->get_result();
+        while ($linha = $resultado->fetch_assoc()) {
+            $projetos[] = [
+                'id' => (int) $linha['id'],
+                'nome' => $linha['nome'],
+                'descricao' => $linha['descricao'],
+                'visibilidade' => (bool) $linha['visibilidade'],
+                'views' => (int) $linha['views'],
+            ];
+        }
+        $stmt->close();
+        return $projetos;
+    }
+
+    /**
+     * Busca o projeto pelo link apenas se ele estiver público.
+     * Retorna o objeto completo ou null se não existir/não estiver visível.
+     */
+    public function getPublico(string $linkRepositorio): ?Projeto
+    {
+        global $conn;
+
+        $stmt = $conn->prepare(
+            'SELECT id FROM projeto WHERE link_repositorio = ? AND visibilidade = 1'
+        );
+        if (!$stmt) {
+            throw new RuntimeException('Não foi possível buscar o projeto.');
+        }
+        $stmt->bind_param('s', $linkRepositorio);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível buscar o projeto.');
+        }
+        $linha = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        if (!$linha) {
+            return null;
+        }
+
+        $projeto = $this->get((int) $linha['id']);
+        return $projeto !== null && $projeto->isPublico() ? $projeto : null;
+    }
+
+    /**
+     * Busca um projeto somente quando seu ID e o ID do dono correspondem.
+     */
+    public function getDoUsuario(int $projetoId, int $usuarioId): ?Projeto
+    {
+        global $conn;
+
+        $stmt = $conn->prepare(
+            'SELECT id FROM projeto WHERE id = ? AND usuario_id = ?'
+        );
+        if (!$stmt) {
+            throw new RuntimeException('Não foi possível buscar o projeto.');
+        }
+        $stmt->bind_param('ii', $projetoId, $usuarioId);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível buscar o projeto.');
+        }
+        $linha = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        return $linha ? $this->get((int) $linha['id']) : null;
+    }
+
+    /**
+     * Exclui um projeto apenas se pertencer ao usuário informado.
+     * Retorna false se nenhum projeto correspondente foi removido.
+     */
+    public function removeDoUsuario(int $projetoId, int $usuarioId): bool
+    {
+        global $conn;
+
+        $stmt = $conn->prepare(
+            'DELETE FROM projeto WHERE id = ? AND usuario_id = ?'
+        );
+        if (!$stmt) {
+            throw new RuntimeException('Não foi possível preparar a exclusão do projeto.');
+        }
+        $stmt->bind_param('ii', $projetoId, $usuarioId);
+        $executado = $stmt->execute();
+        $removido = $executado && $stmt->affected_rows > 0;
+        $stmt->close();
+        return $removido;
+    }
+
+    /**
+     * Atualiza campos e relacionamentos de um projeto pertencente ao usuário.
+     */
+    public function updateDoUsuario(int $projetoId, int $usuarioId, array $valores): bool
+    {
+        return $this->atualizar($projetoId, $valores, $usuarioId);
+    }
+
+    /**
+     * Vincula dinamicamente valores a um statement usando os tipos do mysqli.
+     * Recebe os valores por referência porque bind_param exige essa forma.
+     */
+    private function bindValores(mysqli_stmt $stmt, string $tipos, array &$valores): void
+    {
+        if ($tipos === '') {
+            return;
+        }
+
+        $argumentos = [$tipos];
+        foreach ($valores as $indice => &$valor) {
+            $argumentos[] = &$valor;
+        }
+        if (!call_user_func_array([$stmt, 'bind_param'], $argumentos)) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível vincular os filtros da busca.');
+        }
+    }
+
     /*
      * Insere cada tag/tecnologia se ainda não existir e cria a associação N:N.
      * $tabela, $tabelaRelacao e $colunaRelacao são nomes constantes definidos
      * internamente, nunca valores recebidos diretamente do usuário.
+     */
+    /**
+     * Cria ou reutiliza tags/tecnologias e associa cada item ao projeto.
+     * Os nomes das tabelas são definidos internamente pelos métodos chamadores.
      */
     private function salvarRelacionamentos(
         int $projetoId,
@@ -375,6 +676,10 @@ class ProjetoDAO
         return true;
     }
 
+    /**
+     * Insere um projeto e suas tags/tecnologias em uma única transação.
+     * Retorna false e desfaz tudo se qualquer parte da operação falhar.
+     */
     public function add(Projeto $projeto): bool
     {
         global $conn;
@@ -454,6 +759,10 @@ class ProjetoDAO
         }
     }
 
+    /**
+     * Busca um projeto por link (string) ou ID (int), carregando dono e relações.
+     * Retorna null quando o projeto ou algum dado essencial não é encontrado.
+     */
     public function get(string|int $identificador): ?Projeto
     {
         global $conn;
@@ -562,7 +871,20 @@ class ProjetoDAO
         return $projeto;
     }
 
+    /**
+     * Atualiza campos e relações do projeto sem exigir uma verificação de dono.
+     * Para alterações de usuário, prefira updateDoUsuario().
+     */
     public function update(string|int $identificador, array $valores): bool
+    {
+        return $this->atualizar($identificador, $valores, null);
+    }
+
+    /**
+     * Executa a atualização comum; quando recebe usuário, restringe a operação ao dono.
+     * Campos e relações são gravados dentro da mesma transação.
+     */
+    private function atualizar(string|int $identificador, array $valores, ?int $usuarioId): bool
     {
         global $conn;
 
@@ -620,6 +942,7 @@ class ProjetoDAO
 
         $colunaId = is_string($identificador) ? 'link_repositorio' : 'id';
         $tipoId = is_string($identificador) ? 's' : 'i';
+        $condicaoUsuario = $usuarioId === null ? '' : ' AND usuario_id = ?';
 
         $conn->begin_transaction();
 
@@ -627,10 +950,14 @@ class ProjetoDAO
             if ($sets) {
                 $params[] = $identificador;
                 $tipos .= $tipoId;
+                if ($usuarioId !== null) {
+                    $params[] = $usuarioId;
+                    $tipos .= 'i';
+                }
 
                 $stmt = $conn->prepare(
                     'UPDATE projeto SET ' . implode(', ', $sets) .
-                    " WHERE $colunaId = ?"
+                    " WHERE $colunaId = ?$condicaoUsuario"
                 );
 
                 if (!$stmt) {
@@ -651,12 +978,16 @@ class ProjetoDAO
             }
 
             $stmt = $conn->prepare(
-                "SELECT id FROM projeto WHERE $colunaId = ?"
+                "SELECT id FROM projeto WHERE $colunaId = ?$condicaoUsuario"
             );
 
             if (!$stmt) throw new RuntimeException($conn->error);
 
-            $stmt->bind_param($tipoId, $identificador);
+            if ($usuarioId === null) {
+                $stmt->bind_param($tipoId, $identificador);
+            } else {
+                $stmt->bind_param($tipoId . 'i', $identificador, $usuarioId);
+            }
             if (!$stmt->execute()) {
                 throw new RuntimeException($stmt->error);
             }
@@ -715,6 +1046,10 @@ class ProjetoDAO
         }
     }
 
+    /**
+     * Exclui um projeto pelo link (string) ou pelo ID (int).
+     * Este método não verifica o dono; use removeDoUsuario em operações de usuário.
+     */
     public function remove(string|int $identificador): void
     {
         global $conn;
@@ -734,6 +1069,10 @@ class ProjetoDAO
 
 class ComentarioDAO
 {
+    /**
+     * Insere um comentário com autor, projeto e, se existir, comentário pai.
+     * Retorna se o INSERT foi executado.
+     */
     public function add(Comentario $comentario): bool
     {
         global $conn;
@@ -768,6 +1107,10 @@ class ComentarioDAO
         return $ok;
     }
 
+    /**
+     * Carrega comentário, autor, projeto e pai; opcionalmente carrega respostas diretas.
+     * A opção evita recursão infinita ao carregar o pai ou cada resposta.
+     */
     private function buscarComentario(int $id, bool $carregarFilhos = true): ?Comentario
     {
         global $conn;
@@ -791,7 +1134,6 @@ class ComentarioDAO
 
         if (!$dono || !$projeto) return null;
 
-        // Carrega apenas os dados do pai, sem percorrer seus filhos.
         $pai = null;
         if ($dados['comentario_pai_id'] !== null) {
             $pai = $this->buscarComentario(
@@ -839,11 +1181,17 @@ class ComentarioDAO
         return $comentario;
     }
 
+    /**
+     * Busca um comentário pelo ID usando o carregador de relações completo.
+     */
     public function get(int $id): ?Comentario
     {
         return $this->buscarComentario($id);
     }
 
+    /**
+     * Atualiza o conteúdo e o comentário pai de um comentário existente.
+     */
     public function update(int $id, Comentario $comentario): bool
     {
         global $conn;
@@ -867,6 +1215,9 @@ class ComentarioDAO
         return $ok;
     }
 
+    /**
+     * Exclui um comentário pelo ID; converte a string recebida para inteiro.
+     */
     public function remove(int|string $identificador): void
     {
         global $conn;
@@ -884,6 +1235,10 @@ class ComentarioDAO
 
 class DenunciaDAO
 {
+    /**
+     * Insere uma denúncia e identifica se o alvo é projeto, usuário ou comentário.
+     * Preenche a coluna de relacionamento correspondente ao tipo do alvo.
+     */
     public function add(Denuncia $denuncia): bool
     {
         global $conn;
@@ -943,6 +1298,9 @@ class DenunciaDAO
         return $ok;
     }
 
+    /**
+     * Busca uma denúncia e carrega denunciante e entidade denunciada.
+     */
     public function get(int $id): ?Denuncia
     {
         global $conn;
@@ -1009,6 +1367,9 @@ class DenunciaDAO
         );
     }
 
+    /**
+     * Atualiza o motivo e o status de uma denúncia existente.
+     */
     public function update(int $id, Denuncia $denuncia): bool
     {
         global $conn;
@@ -1029,6 +1390,9 @@ class DenunciaDAO
         return $ok;
     }
 
+    /**
+     * Exclui uma denúncia pelo ID, aceitando string por compatibilidade.
+     */
     public function remove(int|string $identificador): void
     {
         global $conn;
@@ -1046,6 +1410,9 @@ class DenunciaDAO
 
 class AvaliacaoDAO
 {
+    /**
+     * Insere uma avaliação ligada a um projeto e a um usuário.
+     */
     public function add(Avaliacao $avaliacao): bool
     {
         global $conn;
@@ -1069,6 +1436,9 @@ class AvaliacaoDAO
         return $ok;
     }
 
+    /**
+     * Busca uma avaliação e carrega o projeto e o usuário associados.
+     */
     public function get(int $id): ?Avaliacao
     {
         global $conn;
@@ -1101,6 +1471,9 @@ class AvaliacaoDAO
         );
     }
 
+    /**
+     * Atualiza a nota da avaliação identificada pelo ID.
+     */
     public function update(int $id, Avaliacao $avaliacao): bool
     {
         global $conn;
@@ -1119,6 +1492,9 @@ class AvaliacaoDAO
         return $ok;
     }
 
+    /**
+     * Exclui uma avaliação pelo ID, aceitando string por compatibilidade.
+     */
     public function remove(int|string $identificador): void
     {
         global $conn;
