@@ -3,8 +3,6 @@
 require_once __DIR__ . '/../modelos/model.php';
 require_once __DIR__ . '/../configuracao/conexao.php';
 
-class UsuarioDAO
-{
     /**
      * Cadastra um usuário, armazenando a senha como hash.
      * Retorna false se não for possível preparar ou executar o INSERT.
@@ -1228,6 +1226,253 @@ class ComentarioDAO {
      * Preenche a coluna de relacionamento correspondente ao tipo do alvo.
      */
 class DenunciaDAO {
+    private function consultarPainelAdmin(?int $id, ?string $tipo): array
+    {
+        global $conn;
+
+        $sql = <<<'SQL'
+                SELECT
+                    d.id,
+                    d.motivo,
+                    d.data,
+                    d.status,
+                    d.tipo,
+                    COALESCE(denunciante.nome, 'Usuário removido') AS denunciante,
+                    CASE d.tipo
+                        WHEN 'projeto' THEN COALESCE(projeto.nome, 'Projeto removido')
+                        WHEN 'comentario' THEN COALESCE(comentario_projeto.nome, 'Projeto removido')
+                        WHEN 'usuario' THEN COALESCE(usuario_denunciado.nome, 'Usuário removido')
+                    END AS alvo,
+                    CASE d.tipo
+                        WHEN 'projeto' THEN COALESCE(dono_projeto.nome, 'Usuário removido')
+                        WHEN 'comentario' THEN COALESCE(dono_comentario.nome, 'Usuário removido')
+                        WHEN 'usuario' THEN COALESCE(usuario_denunciado.nome, 'Usuário removido')
+                    END AS autor_alvo,
+                    CASE d.tipo
+                        WHEN 'projeto' THEN projeto.descricao
+                        WHEN 'comentario' THEN comentario.descricao
+                        WHEN 'usuario' THEN usuario_denunciado.email
+                    END AS detalhes_alvo
+                FROM denuncia d
+                LEFT JOIN usuario denunciante ON denunciante.id = d.denunciante_id
+                LEFT JOIN projeto ON projeto.id = d.projeto_denunciado_id
+                LEFT JOIN usuario dono_projeto ON dono_projeto.id = projeto.usuario_id
+                LEFT JOIN comentario ON comentario.id = d.comentario_denunciado_id
+                LEFT JOIN projeto comentario_projeto ON comentario_projeto.id = comentario.projeto_id
+                LEFT JOIN usuario dono_comentario ON dono_comentario.id = comentario.usuario_id
+                LEFT JOIN usuario usuario_denunciado ON usuario_denunciado.id = d.usuario_denunciado_id
+                WHERE 1 = 1
+                SQL;
+        if ($id !== null) {
+            $sql .= ' AND d.id = ?';
+        } else {
+            $sql .= " AND d.status <> 'removida'";
+            if ($tipo !== null) {
+                $sql .= ' AND d.tipo = ?';
+            }
+        }
+
+        $sql .= ' ORDER BY d.data DESC, d.id DESC';
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            throw new RuntimeException('Não foi possível preparar a consulta das denúncias.');
+        }
+
+        if ($id !== null) {
+            $stmt->bind_param('i', $id);
+        } elseif ($tipo !== null) {
+            $stmt->bind_param('s', $tipo);
+        }
+        if (!$stmt->execute()) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível carregar as denúncias.');
+        }
+
+        $linhas = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $linhas;
+    }
+
+    public function listarParaAdmin(?string $tipo = null): array
+    {
+        return $this->consultarPainelAdmin(null, $tipo);
+    }
+
+    public function buscarParaAdmin(int $id): ?array
+    {
+        return $this->consultarPainelAdmin($id, null)[0] ?? null;
+    }
+
+    private function executarAdmin(string $sql, string $tipos, mixed ...$valores): void
+    {
+        global $conn;
+
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            throw new RuntimeException('Não foi possível preparar a ação de moderação.');
+        }
+        $argumentos = [$tipos];
+        foreach ($valores as &$valor) {
+            $argumentos[] = &$valor;
+        }
+        unset($valor);
+        if (!call_user_func_array([$stmt, 'bind_param'], $argumentos)) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível vincular os dados da ação administrativa.');
+        }
+        if (!$stmt->execute()) {
+            $stmt->close();
+            throw new RuntimeException('Não foi possível concluir a ação de moderação.');
+        }
+        $stmt->close();
+    }
+
+    public function decidirComoAdmin(int $id, bool $removerAlvo): bool
+    {
+        global $conn;
+
+        $conn->begin_transaction();
+        try {
+            $stmt = $conn->prepare(
+                'SELECT tipo, status, comentario_denunciado_id, projeto_denunciado_id, usuario_denunciado_id
+                 FROM denuncia WHERE id = ? FOR UPDATE'
+            );
+            if (!$stmt) {
+                throw new RuntimeException('Não foi possível localizar a denúncia.');
+            }
+            $stmt->bind_param('i', $id);
+            if (!$stmt->execute()) {
+                $stmt->close();
+                throw new RuntimeException('Não foi possível localizar a denúncia.');
+            }
+            $denuncia = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if (!$denuncia || $denuncia['status'] === 'removida') {
+                $conn->rollback();
+                return false;
+            }
+
+            if (!$removerAlvo) {
+                $this->executarAdmin(
+                    "UPDATE denuncia SET status = 'removida' WHERE id = ?",
+                    'i',
+                    $id
+                );
+            } else {
+                $colunaAlvo = match ($denuncia['tipo']) {
+                    'projeto' => 'projeto_denunciado_id',
+                    'comentario' => 'comentario_denunciado_id',
+                    'usuario' => 'usuario_denunciado_id',
+                    default => null,
+                };
+                if ($colunaAlvo === null || $denuncia[$colunaAlvo] === null) {
+                    $conn->rollback();
+                    return false;
+                }
+
+                switch ($denuncia['tipo']) {
+                    case 'projeto':
+                        $projetoId = (int) $denuncia['projeto_denunciado_id'];
+                        $this->executarAdmin(
+                            "UPDATE denuncia SET status = 'removida', projeto_denunciado_id = NULL
+                             WHERE projeto_denunciado_id = ?",
+                            'i',
+                            $projetoId
+                        );
+                        $this->executarAdmin(
+                            "UPDATE denuncia d
+                             JOIN comentario c ON c.id = d.comentario_denunciado_id
+                             SET d.status = 'removida', d.comentario_denunciado_id = NULL
+                             WHERE c.projeto_id = ?",
+                            'i',
+                            $projetoId
+                        );
+                        $this->executarAdmin(
+                            'UPDATE comentario resposta
+                             JOIN comentario alvo ON alvo.id = resposta.comentario_pai_id
+                             SET resposta.comentario_pai_id = NULL
+                             WHERE alvo.projeto_id = ?',
+                            'i',
+                            $projetoId
+                        );
+                        $this->executarAdmin('DELETE FROM projeto WHERE id = ?', 'i', $projetoId);
+                        break;
+
+                    case 'comentario':
+                        $comentarioId = (int) $denuncia['comentario_denunciado_id'];
+                        $this->executarAdmin(
+                            "UPDATE denuncia SET status = 'removida', comentario_denunciado_id = NULL
+                             WHERE comentario_denunciado_id = ?",
+                            'i',
+                            $comentarioId
+                        );
+                        $this->executarAdmin(
+                            'UPDATE comentario SET comentario_pai_id = NULL WHERE comentario_pai_id = ?',
+                            'i',
+                            $comentarioId
+                        );
+                        $this->executarAdmin('DELETE FROM comentario WHERE id = ?', 'i', $comentarioId);
+                        break;
+
+                    case 'usuario':
+                        $usuarioId = (int) $denuncia['usuario_denunciado_id'];
+                        $this->executarAdmin(
+                            "UPDATE denuncia d
+                             JOIN projeto p ON p.id = d.projeto_denunciado_id
+                             SET d.status = 'removida', d.projeto_denunciado_id = NULL
+                             WHERE p.usuario_id = ?",
+                            'i',
+                            $usuarioId
+                        );
+                        $this->executarAdmin(
+                            "UPDATE denuncia d
+                             JOIN comentario c ON c.id = d.comentario_denunciado_id
+                             LEFT JOIN projeto p ON p.id = c.projeto_id
+                             SET d.status = 'removida', d.comentario_denunciado_id = NULL
+                             WHERE c.usuario_id = ? OR p.usuario_id = ?",
+                            'ii',
+                            $usuarioId,
+                            $usuarioId
+                        );
+                        $this->executarAdmin(
+                            "UPDATE denuncia
+                             SET status = 'removida', usuario_denunciado_id = NULL
+                             WHERE usuario_denunciado_id = ?",
+                            'i',
+                            $usuarioId
+                        );
+                        $this->executarAdmin(
+                            'UPDATE denuncia SET denunciante_id = NULL WHERE denunciante_id = ?',
+                            'i',
+                            $usuarioId
+                        );
+                        $this->executarAdmin(
+                            'UPDATE comentario resposta
+                             JOIN comentario alvo ON alvo.id = resposta.comentario_pai_id
+                             LEFT JOIN projeto p ON p.id = alvo.projeto_id
+                             SET resposta.comentario_pai_id = NULL
+                             WHERE alvo.usuario_id = ? OR p.usuario_id = ?',
+                            'ii',
+                            $usuarioId,
+                            $usuarioId
+                        );
+                        $this->executarAdmin('DELETE FROM usuario WHERE id = ?', 'i', $usuarioId);
+                        break;
+
+                    default:
+                        throw new RuntimeException('O tipo de denúncia não é válido.');
+                }
+            }
+
+            $conn->commit();
+            return true;
+        } catch (Throwable $erro) {
+            $conn->rollback();
+            throw $erro;
+        }
+    }
+
     public function add(Denuncia $denuncia): bool
     {
         global $conn;

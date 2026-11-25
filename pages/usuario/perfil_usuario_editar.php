@@ -98,7 +98,7 @@ $csrfToken = obterTokenCsrf();
 
     <!-- FOOTER -->
     <footer id="footer">
-        DevShare - Sempre abertos à comunidade
+        DevShare — compartilhe ideias, encontre parceiros e transforme projetos em realidade.
     </footer>
 </body>
 <script src="../../assets/js/usuario/perfil.js"></script>

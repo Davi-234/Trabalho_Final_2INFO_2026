@@ -119,7 +119,7 @@ if (is_string($fotoPerfil) && preg_match('/\Aassets\/images\/perfil_[a-f0-9]{32}
   </main>
   <!-- FOOTER -->
   <footer id="footer">
-    DevShare - Sempre abertos à comunidade
+    DevShare — compartilhe ideias, encontre parceiros e transforme projetos em realidade.
   </footer>
 </body>
 <script src="../../assets/js/usuario/card.js"></script>

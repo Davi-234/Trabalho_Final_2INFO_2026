@@ -1,4 +1,8 @@
 function alterar_PreVisualizacao(input_selecionado) {
+  if (!input_selecionado) {
+    return;
+  }
+
   if (input_selecionado === "status" || input_selecionado === "tags" || input_selecionado === "tecnologias" || input_selecionado === "link") {
     return;
   }

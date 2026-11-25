@@ -1,0 +1,95 @@
+.filtro-denuncia {
+    width: 100%;
+    padding: 12px;
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.filtro-denuncia.ativo,
+.filtro-denuncia:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.cabecalho-denuncias p,
+.mensagem-admin {
+    color: var(--text-secondary);
+}
+
+#lista-denuncias {
+    display: grid;
+    gap: 16px;
+}
+
+.denuncia-admin-card {
+    padding: 20px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.denuncia-admin-card h3 {
+    margin-bottom: 8px;
+}
+
+.denuncia-admin-card p {
+    margin: 8px 0;
+    overflow-wrap: anywhere;
+}
+
+.acoes-denuncia {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.acoes-denuncia button,
+.acoes-denuncia a,
+#denuncia footer button,
+header form button {
+    padding: 8px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    color: white;
+    background: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.acoes-denuncia .acao-secundaria,
+#denuncia footer button[data-acao="ignorar"] {
+    color: var(--text-primary);
+    background: transparent;
+    border-color: var(--border);
+}
+
+.acoes-denuncia button:disabled,
+#denuncia footer button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.mensagem-admin:empty {
+    display: none;
+}
+
+#detalhes-alvo {
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+@media (max-width: 700px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    #usuario {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+    }
+}

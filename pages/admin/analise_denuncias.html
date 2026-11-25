@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8" />
@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../assets/css/utilidades/estilo_principal.css">
     <link rel="stylesheet" href="../../assets/css/utilidades/header.css">
     <link rel="stylesheet" href="../../assets/css/usuario/home.css" />
+    <link rel="stylesheet" href="../../assets/css/utilidades/admin.css" />
     <link rel="icon" type="image/png" href="../../assets/images/logo.png">
 </head>
 
@@ -28,14 +29,13 @@
         <!-- Navegação principal -->
         <nav>
             <ul>
-                <li><a href="../global/explorar.html">Explorar</a></li>
+                <li><span id="nome-administrador"></span></li>
                 <li>
-                    <!-- Foto de perfil (placeholder para CSS) -->
-                    <a href="#">
-                        <div id="perfil-icone"></div>
-                    </a>
+                    <form action="../../backend/controladores/logout.php" method="post">
+                        <input type="hidden" name="csrf_token" id="csrf-logout">
+                        <button type="submit">Sair</button>
+                    </form>
                 </li>
-                <li><a href="adm.html">Sair</a></li>
             </ul>
         </nav>
     </header>
@@ -53,130 +53,29 @@
 
             <!-- Ações do usuário -->
             <section id="acoes-usuario">
-                <article>
-                    <h4>Denúncias sobre projetos</h4>
-                </article>
-
-                <article>
-                    <h4>Denúncias sobre comentários</h4>
-                </article>
-
-                <article>
-                    <h4>Denúncias sobre usuários</h4>
-                </article>
+                <button type="button" class="filtro-denuncia ativo" data-tipo="">Todas</button>
+                <button type="button" class="filtro-denuncia" data-tipo="projeto">Projetos</button>
+                <button type="button" class="filtro-denuncia" data-tipo="comentario">Comentários</button>
+                <button type="button" class="filtro-denuncia" data-tipo="usuario">Usuários</button>
             </section>
         </section>
 
         <section id="denuncias">
-            <header>
-                <h2 id="titulo_denuncias">Denúncias sobre projetos</h2>
+            <header class="cabecalho-denuncias">
+                <h2 id="titulo_denuncias">Denúncias pendentes</h2>
+                <p>Concordar remove o conteúdo ou a conta. Ignorar apenas encerra a denúncia.</p>
             </header>
 
-            <!-- Lista de projetos -->
-            <section id="lista-denuncias">
-                <!-- Denuncia Usuario -->
-                <article class="denuncia_usuario">
-                    <header>
-                        <h4>Denunciante: <span><a href="#">Fulano</a></span></h4>
-                        <h5>Denunciado: <span><a href="#">Ciclano</a></span></h5>
-                    </header>
-
-                    <section>
-                        <p>
-                            O seguinte projeto denunciado por mim, fere as diretrizes da comunidade, quanto a
-                            distribuição de conteúdos com direitos autorais.
-                        </p>
-                    </section>
-
-                    <!-- Ações do projeto -->
-                    <footer>
-                        <nav>
-                            <ul>
-                                <li><button>Concordar</button></li>
-                                <li><button class="btn-ver">Ver</button></li>
-                                <li><button>Ignorar</button></li>
-                            </ul>
-                        </nav>
-                    </footer>
-                </article>
-                <!--  -->
-
-                <!-- Denuncia projeto -->
-                <article class="denuncia_usuario">
-                    <header>
-                        <h4>Denunciante: <span><a href="#">Fulano</a></span></h4>
-                        <h5>Denunciado: <span><a href="#">Projeto XYZ</a></span></h5>
-                    </header>
-
-                    <section>
-                        <p>
-                            O seguinte projeto denunciado por mim, fere as diretrizes da comunidade, quanto a
-                            distribuição de conteúdos com direitos autorais.
-                        </p>
-                    </section>
-
-                    <!-- Ações do projeto -->
-                    <footer>
-                        <nav>
-                            <ul>
-                                <li><button>Concordar</button></li>
-                                <li><button class="btn-ver">Ver</button></li>
-                                <li><button>Ignorar</button></li>
-                            </ul>
-                        </nav>
-                    </footer>
-                </article>
-                <!--  -->
-
-                <!-- Denuncia comentraio -->
-                <article class="denuncia_comentario">
-                    <header>
-                        <h4>Denunciante: <span><a href="#">Fulano</a></span></h4>
-                    </header>
-
-                    <section>
-                        <p>
-                            O seguinte projeto denunciado por mim, fere as diretrizes da comunidade, quanto a
-                            distribuição de conteúdos com direitos autorais.
-                        </p>
-                    </section>
-
-                    <!-- Ações do projeto -->
-                    <footer>
-                        <nav>
-                            <ul>
-                                <li><button class="btn-ver">Ver</button></li>
-                            </ul>
-                        </nav>
-                    </footer>
-                </article>
-                <!--  -->
-
+            <p id="mensagem-admin" class="mensagem-admin" role="status" aria-live="polite"></p>
+            <section id="lista-denuncias" aria-live="polite">
             </section>
         </section>
     </main>
     <!-- FOOTER -->
     <footer id="footer">
-        DevShare - Sempre abertos à comunidade
+        DevShare — compartilhe ideias, encontre parceiros e transforme projetos em realidade.
     </footer>
 </body>
-<script>
-    let btns_ver = document.getElementsByClassName('btn-ver');
-    for (let index = 0; index < btns_ver.length; index++) {
-        btns_ver[index].addEventListener('click', function () {
-            window.location.href = "denuncia_descricao.html"
-        });
-    }
-</script>
-<script>
-    const abas_tipos_denuncias = Array.from(document.querySelectorAll('#acoes-usuario article'));
-
-    abas_tipos_denuncias.forEach(abas => {
-        abas.addEventListener('click', function() {
-            let titulo_denuncias = (abas.innerHTML.replace('<h4>','').replace('</h4>',''));
-            document.getElementById('titulo_denuncias').innerHTML = titulo_denuncias;
-        });
-    });
-</script>
+<script src="../../assets/js/admin/painel.js"></script>
 
 </html>

@@ -1,0 +1,63 @@
+## Como iniciar o DevShare sempre que for usar
+
+### 1. Abra o terminal na pasta do projeto
+
+```bash
+cd /home/joaomvt/Projetos/devshare
+```
+
+### 2. Inicie o MySQL de teste
+
+```bash
+sudo systemctl start docker
+sudo docker compose up -d
+sudo docker compose ps
+```
+
+Confirme que `devshare-mysql` aparece como `Up`. O banco fica em um volume do Docker, então os dados continuam lá quando você fecha o site ou desliga o computador.
+
+### 3. Inicie o servidor PHP
+
+No mesmo terminal, ainda na pasta do projeto:
+
+```bash
+php -S localhost:8000 router.php
+```
+
+Deixe esse terminal aberto enquanto usar o site. Depois, abra no navegador:
+
+```text
+http://localhost:8000
+```
+
+Use sempre `router.php` ao iniciar o PHP: ele impede que o arquivo `.env` fique acessível pelo navegador.
+
+### Na primeira configuração, ou se o banco estiver vazio
+
+O schema precisa estar importado no MySQL. Só faça isso se as tabelas ainda não existirem: no MySQL Workbench, conecte a `127.0.0.1`, porta `3307`, e importe `criação_BancoDeDados_Mysql.sql`. **Não precisa importar de novo a cada uso.**
+
+Mantenha as configurações e credenciais locais no `.env`; não o compartilhe nem o envie ao GitHub. As orientações do projeto estão no `README.md`.
+
+### Para acessar como administrador
+
+1. Crie uma conta normalmente pela tela de cadastro.
+2. No Workbench, conectado ao banco `dev_share`, execute a consulta abaixo, substituindo pelo e-mail da sua conta:
+
+   ```sql
+   UPDATE usuario
+   SET tipo = 'adm'
+   WHERE email = 'SEU_EMAIL';
+   ```
+
+3. Entre em `http://localhost:8000/pages/admin/adm.html` com essa conta.
+
+### Ao terminar
+
+- No terminal do PHP, pressione **Ctrl+C** para parar o site.
+- Para parar o MySQL sem apagar os dados, execute:
+
+  ```bash
+  sudo docker compose stop
+  ```
+
+Na próxima vez, repita os passos 1 a 3. Para testar recuperação de senha, lembre-se de que o sistema pode enviar um e-mail real ao endereço cadastrado.
