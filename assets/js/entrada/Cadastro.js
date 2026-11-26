@@ -181,6 +181,7 @@ campoSenha.addEventListener(
     "input",
     () => {
 
+        campoSenha.setCustomValidity("");
         atualizarRequisitosSenha();
         validarConfirmacaoSenha();
 

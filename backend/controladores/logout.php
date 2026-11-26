@@ -10,6 +10,7 @@ if (
     exit('Solicitação inválida.');
 }
 
+$eraAdministrador = ($_SESSION['usuario_tipo'] ?? null) === 'adm';
 $_SESSION = [];
 
 if (ini_get('session.use_cookies')) {
@@ -25,5 +26,8 @@ if (ini_get('session.use_cookies')) {
 }
 
 session_destroy();
-header('Location: ../../pages/entrada/login.html', true, 303);
+$destino = $eraAdministrador
+    ? '../../pages/admin/adm.html'
+    : '../../pages/entrada/login.html';
+header('Location: ' . $destino, true, 303);
 exit;

@@ -18,14 +18,48 @@ Dessa forma, o projeto busca centralizar informações úteis em um único ambie
 - `documentacao/`: requisitos, casos de uso e arquivos do banco de dados.
 - `index.html` e `404.html`: páginas servidas a partir da raiz do projeto.
 
+## Execução local com MySQL
+
+Use Docker, Docker Compose e PHP com a extensão `mysqli`. O MySQL será executado em um contêiner na porta `3307`, sem substituir nem apagar o MariaDB instalado no computador.
+
+1. Instale Docker e Compose no Ubuntu: `sudo apt update` e depois `sudo apt install docker.io docker-compose-v2`.
+2. Inicie o serviço: `sudo systemctl enable --now docker`.
+3. Copie `.env.example` para `.env` e preencha as senhas. Use um valor próprio para `MYSQL_ROOT_PASSWORD` e outro para `MYSQL_PASSWORD`; deixe `MYSQL_HOST="127.0.0.1"` e `MYSQL_PORT="3307"`.
+4. Na raiz do projeto, inicie o MySQL:
+
+```sh
+sudo docker compose up -d
+```
+
+O contêiner mantém os dados em um volume Docker separado; não remova esse volume se quiser preservá-los.
+
+5. Importe `documentacao/BancoDeDados/scripts/criação_BancoDeDados_Mysql.sql` para o MySQL do contêiner. Você pode conectar pelo MySQL Workbench em `127.0.0.1`, porta `3307`, usando o usuário `root` e `MYSQL_ROOT_PASSWORD` do `.env`. O banco MySQL do contêiner começa vazio; isso não altera o conteúdo do MariaDB.
+6. Inicie a aplicação a partir da raiz:
+
+```sh
+php -S localhost:8000 router.php
+```
+
+O roteador bloqueia o acesso HTTP aos arquivos ocultos, como `.env`. Use-o sempre ao iniciar o servidor PHP embutido. Para parar o MySQL sem apagar seus dados, use `sudo docker compose stop`.
+
+Para acessar o painel em `pages/admin/adm.html`, a conta precisa ter `tipo = 'adm'` na tabela `usuario`. Você pode promover uma conta existente no MySQL:
+
+```sql
+UPDATE usuario SET tipo = 'adm' WHERE email = 'seu-email@exemplo.com';
+```
+
+O painel permite filtrar denúncias por categoria, consultar detalhes, encerrar denúncias sem remover o conteúdo ou concordar com a denúncia e remover o conteúdo. Remover uma conta também remove seus projetos e comentários.
+
 ## Recuperação de senha
 
-Para bancos já existentes, aplique `documentacao/BancoDeDados/scripts/adicionar_recuperacao_senha.sql`.
-O envio usa a API SMTP da SendPulse. Configure no ambiente do PHP:
+As configurações de e-mail ficam no arquivo `.env` na raiz do projeto. Configure `DEVSHARE_BASE_URL`, `DEVSHARE_MAIL_FROM`, `DEVSHARE_MAIL_FROM_NAME`, `SENDPULSE_CLIENT_ID` e `SENDPULSE_CLIENT_SECRET`. O arquivo `.env.example` mostra o formato; não coloque credenciais reais nele.
 
-- `DEVSHARE_BASE_URL`: URL pública da aplicação, incluindo `https://` e sem barra final.
-- `DEVSHARE_MAIL_FROM`: endereço remetente autorizado pelo servidor de e-mail.
-- `DEVSHARE_MAIL_FROM_NAME`: nome exibido como remetente (opcional, padrão `DevShare`).
-- `SENDPULSE_CLIENT_ID` e `SENDPULSE_CLIENT_SECRET`: credenciais OAuth em SendPulse > Configurações > API.
+O arquivo `.env` é ignorado pelo Git para manter as credenciais fora do GitHub. O remetente precisa estar autorizado na SendPulse. Para testes locais, `DEVSHARE_BASE_URL` pode ser `http://localhost:8000`; em produção, use HTTPS.
 
-Sem essas configurações, nenhum e-mail será enviado. Não salve as credenciais no repositório. O endereço remetente precisa estar verificado na SendPulse; em produção, use HTTPS.
+Depois de preencher o `.env`, inicie o servidor com o roteador seguro:
+
+```sh
+php -S localhost:8000 router.php
+```
+
+Para testar, abra “Esqueceu a senha?” na tela de login e solicite a recuperação usando o e-mail de uma conta cadastrada. O usuário deve receber uma mensagem de sucesso; confira também a caixa de spam. Se houver erro, consulte o log do PHP e confirme as credenciais OAuth e o remetente autorizado no painel da SendPulse.

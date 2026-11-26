@@ -27,7 +27,7 @@ class Denuncia
         $this->denunciante = $denunciante;
         $this->denunciado = $denunciado;
         $this->data = $data ?? new DateTime();
-        $this->status = $status ?? StatusDenuncia::ANALISANDO;
+        $this->status = $status ?? StatusDenuncia::PENDENTE;
     }
 
 

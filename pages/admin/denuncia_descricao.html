@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8" />
@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../assets/css/utilidades/header.css">
     <link rel="stylesheet" href="../../assets/css/utilidades/footer.css">
     <link rel="stylesheet" href="../../assets/css/utilidades/denuncia_adm.css">
+    <link rel="stylesheet" href="../../assets/css/utilidades/admin.css">
     <link rel="icon" type="image/png" href="../../assets/images/logo.png">
 </head>
 
@@ -29,7 +30,12 @@
         <nav>
             <ul>
                 <li><a href="analise_denuncias.html">Aba Denúncias</a></li>
-                <li><a href="../global/explorar.html">Explorar</a></li>
+                <li>
+                    <form action="../../backend/controladores/logout.php" method="post">
+                        <input type="hidden" name="csrf_token" id="csrf-logout">
+                        <button type="submit">Sair</button>
+                    </form>
+                </li>
             </ul>
         </nav>
     </header>
@@ -37,40 +43,37 @@
     <!-- ================= MAIN ================= -->
     <main>
         <!-- Projeto -->
-        <section id="denuncia">
+        <section id="denuncia" data-id="">
             <header>
-                <h2>Denúncia <span>Comentário</span>: </h2>
+                <h2>Denúncia de <span id="tipo-denuncia"></span></h2>
             </header>
 
             <section id="denunciante">
-                Denunciante: <a href="">Fulano</a>
+                Denunciante: <span id="nome-denunciante"></span>
             </section>
 
             <section id="denunciado">
-                <p>
-                    Denunciado: <span>O comentário feito pelo usuário: <a href="">Ciclano</a> </span>, do projeto: <a
-                        href="">XYZ</a> feito pelo usuário <a href="">Fulano</a>.
-                </p>
+                Denunciado: <strong id="alvo-denuncia"></strong>
+                <p>Autor do conteúdo: <span id="autor-alvo"></span></p>
             </section>
 
             <section id="descricao">
                 <h3>Motivo:</h3>
-                <p>
-                    Este projeto consiste em uma aplicação completa desenvolvida para
-                    resolver um problema específico. Ele utiliza diversas tecnologias
-                    modernas e segue boas práticas de desenvolvimento.
-                </p>
+                <p id="motivo-denuncia"></p>
+                <h3>Conteúdo denunciado:</h3>
+                <p id="detalhes-alvo"></p>
             </section>
 
             <section id="data">
-                <h3>Data denuncia: <span>23/08/2026</span></h3>
+                <h3>Data da denúncia: <span id="data-denuncia"></span></h3>
             </section>
 
+            <p id="mensagem-admin" class="mensagem-admin" role="status" aria-live="polite"></p>
             <footer>
                 <nav>
                     <ul>
-                        <li><button>Concordar</button></li>
-                        <li><button>Ignorar</button></li>
+                        <li><button type="button" data-acao="concordar">Concordar e remover</button></li>
+                        <li><button type="button" data-acao="ignorar">Ignorar denúncia</button></li>
                     </ul>
                 </nav>
             </footer>
@@ -79,8 +82,9 @@
 
     <!-- ================= FOOTER ================= -->
     <footer id="footer">
-        DevShare - Sempre abertos à comunidade
+        DevShare — compartilhe ideias, encontre parceiros e transforme projetos em realidade.
     </footer>
 </body>
+<script src="../../assets/js/admin/painel.js"></script>
 
 </html>
