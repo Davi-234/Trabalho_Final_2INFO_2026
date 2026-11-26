@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8" />
@@ -13,7 +13,7 @@
   <link rel="icon" type="image/png" href="../../assets/images/logo.png">
   <style>
     #login-container {
-      width: 25%;
+      width: min(420px, 92%);
     }
   </style>
 </head>
@@ -27,16 +27,18 @@
 
         <form class="row g-3 needs-validation" novalidate>
           <div>
-            <label for="validationCustom01" class="form-label">Nome Administrador</label>
-            <input type="text" class="form-control" id="validationCustom01" placeholder="Digite o seu nome" required>
+            <label for="validationCustom01" class="form-label">E-mail do administrador</label>
+            <input type="email" class="form-control" id="validationCustom01" name="email"
+              placeholder="Digite seu e-mail" autocomplete="username" required>
           </div>
           <div>
             <label for="validationCustom02" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="validationCustom02" placeholder="Digite a sua senha"
-              required>
+            <input type="password" class="form-control" id="validationCustom02" name="senha"
+              placeholder="Digite sua senha" autocomplete="current-password" required>
           </div>
+          <p id="mensagem-login-admin" class="mensagem-admin" role="alert" aria-live="polite"></p>
           <div class="col-12">
-            <button class="" type="submit">Entrar</button>
+            <button type="submit">Entrar</button>
           </div>
         </form>
       </section>
@@ -45,31 +47,6 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-<script>
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (() => {
-    'use strict'
-
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    const forms = document.querySelectorAll('.needs-validation')
-
-    // Loop over them and prevent submission
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        event.preventDefault();
-
-        if (!form.checkValidity()) {
-          event.stopPropagation();
-          form.classList.add('was-validated');
-          return;
-        }
-
-        form.classList.add('was-validated');
-
-        window.location.href = "analise_denuncias.html";
-      });
-    })
-  })()
-</script>
+<script src="../../assets/js/admin/painel.js"></script>
 
 </html>

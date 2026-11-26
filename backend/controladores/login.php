@@ -36,6 +36,7 @@ try {
     session_regenerate_id(true);
     $_SESSION['usuario_id'] = $usuario->getId();
     $_SESSION['usuario_nome'] = $usuario->getNome();
+    $_SESSION['usuario_tipo'] = $usuario->getTipo()->value;
 
     responderLogin(200, true, 'Login realizado com sucesso.');
     
